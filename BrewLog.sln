@@ -1,0 +1,53 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewLog", "BrewLog\BrewLog.csproj", "{CE9F8BFD-AFB2-4E70-965B-CC6EEE74131B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewMonitor", "BrewMonitor\BrewMonitor.csproj", "{0B8AEEED-71DA-4570-9392-CAA35FA89A29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewMonitorTest", "BrewMonitorTest\BrewMonitorTest.csproj", "{7F8FF51D-79BF-45B0-84F3-A3603AAFDE53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewingModel", "BrewingModel\BrewingModel.csproj", "{5525FB3B-B363-4351-9D80-D17E8FDFB1BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessEquipmentParameters", "ProcessFields\ProcessEquipmentParameters.csproj", "{505C4AF9-382F-4BEB-B129-82078818F533}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewingModelTest", "BrewingModelTest\BrewingModelTest.csproj", "{400FE590-FBC3-4BCD-A2E4-672243FBA62C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewingProcessEquipmentTest", "BrewingProcessEquipmentTest\BrewingProcessEquipmentTest.csproj", "{887A4333-021D-4503-8E24-6E519AD42BC6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE9F8BFD-AFB2-4E70-965B-CC6EEE74131B}.Debug|x86.ActiveCfg = Debug|x86
+		{CE9F8BFD-AFB2-4E70-965B-CC6EEE74131B}.Debug|x86.Build.0 = Debug|x86
+		{CE9F8BFD-AFB2-4E70-965B-CC6EEE74131B}.Release|x86.ActiveCfg = Release|x86
+		{CE9F8BFD-AFB2-4E70-965B-CC6EEE74131B}.Release|x86.Build.0 = Release|x86
+		{0B8AEEED-71DA-4570-9392-CAA35FA89A29}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0B8AEEED-71DA-4570-9392-CAA35FA89A29}.Debug|x86.Build.0 = Debug|Any CPU
+		{0B8AEEED-71DA-4570-9392-CAA35FA89A29}.Release|x86.ActiveCfg = Release|Any CPU
+		{0B8AEEED-71DA-4570-9392-CAA35FA89A29}.Release|x86.Build.0 = Release|Any CPU
+		{7F8FF51D-79BF-45B0-84F3-A3603AAFDE53}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7F8FF51D-79BF-45B0-84F3-A3603AAFDE53}.Debug|x86.Build.0 = Debug|Any CPU
+		{7F8FF51D-79BF-45B0-84F3-A3603AAFDE53}.Release|x86.ActiveCfg = Release|Any CPU
+		{7F8FF51D-79BF-45B0-84F3-A3603AAFDE53}.Release|x86.Build.0 = Release|Any CPU
+		{5525FB3B-B363-4351-9D80-D17E8FDFB1BC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5525FB3B-B363-4351-9D80-D17E8FDFB1BC}.Debug|x86.Build.0 = Debug|Any CPU
+		{5525FB3B-B363-4351-9D80-D17E8FDFB1BC}.Release|x86.ActiveCfg = Release|Any CPU
+		{5525FB3B-B363-4351-9D80-D17E8FDFB1BC}.Release|x86.Build.0 = Release|Any CPU
+		{505C4AF9-382F-4BEB-B129-82078818F533}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{505C4AF9-382F-4BEB-B129-82078818F533}.Debug|x86.Build.0 = Debug|Any CPU
+		{505C4AF9-382F-4BEB-B129-82078818F533}.Release|x86.ActiveCfg = Release|Any CPU
+		{505C4AF9-382F-4BEB-B129-82078818F533}.Release|x86.Build.0 = Release|Any CPU
+		{400FE590-FBC3-4BCD-A2E4-672243FBA62C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{400FE590-FBC3-4BCD-A2E4-672243FBA62C}.Debug|x86.Build.0 = Debug|Any CPU
+		{400FE590-FBC3-4BCD-A2E4-672243FBA62C}.Release|x86.ActiveCfg = Release|Any CPU
+		{400FE590-FBC3-4BCD-A2E4-672243FBA62C}.Release|x86.Build.0 = Release|Any CPU
+		{887A4333-021D-4503-8E24-6E519AD42BC6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{887A4333-021D-4503-8E24-6E519AD42BC6}.Debug|x86.Build.0 = Debug|Any CPU
+		{887A4333-021D-4503-8E24-6E519AD42BC6}.Release|x86.ActiveCfg = Release|Any CPU
+		{887A4333-021D-4503-8E24-6E519AD42BC6}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
