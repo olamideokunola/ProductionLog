@@ -44,6 +44,9 @@
     <Compile Include="MashFilterCommandDispatcher.cs" />
     <Compile Include="StartMashFilterPrefillingCommand.cs" />
     <Compile Include="CompleteMashFilterProcessStepCommand.cs" />
+    <Compile Include="HoldingVesselCommandDispatcher.cs" />
+    <Compile Include="StartHoldingVesselFillingCommand.cs" />
+    <Compile Include="CompleteHoldingVesselProcessStepCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BrewingModel\BrewingModel.csproj">

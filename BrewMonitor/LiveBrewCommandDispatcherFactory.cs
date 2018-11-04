@@ -43,7 +43,7 @@ namespace BrewMonitor
                     break;
                 case "HOLDING VESSEL":
                 case "HOLDING VESSEL TO WORT COPPER":
-                    //liveBrewCommandDispatcher = new MashCopperCommandDispatcher();
+                    liveBrewCommandDispatcher = HoldingVesselCommandDispatcher.GetInstance();
                     break;
                 case "WORT COPPER":
                     //liveBrewCommandDispatcher = new MashCopperCommandDispatcher();

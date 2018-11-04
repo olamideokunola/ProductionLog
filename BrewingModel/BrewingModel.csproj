@@ -54,7 +54,7 @@
     <Compile Include="BrewingProcessEquipment\MashTunSacRestState.cs" />
     <Compile Include="BrewingProcessEquipment\MashTunHeatingUpState.cs" />
     <Compile Include="BrewingProcessEquipment\MashTunMashTransferToMashFilterState.cs" />
-    <Compile Include="BrewingProcessEquipment\IMashFilter.cs" />
+    <Compile Include="BrewingProcessEquipment\IMashFilterState.cs" />
     <Compile Include="BrewingProcessEquipment\MashFilterIdleState.cs" />
     <Compile Include="BrewingProcessEquipment\MashFilterPrefillingState.cs" />
     <Compile Include="BrewingProcessEquipment\MashFilterWeakWortTransferState.cs" />
@@ -66,6 +66,12 @@
     <Compile Include="BrewingProcessEquipment\MashFilterSpentGrainDischargeState.cs" />
     <Compile Include="BrewingProcessEquipment\MashFilterCleaningState.cs" />
     <Compile Include="BrewingProcessEquipment\MashFilter.cs" />
+    <Compile Include="BrewingProcessEquipment\IHoldingVesselState.cs" />
+    <Compile Include="BrewingProcessEquipment\HoldingVessel.cs" />
+    <Compile Include="BrewingProcessEquipment\HoldingVesselIdleState.cs" />
+    <Compile Include="BrewingProcessEquipment\HoldingVesselFillingState.cs" />
+    <Compile Include="BrewingProcessEquipment\HoldingVesselRinsingState.cs" />
+    <Compile Include="BrewingProcessEquipment\HoldingVesselState.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProcessFields\ProcessEquipmentParameters.csproj">

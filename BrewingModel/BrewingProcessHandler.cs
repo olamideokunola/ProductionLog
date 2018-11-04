@@ -18,7 +18,7 @@ namespace BrewingModel
         private MashCopper mashCopper;
         private MashTun mashTun;
         private MashFilter mashFilter;
-        //private HoldingVessel holdingVessel;
+        private HoldingVessel holdingVessel;
         //private WortCopper wortCopper;
         //private Whirlpool whirlpool;
 
@@ -128,15 +128,41 @@ namespace BrewingModel
             }
         }
 
+
+        //HoldingVessel Commands
+        public void StartHoldingVesselFilling(string startTime, string brewNumber, string fieldName, string fieldValue)
+        {
+            Brew brew = GetBrew(brewNumber);
+
+            holdingVessel.InitBrew(brew);
+            holdingVessel.StartFilling(fieldName, fieldValue);
+        }
+
+        public void CompleteHoldingVesselProcessStep(string brewNumber, string fieldName, string fieldValue)
+        {
+            //Brew brew = GetBrew(brewNumber);
+
+            if (holdingVessel.Brew.BrewNumber == brewNumber)
+            {
+                holdingVessel.SetEndTime(fieldName, fieldValue);
+            }
+            else
+            {
+                Console.WriteLine("Incorrect Brew! Dispatched Brew does not match brew in Holding Vessel!");
+            }
+        }
+
         //Other methods
         private void InitializeAllProcessEquipment()
         {
             mashCopper = new MashCopper();
             mashTun = new MashTun();
             mashFilter = new MashFilter();
+            holdingVessel = new HoldingVessel();
             mashCopper.SetState(new MashCopperIdleState());
             mashTun.SetState(new MashTunIdleState());
             mashFilter.SetState(new MashFilterIdleState());
+            holdingVessel.SetState(new HoldingVesselIdleState());
         }
 
         public void PrintCurrentState()

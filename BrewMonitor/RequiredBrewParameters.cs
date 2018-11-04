@@ -234,7 +234,7 @@ namespace BrewMonitor
             param = new Dictionary<string, string>
             {
                 { "Transfer Time (WC) - Finish", "" },
-                { "Rinsing - Finish", "" },
+                //{ "Rinsing - Finish", "" },
                 { "Holding Vessle empty at - Finish", ""}
             };
 
