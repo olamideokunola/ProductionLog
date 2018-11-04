@@ -41,6 +41,9 @@
     <Compile Include="StartMashTunMashingInCommand.cs" />
     <Compile Include="CompleteMashCopperProcessStepCommand.cs" />
     <Compile Include="CompleteMashTunProcessStepCommand.cs" />
+    <Compile Include="MashFilterCommandDispatcher.cs" />
+    <Compile Include="StartMashFilterPrefillingCommand.cs" />
+    <Compile Include="CompleteMashFilterProcessStepCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BrewingModel\BrewingModel.csproj">

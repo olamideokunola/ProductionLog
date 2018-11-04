@@ -4,15 +4,15 @@ using ProcessEquipmentParameters;
 
 namespace BrewingModel.BrewingProcessEquipment
 {
-    public class MashFilterSpentGrainDischargeState : MashFilterState, IMashFilterState, IStateDescription
+    public class MashFilterSpargingToWwtState : MashFilterState, IMashFilterState, IStateDescription
     {
-        public MashFilterSpentGrainDischargeState()
+        public MashFilterSpargingToWwtState()
         {
         }
 
         public string GetStateDescription()
         {
-            return "MashFilterSpentGrainDischargeState";
+            return "MashFilterSpargingToWwtState";
         }
 
         public void InitBrew(MashFilter mashFilter, Brew brew)
@@ -27,11 +27,11 @@ namespace BrewingModel.BrewingProcessEquipment
 
         public void SetEndTime(string paramText, string endTime, MashFilter mashFilter, Brew brew)
         {
-            if (paramText.Equals("Spent Grain Discharge - Finish"))
+            if (paramText.Equals("Sparging to WWT Time - Finish"))
             {
-                MashFilterProcessParameters paramToCheck = MashFilterProcessParameters.DrippingEndTime;
-                MashFilterProcessParameters paramToChange = MashFilterProcessParameters.SpentGrainDischargeEndTime;
-                IMashFilterState newState = mashFilter.CleaningState;
+                MashFilterProcessParameters paramToCheck = MashFilterProcessParameters.SpargingEndTime;
+                MashFilterProcessParameters paramToChange = MashFilterProcessParameters.SpargingToWWTEndTime;
+                IMashFilterState newState = mashFilter.ExtraSpargingState;
                 SetProcessStepEndTime(endTime, mashFilter, brew, paramToCheck, paramToChange, newState);
             }
         }

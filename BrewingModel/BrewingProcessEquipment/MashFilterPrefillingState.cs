@@ -4,15 +4,15 @@ using ProcessEquipmentParameters;
 
 namespace BrewingModel.BrewingProcessEquipment
 {
-    public class MashFilterMashingInState : MashFilterState, IMashFilterState, IStateDescription
+    public class MashFilterPrefillingState : MashFilterState, IMashFilterState, IStateDescription
     {
-        public MashFilterMashingInState()
+        public MashFilterPrefillingState()
         {
         }
 
         public string GetStateDescription()
         {
-            return "MashFilterMashingIn";
+            return "MashFilterPrefillingState";
         }
 
         public void InitBrew(MashFilter mashFilter, Brew brew)
@@ -27,21 +27,16 @@ namespace BrewingModel.BrewingProcessEquipment
 
         public void SetEndTime(string paramText, string endTime, MashFilter mashFilter, Brew brew)
         {
-            if (paramText.Equals("Mash in Time - Finish"))
+            if (paramText.Equals("Prefilling Time - Finish"))
             {
-                MashFilterProcessParameters paramToCheck = MashFilterProcessParameters.MashingInStartTime;
-                MashFilterProcessParameters paramToChange = MashFilterProcessParameters.MashingInEndTime;
-                IMashFilterState newState = mashFilter.ProteinRestState;
+                MashFilterProcessParameters paramToCheck = MashFilterProcessParameters.PrefillingStartTime;
+                MashFilterProcessParameters paramToChange = MashFilterProcessParameters.PrefillingEndTime;
+                IMashFilterState newState = mashFilter.WeakWortTransferState;
                 SetProcessStepEndTime(endTime, mashFilter, brew, paramToCheck, paramToChange, newState);
             }
         }
 
-        public void SetProteinRestTemperature(string temperature, MashFilter mashFilter, Brew brew)
-        {
-
-        }
-
-        public void StartMashingIn(string paramText, string startTime, MashFilter mashFilter, Brew brew)
+        public void StartPrefilling(string paramText, string startTime, MashFilter mashFilter, Brew brew)
         {
            
         }

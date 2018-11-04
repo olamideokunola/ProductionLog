@@ -17,7 +17,7 @@ namespace BrewingModel
         //Process Equipment
         private MashCopper mashCopper;
         private MashTun mashTun;
-        //private MashFilter mashFilter;
+        private MashFilter mashFilter;
         //private HoldingVessel holdingVessel;
         //private WortCopper wortCopper;
         //private Whirlpool whirlpool;
@@ -105,13 +105,38 @@ namespace BrewingModel
             }
         }
 
+        //MashFilter Commands
+        public void StartMashFilterPrefilling(string startTime, string brewNumber, string fieldName, string fieldValue)
+        {
+            Brew brew = GetBrew(brewNumber);
 
+            mashFilter.InitBrew(brew);
+            mashFilter.StartPrefilling(fieldName, fieldValue);
+        }
+
+        public void CompleteMashFilterProcessStep(string brewNumber, string fieldName, string fieldValue)
+        {
+            //Brew brew = GetBrew(brewNumber);
+
+            if (mashFilter.Brew.BrewNumber == brewNumber)
+            {
+                mashFilter.SetEndTime(fieldName, fieldValue);
+            }
+            else
+            {
+                Console.WriteLine("Incorrect Brew! Dispatched Brew does not match brew in Mash Filter!");
+            }
+        }
+
+        //Other methods
         private void InitializeAllProcessEquipment()
         {
             mashCopper = new MashCopper();
             mashTun = new MashTun();
+            mashFilter = new MashFilter();
             mashCopper.SetState(new MashCopperIdleState());
             mashTun.SetState(new MashTunIdleState());
+            mashFilter.SetState(new MashFilterIdleState());
         }
 
         public void PrintCurrentState()
@@ -119,6 +144,7 @@ namespace BrewingModel
             _brew.PrintCurrentState();
             mashCopper.PrintCurrentState();
             mashTun.PrintCurrentState();
+            mashFilter.PrintCurrentState();
         }
 
         //User Methods

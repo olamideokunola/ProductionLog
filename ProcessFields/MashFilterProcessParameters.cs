@@ -12,6 +12,6 @@ namespace ProcessEquipmentParameters
         ExtraSpargingEndTime,
         DrippingEndTime,
         SpentGrainDischargeEndTime,
-        CleaningEndTime
+        ReadyAtTime
     }
 }

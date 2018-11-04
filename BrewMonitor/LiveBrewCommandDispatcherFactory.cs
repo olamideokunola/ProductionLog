@@ -39,7 +39,7 @@ namespace BrewMonitor
                    liveBrewCommandDispatcher = MashTunCommandDispatcher.GetInstance();
                     break;
                 case "MASH FILTER":
-                    //liveBrewCommandDispatcher = new MashCopperCommandDispatcher();
+                    liveBrewCommandDispatcher = MashFilterCommandDispatcher.GetInstance();
                     break;
                 case "HOLDING VESSEL":
                 case "HOLDING VESSEL TO WORT COPPER":

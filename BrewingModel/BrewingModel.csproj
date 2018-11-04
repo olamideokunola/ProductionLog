@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{5525FB3B-B363-4351-9D80-D17E8FDFB1BC}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -46,6 +45,7 @@
     <Compile Include="BrewingProcessEquipment\MashCopperRest2State.cs" />
     <Compile Include="BrewingProcessEquipment\MashCopperMashTransferToMashTunState.cs" />
     <Compile Include="BrewingProcessEquipment\MashTun.cs" />
+    <Compile Include="BrewingProcessEquipment\MashFilterState.cs" />
     <Compile Include="BrewingProcessEquipment\IMashTunState.cs" />
     <Compile Include="BrewingProcessEquipment\MashTunIdleState.cs" />
     <Compile Include="BrewingProcessEquipment\MashTunState.cs" />
@@ -60,11 +60,12 @@
     <Compile Include="BrewingProcessEquipment\MashFilterWeakWortTransferState.cs" />
     <Compile Include="BrewingProcessEquipment\MashFilterMainMashFiltrationState.cs" />
     <Compile Include="BrewingProcessEquipment\MashFilterSpargingState.cs" />
-    <Compile Include="BrewingProcessEquipment\MashFilterSpargingToWWTState.cs" />
+    <Compile Include="BrewingProcessEquipment\MashFilterSpargingToWwtState.cs" />
     <Compile Include="BrewingProcessEquipment\MashFilterExtraSpargingState.cs" />
     <Compile Include="BrewingProcessEquipment\MashFilterDrippingState.cs" />
     <Compile Include="BrewingProcessEquipment\MashFilterSpentGrainDischargeState.cs" />
     <Compile Include="BrewingProcessEquipment\MashFilterCleaningState.cs" />
+    <Compile Include="BrewingProcessEquipment\MashFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProcessFields\ProcessEquipmentParameters.csproj">
