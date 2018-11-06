@@ -10,5 +10,7 @@ namespace BrewingModel.BrewingProcessEquipment
         void SetEndTime(string paramText, string endTime, WortCopper wortCopper, Brew brew);
         void StartCasting(string paramText, string startTime, WortCopper wortCopper, Brew brew);
         void OnEntry(WortCopper wortCopper, Brew brew);
+        //void SetVolumeBeforeBoiling(string volume, WortCopper wortCopper, Brew brew);
+        //void SetVolumeAfterBoiling(string volume, WortCopper wortCopper, Brew brew);
     }
 }

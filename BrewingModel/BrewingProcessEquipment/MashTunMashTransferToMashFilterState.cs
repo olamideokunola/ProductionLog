@@ -40,6 +40,15 @@ namespace BrewingModel.BrewingProcessEquipment
             
         }
 
+        public void SetSacharificationRestTemperature(string temperature, MashTun mashTun, Brew brew)
+        {
+
+        }
+
+        public void SetHeatingUpTemperature(string temperature, MashTun mashTun, Brew brew)
+        {
+
+        }
         public void StartMashingIn(string paramText, string startTime, MashTun mashTun, Brew brew)
         {
 

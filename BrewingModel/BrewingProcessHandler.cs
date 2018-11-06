@@ -82,6 +82,13 @@ namespace BrewingModel
             }
         }
 
+        public void SetMashCopperProteinRestTemperature(string temperature)
+        {
+            //Brew brew = GetBrew(brewNumber);
+
+            //mashCopper.InitBrew(brew);
+            mashCopper.SetProteinRestTemperature(temperature);
+        }
         //MashTun Commands
         public void StartMashTunMashingIn(string startTime, string brewNumber, string fieldName, string fieldValue)
         {
@@ -103,6 +110,16 @@ namespace BrewingModel
             {
                 Console.WriteLine("Incorrect Brew! Dispatched Brew does not match brew in Mash Tun!");
             }
+        }
+
+        public void SetSacharificationRestTemperature(string temperature)
+        {
+            mashTun.SetSacharificationRestTemperature(temperature);
+        }
+
+        public void SetHeatingUpTemperature(string temperature)
+        {
+            mashTun.SetHeatingUpTemperature(temperature;
         }
 
         //MashFilter Commands
@@ -188,6 +205,15 @@ namespace BrewingModel
             }
         }
 
+        public void SetVolumeBeforeBoiling(string volume)
+        {
+            wortCopper.SetVolumeBeforeBoiling(volume);
+        }
+
+        public void SetVolumeAfterBoiling(string volume)
+        {
+            wortCopper.SetVolumeAfterBoiling(volume);
+        }
 
         // Whirlpool Commands
         public void StartWhirlpoolCasting(string brewNumber, string fieldName, string fieldValue)

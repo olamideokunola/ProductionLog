@@ -145,6 +145,15 @@ namespace BrewingModel.BrewingProcessEquipment
             _currentState.SetProteinRestTemperature(temperature, this, _brew);
         }
 
+        public void SetSacharificationRestTemperature(string temperature)
+        {
+            _currentState.SetSacharificationRestTemperature(temperature, this, _brew);
+        }
+
+        public void SetHeatingUpTemperature(string temperature)
+        {
+            _currentState.SetHeatingUpTemperature(temperature, this, _brew);
+        }
         //State actions in state classs
 
 

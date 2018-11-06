@@ -42,6 +42,18 @@ namespace BrewingModel.BrewingProcessEquipment
            
         }
 
+        public void SetHeatingUp1Temperature(string temperature, MashCopper mashCopper, Brew brew)
+        {
+
+        }
+
+        public void SetHeatingUp2Temperature(string temperature, MashCopper mashCopper, Brew brew)
+        {
+            brew.SetProcessParameterValue(ProcessEquipment.MashCopper,
+                                          MashCopperProcessParameters.HeatingUp2Temperature.ToString(),
+                                          temperature);
+        }
+
         public void StartMashingIn(string paramText, string startTime, MashCopper mashCopper, Brew brew)
         {
 

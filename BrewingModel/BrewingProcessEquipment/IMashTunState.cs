@@ -10,5 +10,7 @@ namespace BrewingModel.BrewingProcessEquipment
         void SetEndTime(string paramText, string endTime, MashTun mashTun, Brew brew);
         void OnEntry(MashTun mashTun, Brew brew);
         void SetProteinRestTemperature(string temperature, MashTun mashTun, Brew brew);
+        void SetSacharificationRestTemperature(string temperature, MashTun mashTun, Brew brew);
+        void SetHeatingUpTemperature(string temperature, MashTun mashTun, Brew brew);
     }
 }

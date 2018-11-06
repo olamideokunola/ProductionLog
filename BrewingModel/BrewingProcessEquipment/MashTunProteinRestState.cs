@@ -38,6 +38,18 @@ namespace BrewingModel.BrewingProcessEquipment
 
         public void SetProteinRestTemperature(string temperature, MashTun mashTun, Brew brew)
         {
+            brew.SetProcessParameterValue(ProcessEquipment.MashTun,
+                                          MashTunProcessParameters.ProteinRestTemperature.ToString(),
+                                          temperature);
+        }
+
+        public void SetSacharificationRestTemperature(string temperature, MashTun mashTun, Brew brew)
+        {
+
+        }
+
+        public void SetHeatingUpTemperature(string temperature, MashTun mashTun, Brew brew)
+        {
 
         }
 
