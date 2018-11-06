@@ -1,9 +1,9 @@
 ﻿using System;
 using BrewingModel;
 
-namespace BrewMonitor
+namespace BrewMonitor.LiveBrewCommands
 {
-    public class CompleteMashFilterProcessStepCommand : LiveBrewCommand
+    public class CompleteWortCopperProcessStepCommand : LiveBrewCommand
     {
         string _brandName;
         string _brewNumber;
@@ -11,7 +11,7 @@ namespace BrewMonitor
         string _fieldValue;
         string _fieldSection;
 
-        public CompleteMashFilterProcessStepCommand(string brandName, string brewNumber, string fieldName, string fieldValue, string fieldSection)
+        public CompleteWortCopperProcessStepCommand(string brandName, string brewNumber, string fieldName, string fieldValue, string fieldSection)
         {
             this._brandName = brandName;
             this._brewNumber = brewNumber;
@@ -23,7 +23,7 @@ namespace BrewMonitor
 
         public override void Execute()
         {
-            this.brewingProcessHandler.CompleteMashFilterProcessStep(_brewNumber, _fieldName, _fieldValue);
+            this.brewingProcessHandler.CompleteWortCopperProcessStep(_brewNumber, _fieldName, _fieldValue);
         }
 
         public override bool IsReversible()

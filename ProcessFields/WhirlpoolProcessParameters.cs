@@ -7,6 +7,6 @@ namespace ProcessEquipmentParameters
         CastingEndTime,
         RestingEndTime,
         CoolingEndTime,
-        TrubRemovalEndTime
+        ReadyAtTime,
     }
 }

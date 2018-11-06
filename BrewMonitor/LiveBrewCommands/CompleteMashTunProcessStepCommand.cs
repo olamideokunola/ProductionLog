@@ -1,9 +1,9 @@
 ﻿using System;
 using BrewingModel;
 
-namespace BrewMonitor
+namespace BrewMonitor.LiveBrewCommands
 {
-    public class CompleteHoldingVesselProcessStepCommand : LiveBrewCommand
+    public class CompleteMashTunProcessStepCommand : LiveBrewCommand
     {
         string _brandName;
         string _brewNumber;
@@ -11,7 +11,7 @@ namespace BrewMonitor
         string _fieldValue;
         string _fieldSection;
 
-        public CompleteHoldingVesselProcessStepCommand(string brandName, string brewNumber, string fieldName, string fieldValue, string fieldSection)
+        public CompleteMashTunProcessStepCommand(string brandName, string brewNumber, string fieldName, string fieldValue, string fieldSection)
         {
             this._brandName = brandName;
             this._brewNumber = brewNumber;
@@ -23,7 +23,7 @@ namespace BrewMonitor
 
         public override void Execute()
         {
-            this.brewingProcessHandler.CompleteHoldingVesselProcessStep(_brewNumber, _fieldName, _fieldValue);
+            this.brewingProcessHandler.CompleteMashTunProcessStep(_brewNumber, _fieldName, _fieldValue);
         }
 
         public override bool IsReversible()

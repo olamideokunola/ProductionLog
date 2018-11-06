@@ -1,7 +1,8 @@
 ﻿using System;
 using BrewingModel;
+using BrewMonitor.LiveBrewCommands;
 
-namespace BrewMonitor
+namespace BrewMonitor.LiveBrewCommandDispatchers
 {
     public class MashCopperCommandDispatcher : LiveBrewCommandDispatcher
     {
@@ -21,14 +22,17 @@ namespace BrewMonitor
         //hidden constructer to allow Singleton
         private MashCopperCommandDispatcher()
         {
+            this.liveBrewCommands.Clear();
         }
 
-        public override LiveBrewCommand CreateLiveBrewCommand(string fieldName, string fieldValue, Brew brew, string fieldSection)
+
+        public override void CreateLiveBrewCommands(string fieldName, string fieldValue, Brew brew, string fieldSection)
         {
             switch (fieldName)
             {
                 case "Transport Time RAW Sorguum to WB MC - Finish":
                     liveBrewCommand = new StartMashCopperMashingInCommand(brew.StartDate, brew.StartTime, brew.BrandName, brew.BrewNumber, fieldName, fieldValue, fieldSection);
+                    AddToLiveBrewCommands(liveBrewCommand);
                     break;
                 case "Mash in Time - Finish":
                 case "Protein Rest Time - Finish":
@@ -39,10 +43,9 @@ namespace BrewMonitor
                 case "Mash Transfer to MT - Finish":
                 case "Mash Copper empty at - Finish":
                     liveBrewCommand = new CompleteMashCopperProcessStepCommand(brew.BrandName, brew.BrewNumber, fieldName, fieldValue, fieldSection);
+                    AddToLiveBrewCommands(liveBrewCommand);
                     break;
             }
-
-            return liveBrewCommand;
         }
     }
 }

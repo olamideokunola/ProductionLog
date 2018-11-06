@@ -19,8 +19,8 @@ namespace BrewingModel
         private MashTun mashTun;
         private MashFilter mashFilter;
         private HoldingVessel holdingVessel;
-        //private WortCopper wortCopper;
-        //private Whirlpool whirlpool;
+        private WortCopper wortCopper;
+        private Whirlpool whirlpool;
 
         //Singleton
         private static BrewingProcessHandler _uniqueInstance = null;
@@ -152,6 +152,67 @@ namespace BrewingModel
             }
         }
 
+        // WortCopper Commands
+        public void StartWortCopperHeating(string brewNumber, string fieldName, string fieldValue)
+        {
+            Brew brew = GetBrew(brewNumber);
+
+            wortCopper.InitBrew(brew);
+            wortCopper.StartHeating(fieldName, fieldValue);
+        }
+
+        public void StartWortCopperCasting(string brewNumber, string fieldName, string fieldValue)
+        {
+            //Brew brew = GetBrew(brewNumber);
+            if (wortCopper.Brew.BrewNumber == brewNumber)
+            {
+                wortCopper.StartCasting(fieldName, fieldValue);
+            }
+            else
+            {
+                Console.WriteLine("Incorrect Brew! Dispatched Brew does not match brew in Wort Copper!");
+            }
+        }
+
+        public void CompleteWortCopperProcessStep(string brewNumber, string fieldName, string fieldValue)
+        {
+            //Brew brew = GetBrew(brewNumber);
+
+            if (wortCopper.Brew.BrewNumber == brewNumber)
+            {
+                wortCopper.SetEndTime(fieldName, fieldValue);
+            }
+            else
+            {
+                Console.WriteLine("Incorrect Brew! Dispatched Brew does not match brew in Wort Copper!");
+            }
+        }
+
+
+        // Whirlpool Commands
+        public void StartWhirlpoolCasting(string brewNumber, string fieldName, string fieldValue)
+        {
+            Brew brew = GetBrew(brewNumber);
+            whirlpool.InitBrew(brew);
+            whirlpool.StartCasting(fieldName, fieldValue);
+        }
+
+        public void CompleteWhirlpoolProcessStep(string brewNumber, string fieldName, string fieldValue)
+        {
+            //Brew brew = GetBrew(brewNumber);
+
+            if (whirlpool.Brew.BrewNumber == brewNumber)
+            {
+                whirlpool.SetEndTime(fieldName, fieldValue);
+            }
+            else
+            {
+                Console.WriteLine("Incorrect Brew! Dispatched Brew does not match brew in Whirlpool!");
+            }
+        }
+
+
+
         //Other methods
         private void InitializeAllProcessEquipment()
         {
@@ -159,10 +220,14 @@ namespace BrewingModel
             mashTun = new MashTun();
             mashFilter = new MashFilter();
             holdingVessel = new HoldingVessel();
+            wortCopper = new WortCopper();
+            whirlpool = new Whirlpool();
             mashCopper.SetState(new MashCopperIdleState());
             mashTun.SetState(new MashTunIdleState());
             mashFilter.SetState(new MashFilterIdleState());
             holdingVessel.SetState(new HoldingVesselIdleState());
+            wortCopper.SetState(new WortCopperIdleState());
+            whirlpool.SetState(new WhirlpoolIdleState());
         }
 
         public void PrintCurrentState()
@@ -171,6 +236,9 @@ namespace BrewingModel
             mashCopper.PrintCurrentState();
             mashTun.PrintCurrentState();
             mashFilter.PrintCurrentState();
+            holdingVessel.PrintCurrentState();
+            wortCopper.PrintCurrentState();
+            whirlpool.PrintCurrentState();
         }
 
         //User Methods

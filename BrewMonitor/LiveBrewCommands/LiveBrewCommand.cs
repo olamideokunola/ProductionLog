@@ -1,7 +1,7 @@
 ﻿using System;
 using BrewingModel;
 
-namespace BrewMonitor
+namespace BrewMonitor.LiveBrewCommands
 {
     public abstract class LiveBrewCommand
     {

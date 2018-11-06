@@ -1,21 +1,18 @@
 ﻿using System;
 using BrewingModel;
-namespace BrewMonitor
+
+namespace BrewMonitor.LiveBrewCommands
 {
-    public class StartMashTunMashingInCommand : LiveBrewCommand
+    public class CompleteWhirlpoolProcessStepCommand : LiveBrewCommand
     {
-        string _startDate;
-        string _startTime;
         string _brandName;
         string _brewNumber;
         string _fieldName;
         string _fieldValue;
         string _fieldSection;
 
-        public StartMashTunMashingInCommand(string startDate, string startTime, string brandName, string brewNumber, string fieldName, string fieldValue, string fieldSection)
+        public CompleteWhirlpoolProcessStepCommand(string brandName, string brewNumber, string fieldName, string fieldValue, string fieldSection)
         {
-            this._startDate = startDate;
-            this._startTime = startTime;
             this._brandName = brandName;
             this._brewNumber = brewNumber;
             this._fieldName = fieldName;
@@ -26,7 +23,7 @@ namespace BrewMonitor
 
         public override void Execute()
         {
-            this.brewingProcessHandler.StartMashTunMashingIn(_startTime, _brewNumber, _fieldName, _fieldValue);
+            this.brewingProcessHandler.CompleteWhirlpoolProcessStep(_brewNumber, _fieldName, _fieldValue);
         }
 
         public override bool IsReversible()

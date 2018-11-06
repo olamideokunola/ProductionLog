@@ -3,7 +3,9 @@
  */
 
 using System;
-namespace BrewMonitor
+using BrewMonitor.LiveBrewCommands;
+
+namespace BrewMonitor.LiveBrewCommandDispatchers
 {
     public class LiveBrewCommandDispatcherFactory
     {
@@ -46,10 +48,10 @@ namespace BrewMonitor
                     liveBrewCommandDispatcher = HoldingVesselCommandDispatcher.GetInstance();
                     break;
                 case "WORT COPPER":
-                    //liveBrewCommandDispatcher = new MashCopperCommandDispatcher();
+                    liveBrewCommandDispatcher = WortCopperCommandDispatcher.GetInstance();
                     break;
                 case "WHIRLPOOL":
-                    //liveBrewCommandDispatcher = new MashCopperCommandDispatcher();
+                    liveBrewCommandDispatcher = WhirlpoolCommandDispatcher.GetInstance();
                     break;
             }
 

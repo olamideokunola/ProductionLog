@@ -2,7 +2,7 @@
 using BrewingModel;
 using ProcessEquipmentParameters;
 
-namespace BrewMonitor
+namespace BrewMonitor.LiveBrewCommands
 {
     public class StartMashCopperMashingInCommand : LiveBrewCommand
     {

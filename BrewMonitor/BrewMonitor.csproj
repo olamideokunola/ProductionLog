@@ -32,21 +32,28 @@
     <Compile Include="RequiredBrewParameters.cs" />
     <Compile Include="RequiredFieldsChecker.cs" />
     <Compile Include="LiveBrewMonitor.cs" />
-    <Compile Include="LiveBrewCommandDispatcher.cs" />
-    <Compile Include="LiveBrewCommand.cs" />
-    <Compile Include="StartMashCopperMashingInCommand.cs" />
-    <Compile Include="MashCopperCommandDispatcher.cs" />
-    <Compile Include="LiveBrewCommandDispatcherFactory.cs" />
-    <Compile Include="MashTunCommandDispatcher.cs" />
-    <Compile Include="StartMashTunMashingInCommand.cs" />
-    <Compile Include="CompleteMashCopperProcessStepCommand.cs" />
-    <Compile Include="CompleteMashTunProcessStepCommand.cs" />
-    <Compile Include="MashFilterCommandDispatcher.cs" />
-    <Compile Include="StartMashFilterPrefillingCommand.cs" />
-    <Compile Include="CompleteMashFilterProcessStepCommand.cs" />
-    <Compile Include="HoldingVesselCommandDispatcher.cs" />
-    <Compile Include="StartHoldingVesselFillingCommand.cs" />
-    <Compile Include="CompleteHoldingVesselProcessStepCommand.cs" />
+    <Compile Include="LiveBrewCommandDispatchers\HoldingVesselCommandDispatcher.cs" />
+    <Compile Include="LiveBrewCommandDispatchers\LiveBrewCommandDispatcher.cs" />
+    <Compile Include="LiveBrewCommandDispatchers\LiveBrewCommandDispatcherFactory.cs" />
+    <Compile Include="LiveBrewCommandDispatchers\MashCopperCommandDispatcher.cs" />
+    <Compile Include="LiveBrewCommandDispatchers\MashFilterCommandDispatcher.cs" />
+    <Compile Include="LiveBrewCommandDispatchers\MashTunCommandDispatcher.cs" />
+    <Compile Include="LiveBrewCommandDispatchers\WortCopperCommandDispatcher.cs" />
+    <Compile Include="LiveBrewCommands\CompleteHoldingVesselProcessStepCommand.cs" />
+    <Compile Include="LiveBrewCommands\CompleteMashCopperProcessStepCommand.cs" />
+    <Compile Include="LiveBrewCommands\CompleteMashFilterProcessStepCommand.cs" />
+    <Compile Include="LiveBrewCommands\CompleteMashTunProcessStepCommand.cs" />
+    <Compile Include="LiveBrewCommands\CompleteWortCopperProcessStepCommand.cs" />
+    <Compile Include="LiveBrewCommands\StartHoldingVesselFillingCommand.cs" />
+    <Compile Include="LiveBrewCommands\StartMashCopperMashingInCommand.cs" />
+    <Compile Include="LiveBrewCommands\StartMashFilterPrefillingCommand.cs" />
+    <Compile Include="LiveBrewCommands\StartMashTunMashingInCommand.cs" />
+    <Compile Include="LiveBrewCommands\StartWortCopperCastingCommand.cs" />
+    <Compile Include="LiveBrewCommands\StartWortCopperHeatingCommand.cs" />
+    <Compile Include="LiveBrewCommands\LiveBrewCommand.cs" />
+    <Compile Include="LiveBrewCommandDispatchers\WhirlpoolCommandDispatcher.cs" />
+    <Compile Include="LiveBrewCommands\StartWhirlpoolCastingCommand.cs" />
+    <Compile Include="LiveBrewCommands\CompleteWhirlpoolProcessStepCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BrewingModel\BrewingModel.csproj">
@@ -57,6 +64,10 @@
       <Project>{505C4AF9-382F-4BEB-B129-82078818F533}</Project>
       <Name>ProcessEquipmentParameters</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LiveBrewCommandDispatchers\" />
+    <Folder Include="LiveBrewCommands\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

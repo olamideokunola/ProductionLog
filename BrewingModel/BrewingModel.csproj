@@ -72,6 +72,22 @@
     <Compile Include="BrewingProcessEquipment\HoldingVesselFillingState.cs" />
     <Compile Include="BrewingProcessEquipment\HoldingVesselRinsingState.cs" />
     <Compile Include="BrewingProcessEquipment\HoldingVesselState.cs" />
+    <Compile Include="BrewingProcessEquipment\IWortCopper.cs" />
+    <Compile Include="BrewingProcessEquipment\WortCopper.cs" />
+    <Compile Include="BrewingProcessEquipment\WortCopperIdleState.cs" />
+    <Compile Include="BrewingProcessEquipment\WortCopperHeatingState.cs" />
+    <Compile Include="BrewingProcessEquipment\WortCopperBoilingState.cs" />
+    <Compile Include="BrewingProcessEquipment\WortCopperExtraBoilingState.cs" />
+    <Compile Include="BrewingProcessEquipment\WortCopperCastingState.cs" />
+    <Compile Include="BrewingProcessEquipment\WortCopperState.cs" />
+    <Compile Include="BrewingProcessEquipment\IWhirlpoolState.cs" />
+    <Compile Include="BrewingProcessEquipment\Whirlpool.cs" />
+    <Compile Include="BrewingProcessEquipment\WhirlpoolCastingState.cs" />
+    <Compile Include="BrewingProcessEquipment\WhirlpoolCoolingState.cs" />
+    <Compile Include="BrewingProcessEquipment\WhirlpoolIdleState.cs" />
+    <Compile Include="BrewingProcessEquipment\WhirlpoolRestingState.cs" />
+    <Compile Include="BrewingProcessEquipment\WhirlpoolTrubRemovalState.cs" />
+    <Compile Include="BrewingProcessEquipment\WhirlpoolState.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProcessFields\ProcessEquipmentParameters.csproj">

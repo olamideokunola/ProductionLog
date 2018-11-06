@@ -1,18 +1,21 @@
 ﻿using System;
 using BrewingModel;
-
-namespace BrewMonitor
+namespace BrewMonitor.LiveBrewCommands
 {
-    public class CompleteMashTunProcessStepCommand : LiveBrewCommand
+    public class StartMashFilterPrefillingCommand : LiveBrewCommand
     {
+        string _startDate;
+        string _startTime;
         string _brandName;
         string _brewNumber;
         string _fieldName;
         string _fieldValue;
         string _fieldSection;
 
-        public CompleteMashTunProcessStepCommand(string brandName, string brewNumber, string fieldName, string fieldValue, string fieldSection)
+        public StartMashFilterPrefillingCommand(string startDate, string startTime, string brandName, string brewNumber, string fieldName, string fieldValue, string fieldSection)
         {
+            this._startDate = startDate;
+            this._startTime = startTime;
             this._brandName = brandName;
             this._brewNumber = brewNumber;
             this._fieldName = fieldName;
@@ -23,7 +26,7 @@ namespace BrewMonitor
 
         public override void Execute()
         {
-            this.brewingProcessHandler.CompleteMashTunProcessStep(_brewNumber, _fieldName, _fieldValue);
+            this.brewingProcessHandler.StartMashFilterPrefilling(_startTime, _brewNumber, _fieldName, _fieldValue);
         }
 
         public override bool IsReversible()

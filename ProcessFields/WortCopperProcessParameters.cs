@@ -7,6 +7,7 @@ namespace ProcessEquipmentParameters
         HeatingEndTime,
         BoilingEndTime,
         ExtraBoilingEndTime,
+        CastingStartTime,
         CastingEndTime,
 
         VolumeBeforeBoiling,

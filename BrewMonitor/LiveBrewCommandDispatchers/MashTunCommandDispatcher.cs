@@ -1,7 +1,8 @@
 ﻿using System;
 using BrewingModel;
+using BrewMonitor.LiveBrewCommands;
 
-namespace BrewMonitor
+namespace BrewMonitor.LiveBrewCommandDispatchers
 {
     public class MashTunCommandDispatcher : LiveBrewCommandDispatcher
     {
@@ -22,12 +23,14 @@ namespace BrewMonitor
         private MashTunCommandDispatcher()
         {
         }
-        public override LiveBrewCommand CreateLiveBrewCommand(string fieldName, string fieldValue, Brew brew, string fieldSection)
+
+        public override void CreateLiveBrewCommands(string fieldName, string fieldValue, Brew brew, string fieldSection)
         {
             switch (fieldName)
             {
                 case "Tranpsort Time - Finish":
                     liveBrewCommand = new StartMashTunMashingInCommand(brew.StartDate, brew.StartTime, brew.BrandName, brew.BrewNumber, fieldName, fieldValue, fieldSection);
+                    AddToLiveBrewCommands(liveBrewCommand);
                     break;
                 case "Mash in Time - Finish":
                 case "Protein Rest Time - Finish":
@@ -36,13 +39,12 @@ namespace BrewMonitor
                 case "Heating Time - Finish":
                 case "Mash Tun ready at - Finish":
                     liveBrewCommand = new CompleteMashTunProcessStepCommand(brew.BrandName, brew.BrewNumber, fieldName, fieldValue, fieldSection);
+                    AddToLiveBrewCommands(liveBrewCommand);
                     break;
-                //case "Mash Tun ready at - Finish":
+                    //case "Mash Tun ready at - Finish":
                     //liveBrewCommand = new StartMashTunMashingInCommand(brew.StartDate, brew.StartTime, brew.BrandName, brew.BrewNumber, fieldName, fieldValue, fieldSection);
                     //break;
             }
-
-            return liveBrewCommand;
         }
     }
 }

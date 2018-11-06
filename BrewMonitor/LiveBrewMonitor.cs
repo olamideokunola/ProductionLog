@@ -6,6 +6,7 @@ using System;
 using System.Timers;
 using System.Collections.Generic;
 using BrewingModel;
+using BrewMonitor.LiveBrewCommandDispatchers;
 
 namespace BrewMonitor
 {
@@ -115,8 +116,8 @@ namespace BrewMonitor
                             LiveBrewCommandDispatcherFactory liveBrewCommandDispatcherFactory = LiveBrewCommandDispatcherFactory.GetInstance();
                             LiveBrewCommandDispatcher liveBrewCommandDispatcher = liveBrewCommandDispatcherFactory.GetLiveBrewCommandDispatcher(fieldSection);
 
-                            LiveBrewCommand liveBrewCommand = liveBrewCommandDispatcher.CreateLiveBrewCommand(fieldName, fieldValue, brew, fieldSection);
-                            liveBrewCommand.Execute();
+                            liveBrewCommandDispatcher.CreateLiveBrewCommands(fieldName, fieldValue, brew, fieldSection);
+                            liveBrewCommandDispatcher.SendAllCommands();
                         }
                     }
                 }

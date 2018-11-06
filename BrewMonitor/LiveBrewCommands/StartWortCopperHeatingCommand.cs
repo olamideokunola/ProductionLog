@@ -1,8 +1,8 @@
 ﻿using System;
 using BrewingModel;
-namespace BrewMonitor
+namespace BrewMonitor.LiveBrewCommands
 {
-    public class StartMashFilterPrefillingCommand : LiveBrewCommand
+    public class StartWortCopperHeatingCommand : LiveBrewCommand
     {
         string _startDate;
         string _startTime;
@@ -12,7 +12,7 @@ namespace BrewMonitor
         string _fieldValue;
         string _fieldSection;
 
-        public StartMashFilterPrefillingCommand(string startDate, string startTime, string brandName, string brewNumber, string fieldName, string fieldValue, string fieldSection)
+        public StartWortCopperHeatingCommand(string startDate, string startTime, string brandName, string brewNumber, string fieldName, string fieldValue, string fieldSection)
         {
             this._startDate = startDate;
             this._startTime = startTime;
@@ -26,7 +26,7 @@ namespace BrewMonitor
 
         public override void Execute()
         {
-            this.brewingProcessHandler.StartMashFilterPrefilling(_startTime, _brewNumber, _fieldName, _fieldValue);
+            this.brewingProcessHandler.StartWortCopperHeating(_brewNumber, _fieldName, _fieldValue);
         }
 
         public override bool IsReversible()
