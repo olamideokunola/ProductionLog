@@ -128,12 +128,12 @@ namespace BrewingModel.BrewingProcessEquipment
 
         public void SetVolumeBeforeBoiling(string volume)
         {
-            _currentState.SetVolumeBeforeBoiling(volume, this, _brew);
+           // _currentState.SetVolumeBeforeBoiling(volume, this, _brew);
         }
 
         public void SetVolumeAfterBoiling(string volume)
         {
-            _currentState.SetVolumeAfterBoiling(volume, this, _brew);
+            //_currentState.SetVolumeAfterBoiling(volume, this, _brew);
         }
 
         //State actions in state classs

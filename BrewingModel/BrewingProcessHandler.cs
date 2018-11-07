@@ -119,7 +119,7 @@ namespace BrewingModel
 
         public void SetHeatingUpTemperature(string temperature)
         {
-            mashTun.SetHeatingUpTemperature(temperature;
+            mashTun.SetHeatingUpTemperature(temperature);
         }
 
         //MashFilter Commands

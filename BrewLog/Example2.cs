@@ -2,6 +2,9 @@
 using System.Threading;
 using BrewMonitor;
 using BrewingModel;
+using System.Windows.Forms;
+using System.Drawing;
+using BrewLogGui;
 
 namespace BrewLog
 {
@@ -12,6 +15,10 @@ namespace BrewLog
         {
             BrewingProcessHandler brewingProcessHandler = BrewingProcessHandler.GetInstance();
             brewingProcessHandler.StartNewBrew("01/01/2016", "Maltina", "258");
+
+            ThreadStart guiRef = new ThreadStart(StartGui);
+            Thread guiThread = new Thread(guiRef);
+            guiThread.Start();
             StartTimer();
         }
 
@@ -22,9 +29,14 @@ namespace BrewLog
             //Create timer
             Console.WriteLine("Starting...");
 
-            Timer nTimer = new Timer(action.DoThis, autoEvent, 1000, 5000);
+            System.Threading.Timer nTimer = new System.Threading.Timer(action.DoThis, autoEvent, 1000, 5000);
             autoEvent.WaitOne();
             nTimer.Change(0, 500);
+        }
+
+        static void StartGui()
+        {
+            Application.Run(new AppForm());
         }
     }
 

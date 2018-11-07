@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewingModelTest", "Brewing
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewingProcessEquipmentTest", "BrewingProcessEquipmentTest\BrewingProcessEquipmentTest.csproj", "{887A4333-021D-4503-8E24-6E519AD42BC6}"
 EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BrewLogGui", "BrewLogGui\BrewLogGui.csproj", "{BA0CA698-EEA9-4C5F-8FCE-EB3AB8E3B240}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -49,6 +51,10 @@ Global
 		{887A4333-021D-4503-8E24-6E519AD42BC6}.Debug|x86.Build.0 = Debug|Any CPU
 		{887A4333-021D-4503-8E24-6E519AD42BC6}.Release|x86.ActiveCfg = Release|Any CPU
 		{887A4333-021D-4503-8E24-6E519AD42BC6}.Release|x86.Build.0 = Release|Any CPU
+		{BA0CA698-EEA9-4C5F-8FCE-EB3AB8E3B240}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BA0CA698-EEA9-4C5F-8FCE-EB3AB8E3B240}.Debug|x86.Build.0 = Debug|Any CPU
+		{BA0CA698-EEA9-4C5F-8FCE-EB3AB8E3B240}.Release|x86.ActiveCfg = Release|Any CPU
+		{BA0CA698-EEA9-4C5F-8FCE-EB3AB8E3B240}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
