@@ -35,39 +35,48 @@
     <Compile Include="ProcessEquipmentViews\ProcessEquipmentView.cs" />
     <Compile Include="ProcessEquipmentViews\MashVesselView.cs" />
     <Compile Include="ProcessEquipmentViews\MashCoolerView.cs" />
-    <Compile Include="ProcessEquipmentViews\MashCopperView.cs" />
-    <Compile Include="ProcessEquipmentViews\MashTunView.cs" />
     <Compile Include="ProcessEquipmentViews\HoldingVesselView.cs" />
     <Compile Include="ProcessEquipmentViews\WortCopperView.cs" />
     <Compile Include="ProcessEquipmentViews\MashFilterView.cs" />
     <Compile Include="ProcessEquipmentViews\WhirlpoolView.cs" />
     <Compile Include="ProcessEquipmentViews\WortCoolerView.cs" />
     <Compile Include="ProcessEquipmentViews\PumpView.cs" />
+    <Compile Include="ProcessEquipmentViews\MashTunView.cs" />
+    <Compile Include="ProcessEquipmentViews\MashCopperView.cs" />
+    <Compile Include="ProcessEquipmentViews\MashTransferPumpView.cs" />
+    <Compile Include="ProcessEquipmentViews\MashFiltrationPumpView.cs" />
+    <Compile Include="ProcessEquipmentViews\WortPumpView.cs" />
+    <Compile Include="ProcessEquipmentViews\CastingPumpView.cs" />
+    <Compile Include="ProcessEquipmentViews\CoolingPumpView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\" />
     <Folder Include="ProcessEquipmentViews\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Images\house.jpg" />
     <None Include="Images\wort_copper_running.png" />
     <None Include="Images\wort_copper_idle.png" />
     <None Include="Images\wort_cooler_running.png" />
     <None Include="Images\wort_cooler_idle.png" />
     <None Include="Images\whirlpool_running.png" />
     <None Include="Images\whirlpool_idle.png" />
-    <None Include="Images\test_pump_running.png" />
-    <None Include="Images\test_pump_idle.png" />
-    <None Include="Images\pump_running.png" />
-    <None Include="Images\pump_idle.png" />
-    <None Include="Images\mash_vessel_running.png" />
-    <None Include="Images\mash_vessel_idle.png" />
     <None Include="Images\mash_filter_running.png" />
     <None Include="Images\mash_filter_idle.png" />
     <None Include="Images\mash_cooler_running.png" />
     <None Include="Images\mash_cooler_idle.png" />
     <None Include="Images\holding_vessel_running.png" />
     <None Include="Images\holding_vessel_idle.png" />
+    <None Include="Images\wort_pump_running.png" />
+    <None Include="Images\wort_pump_idle.png" />
+    <None Include="Images\pump_top_to_right_running.png" />
+    <None Include="Images\pump_top_to_right_idle.png" />
+    <None Include="Images\process_view.png" />
+    <None Include="Images\mash_tun_running.png" />
+    <None Include="Images\mash_tun_idle.png" />
+    <None Include="Images\mash_copper_running.png" />
+    <None Include="Images\mash_copper_idle.png" />
+    <None Include="Images\casting_pump_running.png" />
+    <None Include="Images\casting_pump_idle.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BrewingModel\BrewingModel.csproj">

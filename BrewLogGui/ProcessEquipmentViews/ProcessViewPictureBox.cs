@@ -48,7 +48,7 @@ namespace BrewLogGui.ProcessEquipmentViews
             pictureBox.Image = new Bitmap(image, newSize);
             pictureBox.Size = image.Size;
             pictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox.BorderStyle = BorderStyle.FixedSingle;
+            //pictureBox.BorderStyle = BorderStyle.FixedSingle;
             //return image.Size;
         }
     }

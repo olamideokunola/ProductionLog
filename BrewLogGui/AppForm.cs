@@ -54,12 +54,12 @@ namespace BrewLogGui
         // Handler
         void RunBtn_Click(object sender, EventArgs e)
         {
-            processView.MashCoolerView.RunEquipment();
+            processView.WhirlpoolView.RunEquipment();
         }
 
         void StopBtn_Click(object sender, EventArgs e)
         {
-            processView.MashCoolerView.StopEquipment();
+            processView.WhirlpoolView.StopEquipment();
         }
 
     }

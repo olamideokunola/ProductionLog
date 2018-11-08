@@ -12,6 +12,7 @@ namespace BrewLogGui.ProcessEquipmentViews
             _processEquipment = _myProcessEquipment;
             _stopFileName = _myStopFileName;
             _runFileName = _myRunFileName;
+            ViewTop = 50;
         }
 
         public WhirlpoolView(string processEquipment, string stopFileName)
