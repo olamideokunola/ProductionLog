@@ -8,20 +8,32 @@ namespace BrewLogGui
 {
     public class ProcessView : ProcessViewPictureBox
     {
-        MashCopperView mashCopperView;
-        MashTransferPumpView mashTransferPumpView;
-        MashCoolerView mashCoolerView;
-        MashTunView mashTunView;
-        MashFiltrationPumpView mashFiltrationPumpView;
-        MashFilterView mashFilterView;
-        HoldingVesselView holdingVesselView;
-        WortPumpView wortPumpView;
-        WortCopperView wortCopperView;
-        CastingPumpView castingPumpView;
-        WhirlpoolView whirlpoolView;
-        CoolingPumpView coolingPumpView;
-        WortCoolerView wortCoolerView;
+        private MashCopperView mashCopperView;
+        private MashTransferPumpView mashTransferPumpView;
+        private MashCoolerView mashCoolerView;
+        private MashTunView mashTunView;
+        private MashFiltrationPumpView mashFiltrationPumpView;
+        private MashFilterView mashFilterView;
+        private HoldingVesselView holdingVesselView;
+        private WortPumpView wortPumpView;
+        private WortCopperView wortCopperView;
+        private CastingPumpView castingPumpView;
+        private WhirlpoolView whirlpoolView;
+        private CoolingPumpView coolingPumpView;
+        private WortCoolerView wortCoolerView;
 
+        private static ProcessView _uniqueInstance = null;
+
+        //lazy construction of instance
+        public static ProcessView GetInstance()
+        {
+            if (_uniqueInstance == null)
+            {
+                _uniqueInstance = new ProcessView();
+            }
+
+            return _uniqueInstance; 
+        }
         // Equipment getters
         public MashCopperView MashCopperView
         {
@@ -127,7 +139,7 @@ namespace BrewLogGui
         }
 
         // Constructor
-        public ProcessView()
+        private ProcessView()
         {
             this.Size = new Size(1000, 500);
             String imgPathRel = GetImagePath("process_view.png");

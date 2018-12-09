@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Threading;
 using BrewingModel.BrewingProcessEquipment;
 
 namespace BrewLogGui.ProcessEquipmentViews
@@ -27,6 +28,30 @@ namespace BrewLogGui.ProcessEquipmentViews
         int lineSpacing = 15;
         protected int _top = 70;
 
+        public string ProcessEquipment
+        {
+            get
+            {
+                return _processEquipment;
+            }
+        }
+
+        public string RunFileName
+        {
+            get
+            {
+                return _runFileName;
+            }
+        }
+
+        public string StopFileName
+        {
+            get
+            {
+                return _stopFileName;
+            }
+        }
+
         public string ImageFileName
         {
             get
@@ -39,7 +64,7 @@ namespace BrewLogGui.ProcessEquipmentViews
                 _imageFileName = value;
                 _imgPathRel = GetImagePath(_imageFileName);
                 Image = new Bitmap(_imgPathRel);
-                SetUpProcessEquipmentView(_processEquipment, _imageFileName);
+                SetUpProcessEquipmentView();
             }
         }
 
@@ -122,8 +147,8 @@ namespace BrewLogGui.ProcessEquipmentViews
             set
             {
                 _top = value;
-                Controls.Clear();
-                SetUpProcessEquipmentView(_processEquipment, _imageFileName);
+
+                SetUpProcessEquipmentView();
             }
         }
 
@@ -132,15 +157,15 @@ namespace BrewLogGui.ProcessEquipmentViews
         public ProcessEquipmentView(string processEquipment,
                                     string imageFileName)
         {
+            _imageFileName = imageFileName;
             _processEquipment = processEquipment;
-            SetUpProcessEquipmentView(_processEquipment, imageFileName);
+            SetUpProcessEquipmentView(); //_processEquipment, imageFileName);
         }
 
-        public void SetUpProcessEquipmentView(string processEquipment, 
-                                    string imageFileName)
+        public void SetUpProcessEquipmentView()
         {
-            _imageFileName = imageFileName;
-            _imgPathRel = GetImagePath(imageFileName);
+            //_imageFileName = imageFileName;
+            _imgPathRel = GetImagePath(_imageFileName);
 
             Image = new Bitmap(_imgPathRel);
 
@@ -177,7 +202,7 @@ namespace BrewLogGui.ProcessEquipmentViews
 
             _nameLabel = new Label
             {
-                Text = processEquipment,
+                Text = _processEquipment,
                 Location = new Point(margin, _stateLabel.Top + lineSpacing),
                 BackColor = Color.Transparent,
             };
@@ -185,6 +210,7 @@ namespace BrewLogGui.ProcessEquipmentViews
             _nameLabel.AutoSize = true;
             AlignCenter(_nameLabel);
 
+            if (Controls.Count > 0){ Controls.Clear(); }
             Render();
             Show();
         }
@@ -283,6 +309,56 @@ namespace BrewLogGui.ProcessEquipmentViews
         {
             ImageFileName = _stopFileName;
             Show();
+        }
+
+        public void StartFlashing()
+        {
+            //StartFlashTimer();
+        }
+
+        public void StopFlashing()
+        {
+
+        }
+
+        void StartFlashTimer()
+        {
+            AutoResetEvent autoEvent = new AutoResetEvent(false);
+            Action action = new Action(this);
+            //Create timer
+            //Console.WriteLine("Starting...");
+
+            System.Threading.Timer nTimer = new System.Threading.Timer(action.DoThis, autoEvent, 1000, 10000);
+            // When autoEvent signals, 
+            autoEvent.WaitOne();
+            //nTimer.Change(0, 500);
+            //Controls.Clear();
+            SetUpProcessEquipmentView();
+        }   
+    }
+
+    class Action
+    {
+        ProcessEquipmentView _parent;
+        public Action(ProcessEquipmentView parent)
+        {
+            _parent = parent;
+        }
+        //Callback
+        public void DoThis(object state)
+        {
+            AutoResetEvent autoEvent = (AutoResetEvent)state;
+            //Console.WriteLine("Doing this...");
+            SwitchImage();
+            autoEvent.Set();
+            //Thread.Sleep(1000);
+        }
+        private void SwitchImage()
+        {
+            //Console.WriteLine("In  SwitchImage...");
+            //Console.WriteLine("_parent.ImageFileName: " + _parent.ImageFileName);
+            _parent.ImageFileName = _parent.ImageFileName == _parent.RunFileName ? _parent.StopFileName : _parent.RunFileName;
+
         }
     }
 }

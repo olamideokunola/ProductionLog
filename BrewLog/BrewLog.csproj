@@ -37,7 +37,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Example.cs" />
-    <Compile Include="Example2.cs" />
+    <Compile Include="MainProgram.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BrewMonitor\BrewMonitor.csproj">
