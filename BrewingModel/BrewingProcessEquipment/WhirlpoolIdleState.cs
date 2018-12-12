@@ -15,6 +15,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "WhirlpoolIdleState";
         }
 
+        public string GetShortState()
+        {
+            return "Idle";
+        }
+
         public void InitBrew(Whirlpool whirlpool, Brew brew)
         {
             string brewNumber = whirlpool.Brew.BrewNumber;

@@ -15,6 +15,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "WhirlpoolTrubRemovalState";
         }
 
+        public string GetShortState()
+        {
+            return "TrubRemoval";
+        }
+
         public void InitBrew(Whirlpool whirlpool, Brew brew)
         {
 

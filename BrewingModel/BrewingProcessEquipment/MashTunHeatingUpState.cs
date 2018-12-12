@@ -15,6 +15,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "MashTunHeatingUpState";
         }
 
+        public string GetShortState()
+        {
+            return "HeatingUp";
+        }
+
         public void InitBrew(MashTun mashTun, Brew brew)
         {
 

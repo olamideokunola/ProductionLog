@@ -15,6 +15,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "HoldingVesselIdleState";
         }
 
+        public string GetShortState()
+        {
+            return "Idle";
+        }
+
         public void InitBrew(HoldingVessel holdingVessel, Brew brew)
         {
             string brewNumber = holdingVessel.Brew.BrewNumber;

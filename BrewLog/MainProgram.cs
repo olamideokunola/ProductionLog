@@ -8,7 +8,7 @@ using BrewLogGui;
 
 namespace BrewLog
 {
-    class Example2
+    class MainProgram
     {
 
         static void Main()
@@ -19,10 +19,10 @@ namespace BrewLog
             ThreadStart guiRef = new ThreadStart(StartGui);
             Thread guiThread = new Thread(guiRef);
             guiThread.Start();
-            StartTimer();
+            StartBrewMonitor();
         }
 
-        static void StartTimer()
+        static void StartBrewMonitor()
         {
             AutoResetEvent autoEvent = new AutoResetEvent(false);
             Action action = new Action();
@@ -41,7 +41,7 @@ namespace BrewLog
     }
 
     class Action
-    {
+    {   
         public Action()
         {
 

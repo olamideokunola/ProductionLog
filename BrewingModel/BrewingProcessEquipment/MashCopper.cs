@@ -1,13 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using BrewingModel;
+using ProcessEquipmentParameters;
 
 namespace BrewingModel.BrewingProcessEquipment
 {
-    public class MashCopper
+    public class MashCopper 
     {
         //fields
         private Brew _brew;
         private IMashCopperState _currentState;
+
+        public IMashCopperState CurrentState
+        {
+            get
+            {
+                return _currentState;
+            }
+        }
 
         //state members
         private IMashCopperState _idleState;
@@ -179,5 +189,12 @@ namespace BrewingModel.BrewingProcessEquipment
             Console.WriteLine(currentStateDescription.GetStateDescription());
             Console.WriteLine("------------------------------------------");
         }
+
+        public string CurrentStateString()
+        {
+            IStateDescription currentStateDescription = (BrewingModel.BrewingProcessEquipment.IStateDescription)_currentState;
+            return currentStateDescription.GetShortState();
+        }
+
     }
 }

@@ -5,14 +5,23 @@
 using System;
 using System.Collections.Generic;
 using BrewingModel.BrewingProcessEquipment;
+using Observer;
 
 namespace BrewingModel
 {
-    public class BrewingProcessHandler
+    public class BrewingProcessHandler : Subject
     {
         private string _filePath;
         private Brew _brew = new Brew();
         private IDictionary<string, Brew> _brews = new Dictionary<string, Brew>();
+
+        public IDictionary<string, Brew> Brews
+        {
+            get
+            {
+                return _brews;
+            }
+        }
 
         //Process Equipment
         private MashCopper mashCopper;
@@ -24,8 +33,6 @@ namespace BrewingModel
 
         //Singleton
         private static BrewingProcessHandler _uniqueInstance = null;
-
-
 
         //lazy construction of instance
         public static BrewingProcessHandler GetInstance()
@@ -60,6 +67,46 @@ namespace BrewingModel
             }
         }
 
+        public MashTun MashTun
+        {
+            get
+            {
+                return mashTun;
+            }
+        }
+
+        public MashFilter MashFilter
+        {
+            get
+            {
+                return mashFilter;
+            }
+        }
+
+        public HoldingVessel HoldingVessel
+        {
+            get
+            {
+                return holdingVessel;
+            }
+        }
+
+        public WortCopper WortCopper
+        {
+            get
+            {
+                return wortCopper;
+            }
+        }
+
+        public Whirlpool Whirlpool
+        {
+            get
+            {
+                return whirlpool;
+            }
+        }
+
         //LiveBrewMonitor Commands
         //MashCopper Commands
         public void StartMashCopperMashingIn(string startTime, string brewNumber, string fieldName, string fieldValue)
@@ -68,6 +115,7 @@ namespace BrewingModel
 
             mashCopper.InitBrew(brew);
             mashCopper.StartMashingIn(fieldName, fieldValue);
+            Notify();
         }
 
         public void CompleteMashCopperProcessStep(string brewNumber, string fieldName, string fieldValue)
@@ -77,6 +125,7 @@ namespace BrewingModel
             if(mashCopper.Brew.BrewNumber == brewNumber)
             {
                 mashCopper.SetEndTime(fieldName, fieldValue);
+                Notify();
             } else {
                 Console.WriteLine("Incorrect Brew! Dispatched Brew does not match brew in Mash Copper!");
             }
@@ -88,6 +137,7 @@ namespace BrewingModel
 
             //mashCopper.InitBrew(brew);
             mashCopper.SetProteinRestTemperature(temperature);
+            Notify();
         }
         //MashTun Commands
         public void StartMashTunMashingIn(string startTime, string brewNumber, string fieldName, string fieldValue)
@@ -96,6 +146,7 @@ namespace BrewingModel
 
             mashTun.InitBrew(brew);
             mashTun.StartMashingIn(fieldName, fieldValue);
+            Notify();
         }
 
         public void CompleteMashTunProcessStep(string brewNumber, string fieldName, string fieldValue)
@@ -105,6 +156,7 @@ namespace BrewingModel
             if (mashTun.Brew.BrewNumber == brewNumber)
             {
                 mashTun.SetEndTime(fieldName, fieldValue);
+                Notify();
             }
             else
             {
@@ -115,11 +167,13 @@ namespace BrewingModel
         public void SetSacharificationRestTemperature(string temperature)
         {
             mashTun.SetSacharificationRestTemperature(temperature);
+            Notify();
         }
 
         public void SetHeatingUpTemperature(string temperature)
         {
             mashTun.SetHeatingUpTemperature(temperature);
+            Notify();
         }
 
         //MashFilter Commands
@@ -129,6 +183,7 @@ namespace BrewingModel
 
             mashFilter.InitBrew(brew);
             mashFilter.StartPrefilling(fieldName, fieldValue);
+            Notify();
         }
 
         public void CompleteMashFilterProcessStep(string brewNumber, string fieldName, string fieldValue)
@@ -138,6 +193,7 @@ namespace BrewingModel
             if (mashFilter.Brew.BrewNumber == brewNumber)
             {
                 mashFilter.SetEndTime(fieldName, fieldValue);
+                Notify();
             }
             else
             {
@@ -153,6 +209,7 @@ namespace BrewingModel
 
             holdingVessel.InitBrew(brew);
             holdingVessel.StartFilling(fieldName, fieldValue);
+            Notify();
         }
 
         public void CompleteHoldingVesselProcessStep(string brewNumber, string fieldName, string fieldValue)
@@ -162,6 +219,7 @@ namespace BrewingModel
             if (holdingVessel.Brew.BrewNumber == brewNumber)
             {
                 holdingVessel.SetEndTime(fieldName, fieldValue);
+                Notify();
             }
             else
             {
@@ -176,6 +234,7 @@ namespace BrewingModel
 
             wortCopper.InitBrew(brew);
             wortCopper.StartHeating(fieldName, fieldValue);
+            Notify();
         }
 
         public void StartWortCopperCasting(string brewNumber, string fieldName, string fieldValue)
@@ -184,6 +243,7 @@ namespace BrewingModel
             if (wortCopper.Brew.BrewNumber == brewNumber)
             {
                 wortCopper.StartCasting(fieldName, fieldValue);
+                Notify();
             }
             else
             {
@@ -198,6 +258,7 @@ namespace BrewingModel
             if (wortCopper.Brew.BrewNumber == brewNumber)
             {
                 wortCopper.SetEndTime(fieldName, fieldValue);
+                Notify();
             }
             else
             {
@@ -208,11 +269,13 @@ namespace BrewingModel
         public void SetVolumeBeforeBoiling(string volume)
         {
             wortCopper.SetVolumeBeforeBoiling(volume);
+            Notify();
         }
 
         public void SetVolumeAfterBoiling(string volume)
         {
             wortCopper.SetVolumeAfterBoiling(volume);
+            Notify();
         }
 
         // Whirlpool Commands
@@ -221,6 +284,7 @@ namespace BrewingModel
             Brew brew = GetBrew(brewNumber);
             whirlpool.InitBrew(brew);
             whirlpool.StartCasting(fieldName, fieldValue);
+            Notify();
         }
 
         public void CompleteWhirlpoolProcessStep(string brewNumber, string fieldName, string fieldValue)
@@ -230,6 +294,7 @@ namespace BrewingModel
             if (whirlpool.Brew.BrewNumber == brewNumber)
             {
                 whirlpool.SetEndTime(fieldName, fieldValue);
+                Notify();
             }
             else
             {
@@ -254,6 +319,7 @@ namespace BrewingModel
             holdingVessel.SetState(new HoldingVesselIdleState());
             wortCopper.SetState(new WortCopperIdleState());
             whirlpool.SetState(new WhirlpoolIdleState());
+            Notify();
         }
 
         public void PrintCurrentState()
@@ -275,6 +341,7 @@ namespace BrewingModel
                 Brew brew = new Brew(startDate, brandName, brewNumber);
 
                 _brews.Add(brewNumber, brew);
+                Notify();
             }
         }
     }

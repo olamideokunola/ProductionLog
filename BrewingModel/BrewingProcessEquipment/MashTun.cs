@@ -165,5 +165,12 @@ namespace BrewingModel.BrewingProcessEquipment
             Console.WriteLine(currentStateDescription.GetStateDescription());
             Console.WriteLine("------------------------------------------");
         }
+
+        public string CurrentStateString()
+        {
+            IStateDescription currentStateDescription = (BrewingModel.BrewingProcessEquipment.IStateDescription)_currentState;
+            return currentStateDescription.GetShortState();
+        }
+
     }
 }

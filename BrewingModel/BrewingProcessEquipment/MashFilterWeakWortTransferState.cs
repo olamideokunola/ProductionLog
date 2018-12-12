@@ -15,6 +15,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "MashFilterWeakWortTransferState";
         }
 
+        public string GetShortState()
+        {
+            return "TransferToWWT";
+        }
+
         public void InitBrew(MashFilter mashFilter, Brew brew)
         {
 

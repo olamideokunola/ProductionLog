@@ -158,8 +158,6 @@ namespace BrewLogGui
 
         protected void SetUpProcessEquipmentViews()
         {
-
-
             wortCoolerView = new WortCoolerView();
             SetupProcessEquipmentView(wortCoolerView, 915, 247);
 

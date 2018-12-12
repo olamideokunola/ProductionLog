@@ -15,6 +15,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "HoldingVesselRinsingState";
         }
 
+        public string GetShortState()
+        {
+            return "Rinsing";
+        }
+
         public void InitBrew(HoldingVessel holdingVessel, Brew brew)
         {
 

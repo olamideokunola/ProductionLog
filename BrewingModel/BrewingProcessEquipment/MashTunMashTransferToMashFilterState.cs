@@ -14,6 +14,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "MashTransferToMashTunState";
         }
 
+        public string GetShortState()
+        {
+            return "MashTransfer";
+        }
+
         public void InitBrew(MashTun mashTun, Brew brew)
         {
 

@@ -15,6 +15,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "MashFilterIdleState";
         }
 
+        public string GetShortState()
+        {
+            return "Idle";
+        }
+
         public void InitBrew(MashFilter mashFilter, Brew brew)
         {
             string brewNumber = mashFilter.Brew.BrewNumber;

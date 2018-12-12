@@ -14,6 +14,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "MashCopperRest2State";
         }
 
+        public string GetShortState()
+        {
+            return "Rest2";
+        }
+
         public void InitBrew(MashCopper mashCopper, Brew brew)
         {
            

@@ -109,6 +109,7 @@ namespace BrewLogGui.ProcessEquipmentViews
             set
             {
                 _brewNumber = value;
+                RefreshBrewNumber();
             }
         }
 
@@ -121,7 +122,8 @@ namespace BrewLogGui.ProcessEquipmentViews
             }
             set
             {
-                CurrentStateText = value;
+                _currentStateText = value;
+                RefreshCurrentStateText();
             }
         }
 
@@ -135,6 +137,7 @@ namespace BrewLogGui.ProcessEquipmentViews
             set
             {
                 _brandName = value;
+                RefreshBrandName();
             }
         }
 
@@ -299,15 +302,57 @@ namespace BrewLogGui.ProcessEquipmentViews
             }
         }
 
+        // Delegate f Thread safe call 
+        delegate void ReturningVoidDelegate();
+
+        // Thread safe RunEquipment
         public void RunEquipment()
         {
-            ImageFileName = _runFileName;
+            if (this.InvokeRequired)
+            {
+                ReturningVoidDelegate d = new ReturningVoidDelegate(RunEquipment);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                ImageFileName = _runFileName;
+                Show();
+            }
+        }
+
+        // Thread safe RunEquipment
+        public void StopEquipment()
+        {
+            if (this.InvokeRequired)
+            {
+                ReturningVoidDelegate d = new ReturningVoidDelegate(StopEquipment);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                ImageFileName = _stopFileName;
+                Show();
+            }
+        }
+
+        private void RefreshBrewNumber()
+        {
+            _brewNumberLabel.Text = "Brew: " + _brewNumber;
+            AlignCenter(_brewNumberLabel);
             Show();
         }
 
-        public void StopEquipment()
+        private void RefreshCurrentStateText()
         {
-            ImageFileName = _stopFileName;
+            _stateLabel.Text = "State: " + _currentStateText;
+            AlignCenter(_stateLabel);
+            Show();
+        }
+
+        private void RefreshBrandName()
+        {
+            _brandNameLabel.Text = "Brand: " + _brandName;
+            AlignCenter(_brandNameLabel);
             Show();
         }
 

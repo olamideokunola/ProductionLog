@@ -94,6 +94,10 @@
       <Project>{505C4AF9-382F-4BEB-B129-82078818F533}</Project>
       <Name>ProcessEquipmentParameters</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Models\Observer.csproj">
+      <Project>{E1ECF16B-2FC1-4239-93F9-A46C36589C5C}</Project>
+      <Name>Observer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BrewingProcessEquipment\" />

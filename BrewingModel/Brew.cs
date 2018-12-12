@@ -27,6 +27,14 @@ namespace BrewingModel
         private IDictionary<ProcessEquipment, IDictionary<string, string>> processEquipmentParameters = 
             new Dictionary<ProcessEquipment, IDictionary<string, string>>();
 
+        public IDictionary<ProcessEquipment, IDictionary<string, string>> ProcessEquipmentParameters
+        {
+            get
+            {
+                return processEquipmentParameters;
+            }
+        }
+
         public Brew(string startDate, string brandName, string brewNumber)
         {
             _startDate = startDate;

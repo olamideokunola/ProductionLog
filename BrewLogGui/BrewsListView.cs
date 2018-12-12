@@ -10,6 +10,14 @@ namespace BrewLogGui
         private Label label = new Label();
         private ListView listView = new ListView();
 
+        public ListView ListView
+        {
+            get
+            {
+                return listView;
+            }
+        }
+
         public BrewsListView()
         {
             SetupBrewsListView();
@@ -26,6 +34,13 @@ namespace BrewLogGui
 
             Render();
             Show();
+        }
+
+        public void SetBoundary(int x, int y, int width, int height)
+        {
+            this.SetBounds(x, y, width, height);
+            listView.SetBounds(0, label.Height, this.Width, this.Height - label.Height);
+            label.SetBounds(0, 0, this.Width, 20);
         }
 
         private void Render()

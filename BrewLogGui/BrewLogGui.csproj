@@ -49,22 +49,20 @@
     <Compile Include="ProcessEquipmentViews\CastingPumpView.cs" />
     <Compile Include="ProcessEquipmentViews\CoolingPumpView.cs" />
     <Compile Include="BrewsListView.cs" />
-    <Compile Include="Models\BrewsListViewModel.cs" />
     <Compile Include="Controllers\IBrewLoggerGuiController.cs" />
-    <Compile Include="Models\IBrewLoggerGuiModel.cs" />
     <Compile Include="IBrewLoggerGuiView.cs" />
-    <Compile Include="Observer\IObserver.cs" />
-    <Compile Include="Observer\IObserverSubject.cs" />
-    <Compile Include="Observer\ObserverSubject.cs" />
-    <Compile Include="Controllers\AppFormController.cs" />
-    <Compile Include="Models\AppFormModel.cs" />
+    <Compile Include="Controllers\BrewLoggerGuiController.cs" />
+    <Compile Include="EditParameterView.cs" />
+    <Compile Include="ProcessEquipmentParametersView.cs" />
+    <Compile Include="PictureView.cs" />
+    <Compile Include="Models\BrewParametersGuiModel.cs" />
+    <Compile Include="Models\IBrewParametersGuiModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\" />
     <Folder Include="ProcessEquipmentViews\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
-    <Folder Include="Observer\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\wort_copper_running.png" />
@@ -95,6 +93,10 @@
     <ProjectReference Include="..\BrewingModel\BrewingModel.csproj">
       <Project>{5525FB3B-B363-4351-9D80-D17E8FDFB1BC}</Project>
       <Name>BrewingModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Observer.csproj">
+      <Project>{E1ECF16B-2FC1-4239-93F9-A46C36589C5C}</Project>
+      <Name>Observer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

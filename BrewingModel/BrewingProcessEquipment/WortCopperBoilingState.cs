@@ -15,6 +15,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "WortCopperBoilingState";
         }
 
+        public string GetShortState()
+        {
+            return "Boiling";
+        }
+
         public void InitBrew(WortCopper holdingVessel, Brew brew)
         {
 

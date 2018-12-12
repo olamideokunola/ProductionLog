@@ -15,6 +15,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "MashCopperIdle";
         }
 
+        public string GetShortState()
+        {
+            return "Idle";
+        }
+
         public void InitBrew(MashCopper mashCopper, Brew brew)
         {
             string brewNumber = mashCopper.Brew.BrewNumber;

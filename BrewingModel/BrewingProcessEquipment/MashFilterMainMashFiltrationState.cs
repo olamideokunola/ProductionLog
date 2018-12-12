@@ -15,6 +15,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "MashFilterMainMashFiltrationState";
         }
 
+        public string GetShortState()
+        {
+            return "Filtration";
+        }
+
         public void InitBrew(MashFilter mashFilter, Brew brew)
         {
 

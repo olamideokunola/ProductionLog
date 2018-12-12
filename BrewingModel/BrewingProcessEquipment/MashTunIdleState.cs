@@ -15,6 +15,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "MashTunIdle";
         }
 
+        public string GetShortState()
+        {
+            return "Idle";
+        }
+
         public void InitBrew(MashTun mashTun, Brew brew)
         {
             string brewNumber = mashTun.Brew.BrewNumber;

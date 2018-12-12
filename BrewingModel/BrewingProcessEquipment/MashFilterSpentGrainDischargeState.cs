@@ -15,6 +15,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "MashFilterSpentGrainDischargeState";
         }
 
+        public string GetShortState()
+        {
+            return "SG Discharge";
+        }
+
         public void InitBrew(MashFilter mashFilter, Brew brew)
         {
 

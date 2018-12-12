@@ -52,6 +52,10 @@
       <Project>{852D9EDF-A0F5-438E-8B65-2148EF121116}</Project>
       <Name>BrewLogGui</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Models\Observer.csproj">
+      <Project>{E1ECF16B-2FC1-4239-93F9-A46C36589C5C}</Project>
+      <Name>Observer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

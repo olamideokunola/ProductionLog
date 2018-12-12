@@ -15,6 +15,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "WhirlpoolCastingState";
         }
 
+        public string GetShortState()
+        {
+            return "Casting";
+        }
+
         public void InitBrew(Whirlpool whirlpool, Brew brew)
         {
 

@@ -15,6 +15,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "WortCopperIdleState";
         }
 
+        public string GetShortState()
+        {
+            return "Idle";
+        }
+
         public void InitBrew(WortCopper wortCopper, Brew brew)
         {
             string brewNumber = wortCopper.Brew.BrewNumber;

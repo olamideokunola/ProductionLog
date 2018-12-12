@@ -14,6 +14,11 @@ namespace BrewingModel.BrewingProcessEquipment
             return "MashTunSacRestState";
         }
 
+        public string GetShortState()
+        {
+            return "SacRest";
+        }
+
         public void InitBrew(MashTun mashTun, Brew brew)
         {
            

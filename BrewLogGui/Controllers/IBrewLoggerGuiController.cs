@@ -1,12 +1,12 @@
 ﻿using System;
-using BrewLogGui.Models;
+using Observer;
 
 namespace BrewLogGui.Controllers
 {
     public interface IBrewLoggerGuiController
     {
         // Set Model
-        void SetModel(IBrewLoggerGuiModel guiModel);
+        void SetModel(Subject guiModel);
         void SetView(IBrewLoggerGuiView guiView);
 
         void StartNewBrew(string startDate, string brandName, string brewNumber);
@@ -24,5 +24,13 @@ namespace BrewLogGui.Controllers
         // Wort Copper
         void SetWortCopperVolumeBeforeBoiling(string volume);
         void SetWortCopperVolumeAfterBoiling(string volume);
+
+        // Process Equipment State Update
+        void SetProcessEquipment(string processEquipment);
+
+        // Process Equipment Parameter methods
+        void SelectProcessEquipmentParameter(string processEquipment, string parameterName);
+        void ChangeProcessEquipmentParameterValue(string processEquipment, string parameterName, string parameterValue);
+
     }
 }
