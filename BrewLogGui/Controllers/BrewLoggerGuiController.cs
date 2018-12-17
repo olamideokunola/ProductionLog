@@ -1,4 +1,5 @@
 ﻿using System;
+using BrewingModel;
 using Models;
 using Observer;
 
@@ -9,6 +10,13 @@ namespace BrewLogGui.Controllers
         private Subject guiModel;
         private BrewParametersGuiModel brewParametersGuiModel;
         private IBrewLoggerGuiView guiView;
+
+        public string ProcessEquipment
+        {
+            get {
+                return brewParametersGuiModel.SelectedProcessEquipment;
+            }
+        }
 
         public BrewLoggerGuiController(Subject guiModel, IBrewLoggerGuiView guiView)
         {
@@ -91,6 +99,7 @@ namespace BrewLogGui.Controllers
         {
             brewParametersGuiModel.ChangeProcessEquipmentParameterValue(processEquipment, parameterName, parameterValue);
         }
+
 
     }
 }

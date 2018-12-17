@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using BrewingModel;
 using Observer;
 using Models;
+using ProcessEquipmentParameters;
 
 namespace BrewLogGui
 {
@@ -23,7 +24,7 @@ namespace BrewLogGui
         private ProcessView processView;
         private BrewsListView brewsListView = new BrewsListView();
         private ProcessEquipmentParametersView processEquipmentParametersView = 
-            new ProcessEquipmentParametersView(new List<string>());
+            new ProcessEquipmentParametersView();
 
         // MVC Elements
         // BrewingProcessHandler MVC elements
@@ -35,7 +36,7 @@ namespace BrewLogGui
         private Subject guiProcessParametersModel;
         private IBrewLoggerGuiController guiController;
 
-        //private IProcessViewGuiModel processViewModel;
+        private string _selectedParameterName = "";
 
         public AppForm()
         {
@@ -109,8 +110,88 @@ namespace BrewLogGui
             processEquipmentParametersView.SetBounds(
                 brewsListView.Left + brewsListView.Width + padding,
                 brewsListView.Top,
-                500,
+                700,
                 200);
+
+            ListView parametersListView = processEquipmentParametersView.ProcessParametersListview;
+            parametersListView.Activation = ItemActivation.OneClick;
+            parametersListView.Click += ParametersListView_ItemActivate;
+
+            Button submitButton = processEquipmentParametersView.EditParameterView.SubmitButton;
+            submitButton.Click += SubmitButton_Click;
+        }
+
+        void SubmitButton_Click(object sender, EventArgs e)
+        {
+            MaskedTextBox maskedTextBox = processEquipmentParametersView.EditParameterView.ParameterValueTextbox;
+            string processEquipment = guiController.ProcessEquipment;
+            string parameterName = brewParametersGuiModel.SelectedProcessEquipmentParameterName;
+            string parameterValue = maskedTextBox.Text;
+            guiController.ChangeProcessEquipmentParameterValue(
+                processEquipment,
+                parameterName,
+                parameterValue);
+        }
+
+        private void ParametersListView_ItemActivate(object sender, EventArgs e)
+        {
+            string processEquipment = guiController.ProcessEquipment;
+
+            ListView parametersListView = processEquipmentParametersView.ProcessParametersListview;
+            ListView.SelectedListViewItemCollection parameters = parametersListView.SelectedItems;
+            string selectedParameterName = parameters[0].Text;
+            guiController.SelectProcessEquipmentParameter(processEquipment, selectedParameterName);
+
+            // Set mask for text box in case of edit
+            SetTextBoxMask(selectedParameterName);
+            SetButtonState(selectedParameterName);
+        }
+
+        private void SetButtonState(string parameterName)
+        {
+            string parameterType = GetParameterType(parameterName);
+            Button submitButton = processEquipmentParametersView.EditParameterView.SubmitButton;
+            switch (parameterType)
+            {
+                case "Time":
+                    submitButton.Enabled = false;
+                    break;
+                case "Temperature":
+                    submitButton.Enabled = true;
+                    break;
+            }
+        }
+
+        private void SetTextBoxMask(string parameterName)
+        {
+            string parameterType = GetParameterType(parameterName);
+            MaskedTextBox maskedTextBox = processEquipmentParametersView.EditParameterView.ParameterValueTextbox;
+            switch (parameterType)
+            {
+                case "Time":
+                    //maskedTextBox.Mask = "00/00/0000";
+                    maskedTextBox.Mask = "";
+                    break;
+                case "Temperature":
+                    maskedTextBox.Mask = "000";
+                    break;
+            }
+        }
+
+        private string GetParameterType(string parameterName)
+        {
+            string parameterType = "";
+
+            if (parameterName.EndsWith("Time") || parameterName.EndsWith("At"))
+            {
+                parameterType = "Time";
+            }
+            else if(parameterName.EndsWith("Temperature"))
+            {
+                parameterType = "Temperature";
+            }
+
+            return parameterType;
         }
 
         private void render()
@@ -136,39 +217,29 @@ namespace BrewLogGui
             guiController.SetProcessEquipment("Whirpool");
         }
 
-
         void WortCopperView_Click(object sender, EventArgs e)
         {
             guiController.SetProcessEquipment("Wort Copper");
         }
-
 
         void HoldingVesselView_Click(object sender, EventArgs e)
         {
             guiController.SetProcessEquipment("Holding Vessel");
         }
 
-
         void MashFilterView_Click(object sender, EventArgs e)
         {
             guiController.SetProcessEquipment("Mash Filter");
         }
-
 
         void MashTunView_Click(object sender, EventArgs e)
         {
             guiController.SetProcessEquipment("Mash Tun");
         }
 
-
         void MashCopperView_Click(object sender, EventArgs e)
         {
             guiController.SetProcessEquipment("Mash Copper");
-        }
-
-        private void SetupBrewParametersView()
-        {
-
         }
 
         void Btn_Click(object sender, EventArgs e)
@@ -188,6 +259,7 @@ namespace BrewLogGui
             processView.WhirlpoolView.StopEquipment();
         }
 
+
         // Observer Interface Implementation
         public void Update(Subject changedSubject)
         {
@@ -201,14 +273,102 @@ namespace BrewLogGui
             if (changedSubject.Equals(brewParametersGuiModel))
             {
                 UpdateParameterListBox();
+                UpdateSelectedParameterView();
             }
 
         }
 
+        private void UpdateSelectedParameterView()
+        {
+            string selectedParameterName = brewParametersGuiModel.SelectedProcessEquipmentParameterName;
+            string selectedParameterValue = brewParametersGuiModel.SelectedProcessEquipmentParameterValue;
+
+            if (selectedParameterName.Length > 0 && _selectedParameterName != selectedParameterName)
+            {
+                EditParameterView editParameterView = processEquipmentParametersView.EditParameterView;
+                editParameterView.ParameterNameTextbox.Text = selectedParameterName;
+                editParameterView.ParameterValueTextbox.Text = selectedParameterValue;
+                editParameterView.Show();
+            }
+        }
+
         private void UpdateParameterListBox()
         {
+            IList<string> completeParameterList = new List<string>();
+
+            completeParameterList = GetEquipmentParameters(guiController.ProcessEquipment);
+
             processEquipmentParametersView.UpdateParametersList(
+                completeParameterList,
                 brewParametersGuiModel.ProcessEquipmentParameters);
+        }
+
+        private IList<string> GetEquipmentParameters(string processEquipment)
+        {
+            IList<string> processParameters = new List<string>();
+
+            switch (processEquipment)
+            {
+                case "Mash Copper":
+                    processParameters.Add(MashCopperProcessParameters.MashingInStartTime.ToString());
+                    processParameters.Add(MashCopperProcessParameters.MashingInEndTime.ToString());
+                    processParameters.Add(MashCopperProcessParameters.ProteinRestEndTime.ToString());
+                    processParameters.Add(MashCopperProcessParameters.ProteinRestTemperature.ToString());
+                    processParameters.Add(MashCopperProcessParameters.HeatingUp1EndTime.ToString());
+                    processParameters.Add(MashCopperProcessParameters.HeatingUp1Temperature.ToString());
+                    processParameters.Add(MashCopperProcessParameters.HeatingUp2EndTime.ToString());
+                    processParameters.Add(MashCopperProcessParameters.HeatingUp2Temperature.ToString());
+                    processParameters.Add(MashCopperProcessParameters.Rest1EndTime.ToString());
+                    processParameters.Add(MashCopperProcessParameters.Rest2EndTime.ToString());
+                    processParameters.Add(MashCopperProcessParameters.TransferToMtEndTime.ToString());
+                    break;
+                case "Mash Tun":
+                    processParameters.Add(MashTunProcessParameters.MashingInStartTime.ToString());
+                    processParameters.Add(MashTunProcessParameters.MashingInEndTime.ToString());
+                    processParameters.Add(MashTunProcessParameters.ProteinRestEndTime.ToString());
+                    processParameters.Add(MashTunProcessParameters.ProteinRestTemperature.ToString());
+                    processParameters.Add(MashTunProcessParameters.HeatingUpEndTime.ToString());
+                    processParameters.Add(MashTunProcessParameters.HeatingUpTemperature.ToString());
+                    processParameters.Add(MashTunProcessParameters.SacharificationRestEndTime.ToString());
+                    processParameters.Add(MashTunProcessParameters.SacharificationRestTemperature.ToString());
+                    processParameters.Add(MashTunProcessParameters.MashTunReadyAt.ToString());
+                    break;
+                case "Mash Filter":
+                    processParameters.Add(MashFilterProcessParameters.PrefillingStartTime.ToString());
+                    processParameters.Add(MashFilterProcessParameters.PrefillingEndTime.ToString());
+                    processParameters.Add(MashFilterProcessParameters.WeakWortTransferEndTime.ToString());
+                    processParameters.Add(MashFilterProcessParameters.MainMashFiltrationEndTime.ToString());
+                    processParameters.Add(MashFilterProcessParameters.SpargingEndTime.ToString());
+                    processParameters.Add(MashFilterProcessParameters.SpargingToWWTEndTime.ToString());
+                    processParameters.Add(MashFilterProcessParameters.ExtraSpargingEndTime.ToString());
+                    processParameters.Add(MashFilterProcessParameters.DrippingEndTime.ToString());
+                    processParameters.Add(MashFilterProcessParameters.SpentGrainDischargeEndTime.ToString());
+                    processParameters.Add(MashFilterProcessParameters.ReadyAtTime.ToString());
+                    break;
+                case "Holding Vessel":
+                    processParameters.Add(HoldingVesselProcessParameters.FillingStartTime.ToString());
+                    processParameters.Add(HoldingVesselProcessParameters.TransferToWcEndTime.ToString());
+                    processParameters.Add(HoldingVesselProcessParameters.EmptyAtTime.ToString());
+                    break;
+                case "Wort Copper":
+                    processParameters.Add(WortCopperProcessParameters.HeatingStartTime.ToString());
+                    processParameters.Add(WortCopperProcessParameters.HeatingEndTime.ToString());
+                    processParameters.Add(WortCopperProcessParameters.BoilingEndTime.ToString());
+                    processParameters.Add(WortCopperProcessParameters.ExtraBoilingEndTime.ToString());
+                    processParameters.Add(WortCopperProcessParameters.CastingStartTime.ToString());
+                    processParameters.Add(WortCopperProcessParameters.CastingEndTime.ToString());
+                    processParameters.Add(WortCopperProcessParameters.VolumeBeforeBoiling.ToString());
+                    processParameters.Add(WortCopperProcessParameters.VolumeAfterBoiling.ToString());
+                    break;
+                case "Whirlpool":
+                    processParameters.Add(WhirlpoolProcessParameters.CastingStartTime.ToString());
+                    processParameters.Add(WhirlpoolProcessParameters.CastingEndTime.ToString());
+                    processParameters.Add(WhirlpoolProcessParameters.RestingEndTime.ToString());
+                    processParameters.Add(WhirlpoolProcessParameters.CoolingEndTime.ToString());
+                    processParameters.Add(WhirlpoolProcessParameters.ReadyAtTime.ToString());
+                    break;
+            }
+            return processParameters;
         }
 
         private void UpdateMashCopperView()

@@ -56,6 +56,10 @@
       <Project>{E1ECF16B-2FC1-4239-93F9-A46C36589C5C}</Project>
       <Name>Observer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Datasource\Datasource.csproj">
+      <Project>{520F20BD-120A-4DA4-B768-C06E17A0AD20}</Project>
+      <Name>Datasource</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

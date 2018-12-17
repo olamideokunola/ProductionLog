@@ -5,6 +5,7 @@ using BrewingModel;
 using System.Windows.Forms;
 using System.Drawing;
 using BrewLogGui;
+using Datasource;
 
 namespace BrewLog
 {
@@ -20,6 +21,8 @@ namespace BrewLog
             Thread guiThread = new Thread(guiRef);
             guiThread.Start();
             StartBrewMonitor();
+
+            //TestDataSource();
         }
 
         static void StartBrewMonitor()
@@ -38,6 +41,8 @@ namespace BrewLog
         {
             Application.Run(new AppForm());
         }
+
+
     }
 
     class Action

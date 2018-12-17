@@ -8,10 +8,36 @@ namespace BrewLogGui
         private Label parameter_name_label = new Label();
         private Label parameter_value_label = new Label();
 
-        private TextBox parameter_name_textbox = new TextBox();
-        private TextBox parameter_value_textbox = new TextBox();
+        private TextBox parameterNameTextbox = new TextBox();
+        private MaskedTextBox parameterValueTextbox = new MaskedTextBox();
 
-        private Button submit_button = new Button();
+        private Button submitButton = new Button();
+
+        public Button SubmitButton
+        {
+            get
+            {
+                return submitButton;
+            }
+        }
+
+        public TextBox ParameterNameTextbox
+        {
+            get
+            {
+                return parameterNameTextbox;
+            }
+        }
+
+        public MaskedTextBox ParameterValueTextbox
+        {
+            get
+            {
+                return parameterValueTextbox;
+            }
+        }
+
+
 
         public EditParameterView()
         {
@@ -37,24 +63,24 @@ namespace BrewLogGui
 
 
             // Setup text boxes
-            parameter_name_textbox.SetBounds(
+            parameterNameTextbox.SetBounds(
                 parameter_name_label.Width + 5,
                 parameter_name_label.Top, 
-                100, 
+                150, 
                 20);
 
-            parameter_value_textbox.SetBounds(
-                parameter_name_textbox.Left,
+            parameterValueTextbox.SetBounds(
+                parameterNameTextbox.Left,
                 parameter_value_label.Top,
-                100,
+                150,
                 20);
 
             // Setup button
-            submit_button.Text = "Submit";
-            submit_button.SetBounds(
-                parameter_value_textbox.Left,
-                parameter_value_textbox.Top + parameter_value_textbox.Height + 5,
-                100,
+            submitButton.Text = "Save";
+            submitButton.SetBounds(
+                parameterValueTextbox.Left,
+                parameterValueTextbox.Top + parameterValueTextbox.Height + 5,
+                150,
                 20);
 
             Render();
@@ -65,9 +91,9 @@ namespace BrewLogGui
         {
             Controls.Add(parameter_name_label);
             Controls.Add(parameter_value_label);
-            Controls.Add(parameter_name_textbox);
-            Controls.Add(parameter_value_textbox);
-            Controls.Add(submit_button);
+            Controls.Add(parameterNameTextbox);
+            Controls.Add(parameterValueTextbox);
+            Controls.Add(submitButton);
         }
     }
 }

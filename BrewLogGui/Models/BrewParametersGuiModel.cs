@@ -18,6 +18,22 @@ namespace Models
         private string selectedProcessEquipmentParameterName = "";
         private string selectedProcessEquipmentParameterValue = "";
 
+        public string SelectedProcessEquipmentParameterName
+        {
+            get
+            {
+                return selectedProcessEquipmentParameterName;
+            }
+        }
+
+        public string SelectedProcessEquipmentParameterValue
+        {
+            get
+            {
+                return selectedProcessEquipmentParameterValue;
+            }
+        }
+
         public IDictionary<string, string> ProcessEquipmentParameters
         {
             get
@@ -26,12 +42,19 @@ namespace Models
             }
         }
 
+        public string SelectedProcessEquipment
+        {
+            get
+            {
+                return selectedProcessEquipment;
+            }
+        }
+
         //Brews
         public IDictionary<string, Brew> Brews => brewingProcessHandler.Brews;
 
         public BrewParametersGuiModel()
         {
-
         }
 
         // IBrewLoggerGuiModel Interface Implementation
@@ -179,7 +202,17 @@ namespace Models
             {
                 case "Mash Copper":
                     MashCopper mashCopper = brewingProcessHandler.MashCopper;
-                    mashCopper.Brew.SetProcessParameterValue(ProcessEquipment.MashCopper, parameterName, parameterValue);
+                    switch (parameterName)
+                    {
+                        case "ProteinRestTemperature":
+                            SetMashCopperProteinRestTemperature(parameterValue);
+                            break;
+                        case "HeatingUp1Temperature":
+                            break;
+                        case "HeatingUp2Temperature":
+                            break;
+                    }
+                    //mashCopper.Brew.SetProcessParameterValue(ProcessEquipment.MashCopper, parameterName, parameterValue);
                     break;
                 case "Mash Tun":
                     MashTun mashTun = brewingProcessHandler.MashTun;

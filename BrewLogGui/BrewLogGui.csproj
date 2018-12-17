@@ -24,6 +24,18 @@
     <Reference Include="System" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Drawing" />
+    <Reference Include="LiveCharts.Wpf">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.WinForms">
+      <HintPath>..\packages\LiveCharts.WinForms.0.9.7.1\lib\net45\LiveCharts.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppForm.cs" />
@@ -88,6 +100,7 @@
     <None Include="Images\mash_copper_idle.png" />
     <None Include="Images\casting_pump_running.png" />
     <None Include="Images\casting_pump_idle.png" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BrewingModel\BrewingModel.csproj">
@@ -97,6 +110,10 @@
     <ProjectReference Include="..\Models\Observer.csproj">
       <Project>{E1ECF16B-2FC1-4239-93F9-A46C36589C5C}</Project>
       <Name>Observer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProcessFields\ProcessEquipmentParameters.csproj">
+      <Project>{505C4AF9-382F-4BEB-B129-82078818F533}</Project>
+      <Name>ProcessEquipmentParameters</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

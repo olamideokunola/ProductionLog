@@ -18,5 +18,13 @@ namespace BrewingModelTest
             string paramValue = brew.GetProcessParameterValue(ProcessEquipment.MashCopper, MashCopperProcessParameters.MashingInStartTime.ToString());
             Assert.AreEqual("12:00", paramValue);
         }
+
+        [Test()]
+        public void ConvertStringToDateTest()
+        {
+            string dateStr = "01.01.1990 20:40:31";
+            DateTime dateConverted = DateHelper.ConvertStringToDateTime(dateStr);
+            Assert.AreEqual("Datetime", dateConverted.GetType());
+        }
     }
 }

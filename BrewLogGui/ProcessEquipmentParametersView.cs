@@ -12,17 +12,32 @@ namespace BrewLogGui
         private Label process_equipment_name_label = new Label();
         private Label process_parameters_label = new Label();
 
-        private ListView process_parameters_listview = new ListView();
-        private EditParameterView edit_parameter_view = new EditParameterView();
+        private ListView processParametersListview = new ListView();
+        private EditParameterView editParameterView = new EditParameterView();
 
-        private IList<string> _defaultParameters = new List<string>();
+        public ListView ProcessParametersListview
+        {
+            get
+            {
+                return processParametersListview;
+            }
+        }
+
+        public EditParameterView EditParameterView
+        {
+            get
+            {
+                return editParameterView;
+            }
+        }
+
+        // private IList<string> _defaultParameters = new List<string>();
 
         const int margin = 5;
         const int padding = 5;
 
-        public ProcessEquipmentParametersView(IList<string> defaultParameters)
+        public ProcessEquipmentParametersView()
         {
-            this._defaultParameters = defaultParameters;
             SetupProcessEquipmentParametersView();
         }
 
@@ -47,10 +62,10 @@ namespace BrewLogGui
             SetupProcessParametersListView();
 
             // Setup EditParameterView
-            edit_parameter_view.SetBounds(
-                process_parameters_listview.Left + process_parameters_listview.Width + padding,
-                process_parameters_listview.Top,
-                200,
+            editParameterView.SetBounds(
+                processParametersListview.Left + processParametersListview.Width + padding,
+                processParametersListview.Top,
+                300,
                 200);
 
             Render();
@@ -59,47 +74,63 @@ namespace BrewLogGui
 
         private void SetupProcessParametersListView()
         {
-            process_parameters_listview.Clear();
-            process_parameters_listview.View = View.Details;
-            process_parameters_listview.Columns.Add("Parameter", 150, HorizontalAlignment.Left);
-            process_parameters_listview.Columns.Add("Value", 145, HorizontalAlignment.Left);
-            process_parameters_listview.SetBounds(
+            processParametersListview.Clear();
+            processParametersListview.View = View.Details;
+            processParametersListview.Columns.Add("Parameter", 150, HorizontalAlignment.Left);
+            processParametersListview.Columns.Add("Value", 145, HorizontalAlignment.Left);
+            processParametersListview.SetBounds(
                 margin,
                 process_parameters_label.Top + process_parameters_label.Height + padding,
                 300,
                 100);
-
-            PopulateWithProcessEquipmentParameters(_defaultParameters);
-        }
-
-        private void PopulateWithProcessEquipmentParameters(IList<string> defaultParameters)
-        {
-            foreach (string defaultParameter in defaultParameters)
-            {
-                process_parameters_listview.Items.Add(defaultParameter);
-            }
         }
 
         private void Render()
         {
             Controls.Add(process_equipment_name_label);
             Controls.Add(process_parameters_label);
-            Controls.Add(process_parameters_listview);
-            Controls.Add(edit_parameter_view);
+            Controls.Add(processParametersListview);
+            Controls.Add(editParameterView);
         }
 
-        public void UpdateParametersList(IDictionary<string, string> processParameters)
+        public void UpdateParametersList(IList<string> parameterList, IDictionary<string, string> processParameters)
         {
             // Empty ListView
             SetupProcessParametersListView();
 
+            // Create new parameters list
+            IDictionary<string, string> newProcessParameters = CreateCompleteParameterList(parameterList, processParameters);
+
             // Add new process parameters and their values
-            foreach (KeyValuePair<string, string> processParameter in processParameters)
+            foreach (KeyValuePair<string, string> processParameter in newProcessParameters)
             {
-                process_parameters_listview.Items.Add(processParameter.Key);
-                int index = process_parameters_listview.Items.Count - 1;
-                process_parameters_listview.Items[index].SubItems.Add(processParameter.Value);
+                processParametersListview.Items.Add(processParameter.Key);
+                int index = processParametersListview.Items.Count - 1;
+                processParametersListview.Items[index].SubItems.Add(processParameter.Value);
             }
+        }
+
+        private IDictionary<string, string> CreateCompleteParameterList(IList<string> parameterNameList, IDictionary<string, string> processParameters)
+        {
+            IDictionary<string, string> newProcessParameters =
+                new Dictionary<string, string>();
+
+            foreach (string processParameterName in parameterNameList)
+            {
+                newProcessParameters.Add(processParameterName, "");
+            }
+
+            foreach (string processParameterName in parameterNameList)
+            {
+                if(processParameters.ContainsKey(processParameterName))
+                {
+                    if (processParameters[processParameterName].Length > 0)
+                    {
+                        newProcessParameters[processParameterName] = processParameters[processParameterName];
+                    }
+                }
+            }
+            return newProcessParameters;
         }
     }
 }

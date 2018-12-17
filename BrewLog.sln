@@ -19,6 +19,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewLogGui", "BrewLogGui\Br
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Observer", "Models\Observer.csproj", "{E1ECF16B-2FC1-4239-93F9-A46C36589C5C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datasource", "Datasource\Datasource.csproj", "{520F20BD-120A-4DA4-B768-C06E17A0AD20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatasourceTest", "DatasourceTest\DatasourceTest.csproj", "{FB3E3B7C-0320-4005-BD59-F317E01530C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util", "Util\Util.csproj", "{5098E998-F99D-4373-A1BE-7960A6D1898A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -61,6 +67,18 @@ Global
 		{E1ECF16B-2FC1-4239-93F9-A46C36589C5C}.Debug|x86.Build.0 = Debug|Any CPU
 		{E1ECF16B-2FC1-4239-93F9-A46C36589C5C}.Release|x86.ActiveCfg = Release|Any CPU
 		{E1ECF16B-2FC1-4239-93F9-A46C36589C5C}.Release|x86.Build.0 = Release|Any CPU
+		{520F20BD-120A-4DA4-B768-C06E17A0AD20}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{520F20BD-120A-4DA4-B768-C06E17A0AD20}.Debug|x86.Build.0 = Debug|Any CPU
+		{520F20BD-120A-4DA4-B768-C06E17A0AD20}.Release|x86.ActiveCfg = Release|Any CPU
+		{520F20BD-120A-4DA4-B768-C06E17A0AD20}.Release|x86.Build.0 = Release|Any CPU
+		{FB3E3B7C-0320-4005-BD59-F317E01530C9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FB3E3B7C-0320-4005-BD59-F317E01530C9}.Debug|x86.Build.0 = Debug|Any CPU
+		{FB3E3B7C-0320-4005-BD59-F317E01530C9}.Release|x86.ActiveCfg = Release|Any CPU
+		{FB3E3B7C-0320-4005-BD59-F317E01530C9}.Release|x86.Build.0 = Release|Any CPU
+		{5098E998-F99D-4373-A1BE-7960A6D1898A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5098E998-F99D-4373-A1BE-7960A6D1898A}.Debug|x86.Build.0 = Debug|Any CPU
+		{5098E998-F99D-4373-A1BE-7960A6D1898A}.Release|x86.ActiveCfg = Release|Any CPU
+		{5098E998-F99D-4373-A1BE-7960A6D1898A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

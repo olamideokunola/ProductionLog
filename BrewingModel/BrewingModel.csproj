@@ -21,6 +21,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="EPPlus">
+      <HintPath>..\packages\EPPlus.4.5.2.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +96,13 @@
     <Compile Include="BrewingProcessEquipment\WhirlpoolRestingState.cs" />
     <Compile Include="BrewingProcessEquipment\WhirlpoolTrubRemovalState.cs" />
     <Compile Include="BrewingProcessEquipment\WhirlpoolState.cs" />
+    <Compile Include="DateHelper.cs" />
+    <Compile Include="IBrew.cs" />
+    <Compile Include="BrewProxy.cs" />
+    <Compile Include="Datasource\DataSource.cs" />
+    <Compile Include="Datasource\XlDatasource.cs" />
+    <Compile Include="Datasource\Period.cs" />
+    <Compile Include="Datasource\Month.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProcessFields\ProcessEquipmentParameters.csproj">
@@ -98,9 +113,17 @@
       <Project>{E1ECF16B-2FC1-4239-93F9-A46C36589C5C}</Project>
       <Name>Observer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{5098E998-F99D-4373-A1BE-7960A6D1898A}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BrewingProcessEquipment\" />
+    <Folder Include="Datasource\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

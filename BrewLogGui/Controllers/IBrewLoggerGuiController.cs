@@ -1,4 +1,5 @@
 ﻿using System;
+using BrewingModel;
 using Observer;
 
 namespace BrewLogGui.Controllers
@@ -27,6 +28,7 @@ namespace BrewLogGui.Controllers
 
         // Process Equipment State Update
         void SetProcessEquipment(string processEquipment);
+        string ProcessEquipment { get; }
 
         // Process Equipment Parameter methods
         void SelectProcessEquipmentParameter(string processEquipment, string parameterName);
