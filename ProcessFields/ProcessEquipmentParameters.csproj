@@ -38,6 +38,10 @@
     <Compile Include="WortCopperProcessParameters.cs" />
     <Compile Include="WhirlpoolProcessParameters.cs" />
     <Compile Include="ProcessDurations\MashCopperProcessDurations.cs" />
+    <Compile Include="ProcessDurations\MashTunProcessDurations .cs" />
+    <Compile Include="ProcessDurations\MashFilterProcessDurations.cs" />
+    <Compile Include="ProcessDurations\WortCopperProcessDurations .cs" />
+    <Compile Include="ProcessDurations\WhirlpoolProcessDurations.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ProcessDurations\" />

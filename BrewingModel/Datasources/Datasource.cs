@@ -4,9 +4,9 @@ using System.IO;
 using BrewingModel;
 using OfficeOpenXml;
 
-namespace Datasource
+namespace BrewingModel.Datasources
 {
-    public abstract class DataSource
+    public abstract class Datasource
     {
         /// <summary>
         /// The Datasource allows access to the data store of processed brews

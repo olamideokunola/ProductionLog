@@ -123,7 +123,7 @@ namespace BrewingModel
             processParameters = _brew.ProcessEquipmentParameters[processEquipment];
             if (processParameters.Count == 0)
             {
-
+                _brew.LoadEquipmentProcessParameters(processEquipment);
             }
             return _brew.GetProcessParameterValue(processEquipment, parameterName);
         }
@@ -154,6 +154,5 @@ namespace BrewingModel
             Console.WriteLine("Current Brew State: " + _brew.CurrentState.GetType());
             Console.WriteLine("-----------");
         }
-
     }
 }

@@ -43,10 +43,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Datasource\Datasource.csproj">
-      <Project>{520F20BD-120A-4DA4-B768-C06E17A0AD20}</Project>
-      <Name>Datasource</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BrewingModel\BrewingModel.csproj">
       <Project>{5525FB3B-B363-4351-9D80-D17E8FDFB1BC}</Project>
       <Name>BrewingModel</Name>

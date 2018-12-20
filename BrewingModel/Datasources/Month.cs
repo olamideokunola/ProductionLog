@@ -1,5 +1,5 @@
 ﻿using System;
-namespace BrewingModel.Datasource
+namespace BrewingModel.Datasources
 {
     public enum Month
     {

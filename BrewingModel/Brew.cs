@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using ProcessEquipmentParameters;
 using ProcessFields.ProcessDurations;
 using Util;
+using BrewingModel.Datasources;
 
 namespace BrewingModel
 {
@@ -98,7 +99,6 @@ namespace BrewingModel
             }
         }
 
-
         //Methods
         public void SetState(IBrewState newState)
         {
@@ -179,10 +179,21 @@ namespace BrewingModel
             }
         }
 
+        // Method foor getting process durations
+        private string GetProcessDuration(ProcessEquipment processEquipment, string processStartTime, string processEndTime)
+        {
+            DateTime startTime = DateHelper.GetProcessParameterDateTime(GetProcessParameterValue(processEquipment, processStartTime));
+            DateTime endTime = DateHelper.GetProcessParameterDateTime(GetProcessParameterValue(processEquipment, processEndTime));
 
-        // Mash Copper Process Duration Calculations
+            TimeSpan processDuration = endTime - startTime;
+
+            return processDuration.ToString(@"hh\:mm\:ss");
+        }
+
+        // MashCopper Process Duration Calculations
         public IDictionary<string, string> GetMashCopperProcessDurations()
         {
+            // MashCopper
             IDictionary<string, string> mashCopperProcessDurations = new Dictionary<string, string>
             {
                 { MashCopperProcessDurations.MashingInDuration.ToString(), GetMashCopperMashingInDuration() },
@@ -250,26 +261,172 @@ namespace BrewingModel
             return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
-        private string GetProcessDuration(ProcessEquipment processEquipment, string processStartTime, string processEndTime)
+        // MashTun Process Duration Calculations
+        public IDictionary<string, string> GetMashTunProcessDurations()
         {
-            DateTime startTime = DateHelper.GetProcessParameterDateTime(GetProcessParameterValue(processEquipment, processStartTime));
-            DateTime endTime = DateHelper.GetProcessParameterDateTime(GetProcessParameterValue(processEquipment, processEndTime));
+            // MashTun
+            IDictionary<string, string> mashTunProcessDurations = new Dictionary<string, string>
+            {
+                { MashTunProcessDurations.MashingInDuration.ToString(), GetMashTunMashingInDuration() },
+                { MashTunProcessDurations.ProteinRestDuration.ToString(), GetMashTunProteinRestDuration() },
+                { MashTunProcessDurations.SaccharificationDuration.ToString(), GetMashTunSaccharificationDuration() },
+                { MashTunProcessDurations.HeatingUpDuration.ToString(), GetMashTunHeatingUpDuration() },
+            };
 
-            TimeSpan processDuration = endTime - startTime;
+            return mashTunProcessDurations;
+        }
 
-            return processDuration.ToString(@"hh\:mm\:ss");
+        private string GetMashTunHeatingUpDuration()
+        {
+            ProcessEquipment processEquipment = ProcessEquipment.MashTun;
+            string processStartTimeString = MashTunProcessParameters.SacharificationRestEndTime.ToString();
+            string processEndTimeString = MashTunProcessParameters.HeatingUpEndTime.ToString();
+
+            return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
+        }
+
+        private string GetMashTunSaccharificationDuration()
+        {
+            ProcessEquipment processEquipment = ProcessEquipment.MashTun;
+            string processStartTimeString = MashTunProcessParameters.ProteinRestEndTime.ToString();
+            string processEndTimeString = MashTunProcessParameters.SacharificationRestEndTime.ToString();
+
+            return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
+        }
+
+        private string GetMashTunProteinRestDuration()
+        {
+            ProcessEquipment processEquipment = ProcessEquipment.MashTun;
+            string processStartTimeString = MashTunProcessParameters.MashingInEndTime.ToString();
+            string processEndTimeString = MashTunProcessParameters.ProteinRestEndTime.ToString();
+
+            return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
+        }
+
+        private string GetMashTunMashingInDuration()
+        {
+            ProcessEquipment processEquipment = ProcessEquipment.MashTun;
+            string processStartTimeString = MashTunProcessParameters.MashingInStartTime.ToString();
+            string processEndTimeString = MashTunProcessParameters.MashingInEndTime.ToString();
+
+            return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
+        }
+
+        // MashFilter Process Duration Calculations
+        public IDictionary<string, string> GetMashFilterProcessDurations()
+        {
+            // MashFilter
+            IDictionary<string, string> mashFilterProcessDurations = new Dictionary<string, string>
+            {
+                { MashFilterProcessDurations.MainWortFiltrationDuration.ToString(), GetMashFilterMainWortFiltrationDuration() },
+                { MashFilterProcessDurations.SpargingRestDuration.ToString(), GetMashFilterSpargingRestDuration() },
+                { MashFilterProcessDurations.TotalFiltrationDuration.ToString(), GetMashFilterTotalFiltrationDuration() },
+            };
+
+            return mashFilterProcessDurations;
+        }
+
+        private string GetMashFilterTotalFiltrationDuration()
+        {
+            ProcessEquipment processEquipment = ProcessEquipment.MashFilter;
+            string processStartTimeString = MashFilterProcessParameters.PrefillingEndTime.ToString();
+            string processEndTimeString = MashFilterProcessParameters.ExtraSpargingEndTime.ToString();
+
+            return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
+        }
+
+        private string GetMashFilterSpargingRestDuration()
+        {
+            ProcessEquipment processEquipment = ProcessEquipment.MashFilter;
+            string processStartTimeString = MashFilterProcessParameters.MainMashFiltrationEndTime.ToString();
+            string processEndTimeString = MashFilterProcessParameters.SpargingEndTime.ToString();
+
+            return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
+        }
+
+        private string GetMashFilterMainWortFiltrationDuration()
+        {
+            ProcessEquipment processEquipment = ProcessEquipment.MashFilter;
+            string processStartTimeString = MashFilterProcessParameters.WeakWortTransferEndTime.ToString();
+            string processEndTimeString = MashFilterProcessParameters.MainMashFiltrationEndTime.ToString();
+
+            return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
 
-        // Load data from Datasource
-        public IDictionary<string, string> LoadProcessParameters()
+        // WortCopper Process Duration Calculations
+        public IDictionary<string, string> GetWortCopperProcessDurations()
         {
-            IDictionary<string, string> processParameters = new Dictionary<string, string>();
+            // WortCopper
+            IDictionary<string, string> mashFilterProcessDurations = new Dictionary<string, string>
+            {
+                { WortCopperProcessDurations.HeatToBoilDuration.ToString(), GetWortCopperHeatToBoilDuration() },
+                { WortCopperProcessDurations.BoilingDuration.ToString(), GetWortCopperBoilingDuration() }
+            };
 
-
-
-            return processParameters;
+            return mashFilterProcessDurations;
         }
+
+        private string GetWortCopperBoilingDuration()
+        {
+            ProcessEquipment processEquipment = ProcessEquipment.WortCopper;
+            string processStartTimeString = WortCopperProcessParameters.HeatingEndTime.ToString();
+            string processEndTimeString = WortCopperProcessParameters.BoilingEndTime.ToString();
+
+            return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
+        }
+
+        private string GetWortCopperHeatToBoilDuration()
+        {
+            ProcessEquipment processEquipment = ProcessEquipment.WortCopper;
+            string processStartTimeString = WortCopperProcessParameters.HeatingStartTime.ToString();
+            string processEndTimeString = WortCopperProcessParameters.HeatingEndTime.ToString();
+
+            return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
+        }
+
+        // Whirlpool Process Duration Calculations
+        public IDictionary<string, string> GetWhirlpoolProcessDurations()
+        {
+            // Whirlpool
+            IDictionary<string, string> mashFilterProcessDurations = new Dictionary<string, string>
+            {
+                { WhirlpoolProcessDurations.CastingDuration.ToString(), GetWhirlpoolCastingDuration() },
+                { WhirlpoolProcessDurations.RestDuration.ToString(), GetWhirlpoolRestDuration() },
+                { WhirlpoolProcessDurations.CoolingDuration.ToString(), GetWhirlpoolCoolingDuration() }
+            };
+
+            return mashFilterProcessDurations;
+        }
+
+        private string GetWhirlpoolCoolingDuration()
+        {
+            ProcessEquipment processEquipment = ProcessEquipment.Whirlpool;
+            string processStartTimeString = WhirlpoolProcessParameters.RestingEndTime.ToString();
+            string processEndTimeString = WhirlpoolProcessParameters.CoolingEndTime.ToString();
+
+            return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
+        }
+
+        private string GetWhirlpoolRestDuration()
+        {
+            ProcessEquipment processEquipment = ProcessEquipment.Whirlpool;
+            string processStartTimeString = WhirlpoolProcessParameters.CastingEndTime.ToString();
+            string processEndTimeString = WhirlpoolProcessParameters.RestingEndTime.ToString();
+
+            return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
+        }
+
+        private string GetWhirlpoolCastingDuration()
+        {
+            ProcessEquipment processEquipment = ProcessEquipment.Whirlpool;
+            string processStartTimeString = WhirlpoolProcessParameters.CastingStartTime.ToString();
+            string processEndTimeString = WhirlpoolProcessParameters.CastingEndTime.ToString();
+
+            return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
+        }
+
+
 
         //Event methods
         public void StartBrew(string startTime)
@@ -285,5 +442,12 @@ namespace BrewingModel
             Console.WriteLine("-----------");
         }
 
+        // Load data from Datasource
+        internal void LoadEquipmentProcessParameters(ProcessEquipment processEquipment)
+        {
+            IDictionary<string, string> loadedProcessEquipmentParameters = processEquipmentParameters[ProcessEquipment.MashCopper];
+
+            //Datasource datasource = XlDatasource.GetInstance();
+        }
     }
 }

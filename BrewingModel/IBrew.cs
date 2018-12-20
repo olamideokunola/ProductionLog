@@ -45,5 +45,6 @@ namespace BrewingModel
         void PrintCurrentState();
 
         IBrewState CurrentState { get; set; }
+
     }
 }

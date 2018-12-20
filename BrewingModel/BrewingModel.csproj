@@ -99,10 +99,11 @@
     <Compile Include="DateHelper.cs" />
     <Compile Include="IBrew.cs" />
     <Compile Include="BrewProxy.cs" />
-    <Compile Include="Datasource\DataSource.cs" />
-    <Compile Include="Datasource\XlDatasource.cs" />
-    <Compile Include="Datasource\Period.cs" />
-    <Compile Include="Datasource\Month.cs" />
+    <Compile Include="Datasources\Datasource.cs" />
+    <Compile Include="Datasources\XlDatasource.cs" />
+    <Compile Include="Datasources\Period.cs" />
+    <Compile Include="Datasources\Month.cs" />
+    <Compile Include="Datasources\XlPeriod.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProcessFields\ProcessEquipmentParameters.csproj">
@@ -120,7 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BrewingProcessEquipment\" />
-    <Folder Include="Datasource\" />
+    <Folder Include="Datasources\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

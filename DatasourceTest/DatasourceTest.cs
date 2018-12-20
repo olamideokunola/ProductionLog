@@ -1,5 +1,5 @@
 ﻿using BrewingModel;
-using Datasource;
+using BrewingModel.Datasources;
 using NUnit.Framework;
 using System;
 namespace DatasourceTest
@@ -7,30 +7,32 @@ namespace DatasourceTest
     [TestFixture()]
     public class DatasourceTest
     {
-        static string connectionString = "/home/olamide/Projects/BrewLog/Datasource/bin/Debug";
-        Period period = new Period("2018", Month.March, connectionString);
+        static string connectionString = "/home/olamide/Projects/BrewLog/BrewingModel/bin/Debug";
+        static Period period = new XlPeriod("2018", Month.January, connectionString);
+        static XlPeriod xlPeriod = (XlPeriod)period;
 
         static string templateFilePath = $"{AppDomain.CurrentDomain.BaseDirectory}period_template.xlsx";
 
         [Test()]
         public void PeriodTestCase()
         {
-            Assert.AreEqual("Brewing forms", period.XlWorkSheet.Name);
+            Console.Write(xlPeriod.XlBrewingFormWorksheet.Name);
+            Assert.AreEqual("Brewing forms", xlPeriod.XlBrewingFormWorksheet.Name);
         }
 
         [Test()]
         public void GetColumnNumberTestCase()
         {
-            Brew brew = new Brew("01.01.2018", "Amstel", "214");
-            int colNumber = period.GetColumnNumber(brew);
+            Brew brew = new Brew("01.01.2018", "Amstel", "AM2334");
+            int colNumber = xlPeriod.GetColumnNumber(brew);
             //period.XlWorkSheet.Name = "Name";
-            Assert.AreEqual(4, colNumber);
+            Assert.AreEqual(3, colNumber);
         }
+
 
         [Test()]
         public void CreatePeriodWorkBookTestCase()
         {
-
             //XlDatasource xlDatasource = new XlDatasource(connectionString, templateFilePath);
             //xlDatasource.CreateNewPeriodWorkBook(period);
             //Assert.AreEqual("/home/olamide/Projects/BrewLog/Datasource/bin/Debug/2018", period.FileInfo.DirectoryName);
@@ -39,20 +41,18 @@ namespace DatasourceTest
         [Test()]
         public void AddPeriodTestCase()
         {
-
             XlDatasource xlDatasource = new XlDatasource(connectionString, templateFilePath);
             xlDatasource.AddPeriod(period);
-            Assert.AreEqual("/home/olamide/Projects/BrewLog/Datasource/bin/Debug/2018", period.FileInfo.DirectoryName);
+            Assert.AreEqual("/home/olamide/Projects/BrewLog/BrewingModel/bin/Debug/2018", xlPeriod.FileInfo.DirectoryName);
         }
 
         [Test()]
         public void CreateAndAddPeriodTestCase()
         {
-
             XlDatasource xlDatasource = new XlDatasource(connectionString, templateFilePath);
-            Period newPeriod = xlDatasource.CreatePeriod("2018", Month.March);
+            Period newPeriod = xlDatasource.CreatePeriod("2018", Month.January);
             xlDatasource.AddPeriod(newPeriod);
-            Assert.AreEqual("/home/olamide/Projects/BrewLog/Datasource/bin/Debug/2018", period.FileInfo.DirectoryName);
+            Assert.AreEqual("/home/olamide/Projects/BrewLog/BrewingModel/bin/Debug/2018", xlPeriod.FileInfo.DirectoryName);
         }
 
         [Test()]
@@ -60,15 +60,15 @@ namespace DatasourceTest
         {
 
             XlDatasource xlDatasource = new XlDatasource(connectionString, templateFilePath);
+            xlDatasource.LoadPeriods();
             xlDatasource.DeletePeriod(period);
 
-            Assert.AreEqual("/home/olamide/Projects/BrewLog/Datasource/bin/Debug/2018", period.FileInfo.DirectoryName);
+            Assert.AreEqual("/home/olamide/Projects/BrewLog/BrewingModel/bin/Debug/2018", xlPeriod.FileInfo.DirectoryName);
         }
 
         [Test()]
         public void LoadPeriodsTestCase()
         {
-
             XlDatasource xlDatasource = new XlDatasource(connectionString, templateFilePath);
             xlDatasource.LoadPeriods();
 
@@ -78,9 +78,8 @@ namespace DatasourceTest
         [Test()]
         public void PeriodLoadBrewsFromWorkSheetTestCase()
         {
-        
-            Period period = new Period("2018","January",connectionString);
-            period.LoadBrewsFromWorkSheet();
+            Period period = new XlPeriod("2018","January",connectionString);
+            period.LoadBrews();
 
             Assert.AreEqual(2, period.Brews.Count);
         }

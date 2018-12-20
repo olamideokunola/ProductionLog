@@ -5,11 +5,10 @@ using BrewingModel;
 using OfficeOpenXml;
 using Util;
 
-namespace Datasource
+namespace BrewingModel.Datasources
 {
-	public class XlDatasource : Datasource.DataSource
+	public class XlDatasource : Datasource
     {
-
         public XlDatasource(string connectionString, string templatePath)
         {
             //template = new FileInfo($"{AppDomain.CurrentDomain.BaseDirectory}period_template.xlsx");
@@ -18,9 +17,14 @@ namespace Datasource
             //this.connectionString = $"{AppDomain.CurrentDomain.BaseDirectory}";
         }
 
+        public XlDatasource()
+        {
+        }
+
         public override void AddPeriod(Period period)
         {
-            using (xlExcelPackage = new ExcelPackage(period.FileInfo))
+            XlPeriod xlPeriod = (XlPeriod)period;
+            using (xlExcelPackage = new ExcelPackage(xlPeriod.FileInfo))
             {
                 if (!periods.ContainsKey(period.PeriodName))
                 {
@@ -32,21 +36,22 @@ namespace Datasource
 
         public override Period CreatePeriod(string year, Month month)
         {
-            Period period = new Period(year, month, this.connectionString);
+            Period period = new XlPeriod(year, month.ToString(), this.connectionString);
             return period;
         }
 
         public override Period CreatePeriod(string year, string month)
         {
-            Period period = new Period(year, month, this.connectionString);
+            Period period = new XlPeriod(year, month, this.connectionString);
             return period;
         }
 
         public override void DeletePeriod(Period period)
         {
-            using (xlExcelPackage = new ExcelPackage(period.FileInfo))
+            XlPeriod xlPeriod = (XlPeriod)period;
+            using (xlExcelPackage = new ExcelPackage(xlPeriod.FileInfo))
             {
-                if (periods.ContainsKey(period.PeriodName) && period.FileInfo.Exists)
+                if (periods.ContainsKey(period.PeriodName) && xlPeriod.FileInfo.Exists)
                 {
                     DeletePeriodWorkBook(period);
                     periods.Remove(period.PeriodName);
@@ -56,11 +61,12 @@ namespace Datasource
 
         private void DeletePeriodWorkBook(Period period)
         {
-            using (xlExcelPackage = new ExcelPackage(period.FileInfo))
+            XlPeriod xlPeriod = (XlPeriod)period;
+            using (xlExcelPackage = new ExcelPackage(xlPeriod.FileInfo))
             {
                 Byte[] bin = xlExcelPackage.GetAsByteArray();
 
-                FileInfo file = period.FileInfo;
+                FileInfo file = xlPeriod.FileInfo;
                 File.Delete(file.FullName);
             }
         }
@@ -78,7 +84,7 @@ namespace Datasource
                 {
                     int startIndex = file.Name.LastIndexOf(file.Extension, StringComparison.CurrentCulture);
                     string month = file.Name.Remove(startIndex);
-                    Period period = new Period(year, month, connectionString);
+                    Period period = new XlPeriod(year, month, connectionString);
                     string periodName = year + "-" + month;
                     periods.Add(periodName, period);
                 }
@@ -94,11 +100,12 @@ namespace Datasource
 
         private string CreateNewPeriodWorkBook(Period period)
         {
+            XlPeriod xlPeriod = (XlPeriod)period;
             using (xlExcelPackage = new ExcelPackage(template, true))
             {
                 Byte[] bin = xlExcelPackage.GetAsByteArray();
 
-                FileInfo file = period.FileInfo;
+                FileInfo file = xlPeriod.FileInfo;
                 File.WriteAllBytes(file.FullName, bin);
                 return file.FullName;
             }
@@ -117,8 +124,9 @@ namespace Datasource
 
                 Period period = CreatePeriod(year, month);
 
-                return period.GetBrewFromWorkSheet(brew);
+                return period.GetBrewWithProcessParameters(brew);
             }
         }
+
     }
 }

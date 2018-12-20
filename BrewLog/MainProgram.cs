@@ -5,7 +5,7 @@ using BrewingModel;
 using System.Windows.Forms;
 using System.Drawing;
 using BrewLogGui;
-using Datasource;
+using BrewingModel.Datasource;
 
 namespace BrewLog
 {

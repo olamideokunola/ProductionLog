@@ -18,7 +18,24 @@ namespace BrewingModel
         }
 
         // Other attributes
-        private static string pattern = "dd.MM.yyyy HH:mm:ss";
+        private static string dateTimePattern = "dd.MM.yyyy HH:mm:ss";
+        private static string datePattern = "dd.MM.yyyy";
+
+        //public static string DateTimePattern
+        //{
+        //    get
+        //    {
+        //        return dateTimePattern;
+        //    }
+        //}
+
+        //public static string DatePattern
+        //{
+        //    get
+        //    {
+        //        return datePattern;
+        //    }
+        //}
 
         public DateHelper()
         {
@@ -36,9 +53,15 @@ namespace BrewingModel
         public static DateTime ConvertStringToDateTime(string dateStr)
         {
             DateTime convertedDate;
-            convertedDate = DateTime.ParseExact(dateStr, pattern, null);
+            convertedDate = DateTime.ParseExact(dateStr, dateTimePattern, null);
 
             return convertedDate;
+        }
+
+        public static string ConvertDateToString(DateTime date)
+        {
+            string dateStr = date.ToString(datePattern);
+            return dateStr;
         }
     }
 }
