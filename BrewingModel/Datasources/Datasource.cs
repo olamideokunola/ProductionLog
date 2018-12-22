@@ -20,10 +20,6 @@ namespace BrewingModel.Datasources
         protected string fileName;
         protected FileInfo template;
 
-        // Excel Objects
-        protected ExcelPackage xlExcelPackage;
-        protected ExcelWorksheet xlWorkSheet;
-
         public IDictionary<string, Period> Periods
         {
             get
@@ -45,8 +41,14 @@ namespace BrewingModel.Datasources
 
         public abstract void DeletePeriod(Period period);
 
-        public abstract IDictionary<string, Period> LoadPeriods();
+        public abstract Period GetPeriod(string year, Month month);
+        public abstract Period GetPeriod(IBrew brew);
 
-        public abstract IBrew GetBrewProcessParameters(IBrew brew);
+        public abstract void LoadPeriods();
+
+        public abstract IBrew GetBrewWithProcessParameters(IBrew brew);
+
+        public abstract string SaveBrew(IBrew brew);
+
     }
 }

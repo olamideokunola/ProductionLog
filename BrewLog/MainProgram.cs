@@ -5,7 +5,7 @@ using BrewingModel;
 using System.Windows.Forms;
 using System.Drawing;
 using BrewLogGui;
-using BrewingModel.Datasource;
+using BrewingModel.Datasources;
 
 namespace BrewLog
 {
@@ -16,6 +16,14 @@ namespace BrewLog
         {
             BrewingProcessHandler brewingProcessHandler = BrewingProcessHandler.GetInstance();
             brewingProcessHandler.StartNewBrew("01/01/2016", "Maltina", "258");
+
+            string connectionString = "/home/olamide/Projects/BrewLog/BrewingModel/bin/Debug";
+            string templateFilePath = $"{AppDomain.CurrentDomain.BaseDirectory}period_template.xlsx";
+
+            // Setup Datasource Handler
+            DataSourceHandler dataSourceHandler = DataSourceHandler.GetInstance();
+            Datasource datasource = new XlDatasource(connectionString, templateFilePath);
+            dataSourceHandler.Datasource = datasource;
 
             ThreadStart guiRef = new ThreadStart(StartGui);
             Thread guiThread = new Thread(guiRef);

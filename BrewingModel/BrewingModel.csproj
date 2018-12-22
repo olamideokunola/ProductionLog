@@ -104,6 +104,7 @@
     <Compile Include="Datasources\Period.cs" />
     <Compile Include="Datasources\Month.cs" />
     <Compile Include="Datasources\XlPeriod.cs" />
+    <Compile Include="Datasources\DataSourceHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProcessFields\ProcessEquipmentParameters.csproj">

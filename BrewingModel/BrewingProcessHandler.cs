@@ -17,7 +17,7 @@ namespace BrewingModel
 
         public IDictionary<string, Brew> Brews
         {
-            get
+            get`
             {
                 return _brews;
             }
@@ -41,7 +41,6 @@ namespace BrewingModel
             {
                 _uniqueInstance = new BrewingProcessHandler();
             }
-
             return _uniqueInstance;
         }
 
@@ -301,8 +300,6 @@ namespace BrewingModel
                 Console.WriteLine("Incorrect Brew! Dispatched Brew does not match brew in Whirlpool!");
             }
         }
-
-
 
         //Other methods
         private void InitializeAllProcessEquipment()

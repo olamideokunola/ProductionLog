@@ -9,6 +9,9 @@ namespace BrewingModel.Datasources
 {
 	public class XlDatasource : Datasource
     {
+
+        private ExcelPackage xlExcelPackage;
+
         public XlDatasource(string connectionString, string templatePath)
         {
             //template = new FileInfo($"{AppDomain.CurrentDomain.BaseDirectory}period_template.xlsx");
@@ -71,7 +74,8 @@ namespace BrewingModel.Datasources
             }
         }
 
-        public override IDictionary<string, Period> LoadPeriods()
+
+        public override void LoadPeriods()
         {
             DirectoryInfo dir = new DirectoryInfo(ConnectionString);
 
@@ -89,8 +93,6 @@ namespace BrewingModel.Datasources
                     periods.Add(periodName, period);
                 }
             }
-
-            return periods;
         }
 
         public override void UpdatePeriod(Period period)
@@ -111,7 +113,7 @@ namespace BrewingModel.Datasources
             }
         }
 
-        public override IBrew GetBrewProcessParameters(IBrew brew)
+        public override IBrew GetBrewWithProcessParameters(IBrew brew)
         {
             using (xlExcelPackage = new ExcelPackage(template, true))
             {
@@ -125,6 +127,52 @@ namespace BrewingModel.Datasources
                 Period period = CreatePeriod(year, month);
 
                 return period.GetBrewWithProcessParameters(brew);
+            }
+        }
+
+        public override Period GetPeriod(IBrew brew)
+        {
+            return GetPeriod(brew.Year, brew.Month);
+        }
+
+        public override Period GetPeriod(string year, Month month)
+        {            
+            return GetPeriod(year, month.ToString());
+        }
+
+        public Period GetPeriod(string year, string month)
+        {
+            string periodName = year + "-" + month;
+            if (periods.ContainsKey(periodName))
+            {
+                Period period = periods[periodName];
+                period.LoadBrews();
+                return period;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public override string SaveBrew(IBrew brew)
+        {
+            if(brew.BrewNumber.Length > 0 && brew.BrandName.Length > 0 && brew.StartDate.Length > 0)
+            {
+                Period period = GetPeriod(brew);
+                if(period.Brews.ContainsKey(brew.BrewNumber))
+                {
+                    period.UpdateBrew(brew);
+                }
+                else
+                {
+                    period.AddBrew(brew);
+                }
+                return "Success";
+            }
+            else
+            {
+                return "Failure";
             }
         }
 
