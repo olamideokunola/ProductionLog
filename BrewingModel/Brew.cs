@@ -182,12 +182,22 @@ namespace BrewingModel
         // Method foor getting process durations
         private string GetProcessDuration(ProcessEquipment processEquipment, string processStartTime, string processEndTime)
         {
-            DateTime startTime = DateHelper.GetProcessParameterDateTime(GetProcessParameterValue(processEquipment, processStartTime));
-            DateTime endTime = DateHelper.GetProcessParameterDateTime(GetProcessParameterValue(processEquipment, processEndTime));
+            string startTimeString = GetProcessParameterValue(processEquipment, processStartTime);
+            string endTimeString = GetProcessParameterValue(processEquipment, processEndTime);
 
-            TimeSpan processDuration = endTime - startTime;
+            if (startTimeString != "" && endTimeString != "")
+            {
+                DateTime startTime = DateHelper.GetProcessParameterDateTime(startTimeString);
+                DateTime endTime = DateHelper.GetProcessParameterDateTime(GetProcessParameterValue(processEquipment, processEndTime));
 
-            return processDuration.ToString(@"hh\:mm\:ss");
+                TimeSpan processDuration = endTime - startTime;
+
+                return processDuration.ToString(@"hh\:mm\:ss");
+            }
+            else
+            {
+                return "";
+            }
         }
 
         // MashCopper Process Duration Calculations
@@ -448,6 +458,12 @@ namespace BrewingModel
             IDictionary<string, string> loadedProcessEquipmentParameters = processEquipmentParameters[ProcessEquipment.MashCopper];
 
             //Datasource datasource = XlDatasource.GetInstance();
+        }
+
+        public void Save()
+        {
+            DatasourceHandler datasourceHandler = DatasourceHandler.GetInstance();
+            datasourceHandler.SaveBrew(this);
         }
     }
 }

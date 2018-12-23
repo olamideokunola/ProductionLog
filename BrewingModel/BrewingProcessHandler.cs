@@ -17,7 +17,7 @@ namespace BrewingModel
 
         public IDictionary<string, Brew> Brews
         {
-            get`
+            get
             {
                 return _brews;
             }

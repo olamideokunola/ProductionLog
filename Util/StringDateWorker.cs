@@ -26,7 +26,7 @@ namespace Util
             string year = "";
             if (startDate.Length > 0)
             {
-                year = startDate.Substring(7, 4);
+                year = startDate.Substring(6, 4);
             }
             return year;
         }
@@ -38,7 +38,7 @@ namespace Util
 
             if (startDate.Length > 0)
             {
-                month = startDate.Substring(4, 2);
+                month = startDate.Substring(3, 2);
                 monthInt = int.Parse(month);
             }
             return Enum.GetName(typeof(Month), monthInt);

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using BrewingModel.Datasources;
 using ProcessEquipmentParameters;
 using ProcessFields.ProcessDurations;
 
@@ -134,10 +135,30 @@ namespace BrewingModel
         }
 
 
-        // Mash Copper Process Duration Calculations
+        // Process Equipment Process Duration Calculations
         public IDictionary<string, string> GetMashCopperProcessDurations()
         {
             return _brew.GetMashCopperProcessDurations();
+        }
+
+        public IDictionary<string, string> GetMashTunProcessDurations()
+        {
+            return _brew.GetMashTunProcessDurations();
+        }
+
+        public IDictionary<string, string> GetMashFilterProcessDurations()
+        {
+            return _brew.GetMashFilterProcessDurations();
+        }
+
+        public IDictionary<string, string> GetWortCopperProcessDurations()
+        {
+            return _brew.GetWortCopperProcessDurations();
+        }
+
+        public IDictionary<string, string> GetWhirlpoolProcessDurations()
+        {
+            return _brew.GetWhirlpoolProcessDurations();
         }
 
 
@@ -153,6 +174,12 @@ namespace BrewingModel
             Console.WriteLine("-----------");
             Console.WriteLine("Current Brew State: " + _brew.CurrentState.GetType());
             Console.WriteLine("-----------");
+        }
+
+        public void Save()
+        {
+            DatasourceHandler datasourceHandler = DatasourceHandler.GetInstance();
+            datasourceHandler.SaveBrew(_brew);
         }
     }
 }

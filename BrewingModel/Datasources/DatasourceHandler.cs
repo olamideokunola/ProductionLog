@@ -3,33 +3,53 @@ using System.Collections.Generic;
 
 namespace BrewingModel.Datasources
 {
-    public class DataSourceHandler
+    public class DatasourceHandler
     {
         //Singleton
-        private static DataSourceHandler _uniqueInstance = null;
+        private static DatasourceHandler _uniqueInstance = null;
 
         //lazy construction of instance
-        public static DataSourceHandler GetInstance()
+        public static DatasourceHandler GetInstance()
         {
             if (_uniqueInstance == null)
             {
-                _uniqueInstance = new DataSourceHandler();
+                _uniqueInstance = new DatasourceHandler();
             }
 
             return _uniqueInstance;
         }
 
-        private IDictionary<string, Period> _periods = new Dictionary<string, Period>();
-        private Datasource _datasource;
-
-        public Datasource Datasource { get => _datasource; set => _datasource = value; }
-
-        private DataSourceHandler(Datasource datasource)
+        public static DatasourceHandler GetInstance(Datasource datasource)
         {
-            Datasource = datasource;
+            if (_uniqueInstance == null)
+            {
+                _uniqueInstance = new DatasourceHandler(datasource);
+            }
+            _datasource = datasource;
+            _datasource.LoadPeriods();
+            return _uniqueInstance;
         }
 
-        private DataSourceHandler()
+        private IDictionary<string, Period> _periods = new Dictionary<string, Period>();
+        private static Datasource _datasource;
+
+        public Datasource Datasource
+        {
+            get { return _datasource; }
+            set
+            {
+                _datasource = value;
+                _datasource.LoadPeriods();
+            }
+        }
+
+        private DatasourceHandler(Datasource datasource)
+        {
+            Datasource = datasource;
+
+        }
+
+        private DatasourceHandler()
         {
         }
 

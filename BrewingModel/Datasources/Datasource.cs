@@ -32,6 +32,7 @@ namespace BrewingModel.Datasources
 
 
         // Methods
+        public abstract Period CreatePeriod(IBrew brew);
         public abstract Period CreatePeriod(string year, Month month);
         public abstract Period CreatePeriod(string year, string month);
 

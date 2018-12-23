@@ -66,9 +66,7 @@ namespace BrewingModel.Datasources
             {
                 int newColumnIndex = _brews.Count + 3;
 
-                Brew brewWithParameters = (Brew)brew;
-
-                AddBrewToWorkSheet(brewWithParameters, newColumnIndex);
+                AddBrewToWorkSheet(brew, newColumnIndex);
                 _brews.Add(brew.BrewNumber, brew);
             }
         }
@@ -104,18 +102,17 @@ namespace BrewingModel.Datasources
         {
             if (_brews.ContainsKey(brew.BrewNumber)) // && !BrewInWorkSheet(brew))
             {
-                Brew brewWithParameters = (Brew)brew;
 
                 int columnIndex = GetColumnNumber(brew);
 
-                AddBrewToWorkSheet(brewWithParameters, columnIndex);
-                _brews.Add(brew.BrewNumber, brew);
+                AddBrewToWorkSheet(brew, columnIndex);
+                _brews[brew.BrewNumber] = brew;
             }
         }
 
 
         // Worksheet methods
-        private void AddBrewToWorkSheet(Brew brew, int columnIndex)
+        private void AddBrewToWorkSheet(IBrew brew, int columnIndex)
         {
             using (xlPackage = new ExcelPackage(fileInfo))
             {
@@ -126,7 +123,7 @@ namespace BrewingModel.Datasources
             }
         }
 
-        private void SetRawData(Brew brew, int newColumnIndex)
+        private void SetRawData(IBrew brew, int newColumnIndex)
         {
             using (xlPackage = new ExcelPackage(fileInfo))
             {
@@ -153,7 +150,6 @@ namespace BrewingModel.Datasources
                 rawDataWorksheet.Cells[16, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.MashCopper, MashCopperProcessParameters.HeatingUp2Temperature.ToString());
 
                 // Mash Tun process parameters
-                // TODO  update all process parameters accordingly
                 rawDataWorksheet.Cells[17, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.MashTun, MashTunProcessParameters.MashingInStartTime.ToString());
                 rawDataWorksheet.Cells[18, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.MashTun, MashTunProcessParameters.MashingInEndTime.ToString());
                 rawDataWorksheet.Cells[19, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.MashTun, MashTunProcessParameters.ProteinRestEndTime.ToString());
@@ -197,10 +193,12 @@ namespace BrewingModel.Datasources
                 rawDataWorksheet.Cells[49, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.Whirlpool, WhirlpoolProcessParameters.RestingEndTime.ToString());
                 rawDataWorksheet.Cells[50, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.Whirlpool, WhirlpoolProcessParameters.CoolingEndTime.ToString());
                 rawDataWorksheet.Cells[51, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.Whirlpool, WhirlpoolProcessParameters.ReadyAtTime.ToString());
+
+                SaveWorkSheet(xlPackage);
             }
         }
 
-        private void SetBrewingFormData(Brew brew, int newColumnIndex)
+        private void SetBrewingFormData(IBrew brew, int newColumnIndex)
         {
 
             using (xlPackage = new ExcelPackage(fileInfo))
@@ -227,7 +225,6 @@ namespace BrewingModel.Datasources
                 brewingFormWorksheet.Cells[15, newColumnIndex].Value = brew.GetMashCopperProcessDurations()[MashCopperProcessDurations.Rest2Duration.ToString()];
 
                 // Mash Tun process parameters
-                // TODO  update all process parameters accordingly
                 brewingFormWorksheet.Cells[16, newColumnIndex].Value = brew.GetMashTunProcessDurations()[MashTunProcessDurations.MashingInDuration.ToString()];
                 brewingFormWorksheet.Cells[17, newColumnIndex].Value = "";
                 brewingFormWorksheet.Cells[18, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.MashTun, MashTunProcessParameters.ProteinRestTemperature.ToString());
@@ -259,10 +256,23 @@ namespace BrewingModel.Datasources
                 brewingFormWorksheet.Cells[38, newColumnIndex].Value = "";
                 brewingFormWorksheet.Cells[39, newColumnIndex].Value = "";
 
+                SaveWorkSheet(xlPackage);
            }
         }
 
-        public int GetColumnNumber(IBrew brew)
+        private string SaveWorkSheet(ExcelPackage xlPackage)
+        {
+            using (xlPackage)
+            {
+                Byte[] bin = xlPackage.GetAsByteArray();
+
+                FileInfo file = fileInfo;
+                File.WriteAllBytes(file.FullName, bin);
+                return file.FullName;
+            }
+        }
+
+        private int GetColumnNumber(IBrew brew)
         {
             using (xlPackage = new ExcelPackage(fileInfo))
             {
@@ -374,7 +384,8 @@ namespace BrewingModel.Datasources
                     brewWithParameters.SetProcessParameterValue(ProcessEquipment.Whirlpool, WhirlpoolProcessParameters.RestingEndTime.ToString(), rawDataWorksheet.Cells[49, columnIndex].Value.ToString());
                     brewWithParameters.SetProcessParameterValue(ProcessEquipment.Whirlpool, WhirlpoolProcessParameters.CoolingEndTime.ToString(), rawDataWorksheet.Cells[50, columnIndex].Value.ToString());
                     brewWithParameters.SetProcessParameterValue(ProcessEquipment.Whirlpool, WhirlpoolProcessParameters.ReadyAtTime.ToString(), rawDataWorksheet.Cells[51, columnIndex].Value.ToString());
-                    
+
+
                 }
 
                 return brewWithParameters;
@@ -385,31 +396,34 @@ namespace BrewingModel.Datasources
         {
             using (xlPackage = new ExcelPackage(fileInfo))
             {
-                xlRawDataWorksheet = xlPackage.Workbook.Worksheets[rawDataSheetName];
-
-                string brewDate;
-                string brandname;
-                string brewNumber;
-                string startTime;
-
-                int column;
-                _brews.Clear();
-
-                for (int columnIndex = 3; columnIndex <= xlRawDataWorksheet.Dimension.Columns; columnIndex++)
+                if (xlPackage.Workbook.Worksheets[rawDataSheetName] != null)
                 {
-                    column = columnIndex;
-                    if(xlRawDataWorksheet.Cells[4, column].Value != null)
+                    xlRawDataWorksheet = xlPackage.Workbook.Worksheets[rawDataSheetName];
+
+                    string brewDate;
+                    string brandname;
+                    string brewNumber;
+                    string startTime;
+
+                    int column;
+                    _brews.Clear();
+
+                    for (int columnIndex = 3; columnIndex <= xlRawDataWorksheet.Dimension.Columns; columnIndex++)
                     {
-                        brewDate = DateHelper.ConvertDateToString(xlRawDataWorksheet.Cells[2, column].GetValue<DateTime>());
-                        brandname = xlRawDataWorksheet.Cells[3, column].Value.ToString();
-                        brewNumber = xlRawDataWorksheet.Cells[4, column].Value.ToString();
-                        startTime = xlRawDataWorksheet.Cells[5, column].Value.ToString();
+                        column = columnIndex;
+                        if (xlRawDataWorksheet.Cells[4, column].Value != null)
+                        {
+                            brewDate = DateHelper.ConvertDateToString(xlRawDataWorksheet.Cells[2, column].GetValue<DateTime>());
+                            brandname = xlRawDataWorksheet.Cells[3, column].Value.ToString();
+                            brewNumber = xlRawDataWorksheet.Cells[4, column].Value.ToString();
+                            startTime = xlRawDataWorksheet.Cells[5, column].Value.ToString();
 
-                        IBrew brew = new BrewProxy(brewDate, brandname, brewNumber);
+                            IBrew brew = new BrewProxy(brewDate, brandname, brewNumber);
 
-                        _brews.Add(brew.BrewNumber, brew);
+                            _brews.Add(brew.BrewNumber, brew);
+                        }
+
                     }
-
                 }
             }
         }

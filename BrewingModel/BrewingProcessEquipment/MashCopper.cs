@@ -166,16 +166,19 @@ namespace BrewingModel.BrewingProcessEquipment
         {
             _currentState.StartMashingIn(paramText, startTime, this, _brew);
             _brew.SetState(new BrewInProcessState());
+            _brew.Save();
         }
 
         public void SetEndTime(string paramText, string endTime)
         {
             _currentState.SetEndTime(paramText, endTime, this, _brew);
+            _brew.Save();
         }
 
         public void SetProteinRestTemperature(string temperature)
         {
             _currentState.SetProteinRestTemperature(temperature, this, _brew);
+            _brew.Save();
         }
 
         //State actions in state classs
