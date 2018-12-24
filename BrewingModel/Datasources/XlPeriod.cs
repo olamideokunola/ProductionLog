@@ -18,8 +18,26 @@ namespace BrewingModel.Datasources
         ExcelWorksheet xlBrewingFormWorksheet;
 
         FileInfo fileInfo;
-        const string rawDataSheetName = "Raw data";
-        const string brewingFormSheetName = "Brewing forms";
+        private const string rawDataSheetName = "Raw data";
+        private const string brewingFormSheetName = "Brewing forms";
+
+        static WorkSheetSaver workSheetSaver;
+
+        public string RawDataSheetName
+        {
+            get
+            {
+                return rawDataSheetName;
+            }
+        }
+
+        public string BrewingFormSheetName
+        {
+            get
+            {
+                return brewingFormSheetName;
+            }
+        }
 
         public FileInfo FileInfo
         {
@@ -58,6 +76,8 @@ namespace BrewingModel.Datasources
             xlPackage = new ExcelPackage(fileInfo);
             xlRawDataWorksheet = xlPackage.Workbook.Worksheets[rawDataSheetName];
             xlBrewingFormWorksheet = xlPackage.Workbook.Worksheets[brewingFormSheetName];
+
+            workSheetSaver = new WorkSheetSaver(this);
         }
 
         public override void AddBrew(IBrew brew)
@@ -65,8 +85,8 @@ namespace BrewingModel.Datasources
             if (!_brews.ContainsKey(brew.BrewNumber)) // && !BrewInWorkSheet(brew))
             {
                 int newColumnIndex = _brews.Count + 3;
-
-                AddBrewToWorkSheet(brew, newColumnIndex);
+                //AddBrewToWorkSheet(brew, newColumnIndex);
+                workSheetSaver.AddBrewToWorkSheet(brew, newColumnIndex);
                 _brews.Add(brew.BrewNumber, brew);
             }
         }
@@ -90,7 +110,7 @@ namespace BrewingModel.Datasources
 
         public override void LoadBrews()
         {
-            LoadBrewsFromWorkSheet();
+            workSheetSaver.LoadBrewsFromWorkSheet();
         }
 
         public override void RemoveBrew(IBrew brew)
@@ -105,14 +125,14 @@ namespace BrewingModel.Datasources
 
                 int columnIndex = GetColumnNumber(brew);
 
-                AddBrewToWorkSheet(brew, columnIndex);
+                workSheetSaver.AddBrewToWorkSheet(brew, columnIndex);
                 _brews[brew.BrewNumber] = brew;
             }
         }
 
 
         // Worksheet methods
-        private void AddBrewToWorkSheet(IBrew brew, int columnIndex)
+        internal void AddBrewToWorkSheet(IBrew brew, int columnIndex)
         {
             using (xlPackage = new ExcelPackage(fileInfo))
             {
@@ -195,6 +215,7 @@ namespace BrewingModel.Datasources
                 rawDataWorksheet.Cells[51, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.Whirlpool, WhirlpoolProcessParameters.ReadyAtTime.ToString());
 
                 SaveWorkSheet(xlPackage);
+
             }
         }
 
@@ -257,10 +278,11 @@ namespace BrewingModel.Datasources
                 brewingFormWorksheet.Cells[39, newColumnIndex].Value = "";
 
                 SaveWorkSheet(xlPackage);
-           }
+
+            }
         }
 
-        private string SaveWorkSheet(ExcelPackage xlPackage)
+        private void SaveWorkSheet(ExcelPackage xlPackage)
         {
             using (xlPackage)
             {
@@ -268,7 +290,7 @@ namespace BrewingModel.Datasources
 
                 FileInfo file = fileInfo;
                 File.WriteAllBytes(file.FullName, bin);
-                return file.FullName;
+                //return file.FullName;
             }
         }
 
@@ -392,7 +414,7 @@ namespace BrewingModel.Datasources
             }
         }
 
-        private void LoadBrewsFromWorkSheet()
+        internal void LoadBrewsFromWorkSheet()
         {
             using (xlPackage = new ExcelPackage(fileInfo))
             {

@@ -7,6 +7,7 @@ using System.Timers;
 using System.Collections.Generic;
 using BrewingModel;
 using BrewMonitor.LiveBrewCommandDispatchers;
+using System.Collections.Concurrent;
 
 namespace BrewMonitor
 {
@@ -38,6 +39,7 @@ namespace BrewMonitor
         private BrewLoader _brewLoader;
         private BrewInProcess _brewInProcess;
         private IDictionary<string, BrewInProcess> _brewsInProcess = new Dictionary<string, BrewInProcess>();
+        //private ConcurrentDictionary<string, BrewInProcess> _brewsInProcess = new ConcurrentDictionary<string, BrewInProcess>();
         private RequiredBrewParameters _requiredBrewParameters;
         private IDictionary<string, IDictionary<string, string>> _brewFields;
         private IFileParser _brewFileParser;
@@ -96,7 +98,7 @@ namespace BrewMonitor
                 if (_brewInProcess.HasNewField())
                 {
                     Console.WriteLine("In HasNewField!");
-                    foreach (KeyValuePair<string, IDictionary<string, string>> section in _brewInProcess.NewField)
+                    foreach (KeyValuePair<string, ConcurrentDictionary<string, string>> section in _brewInProcess.NewField)
                     {
                         IDictionary<string, string> sectionFields = new Dictionary<string, string>();
                         sectionFields = section.Value;

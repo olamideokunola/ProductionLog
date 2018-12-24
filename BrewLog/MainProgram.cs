@@ -17,18 +17,18 @@ namespace BrewLog
             BrewingProcessHandler brewingProcessHandler = BrewingProcessHandler.GetInstance();
             brewingProcessHandler.StartNewBrew("01/01/2016", "Maltina", "258");
 
+            string connectionString = "/home/olamide/Projects/BrewLog/BrewingModel/bin/Debug";
+            string templateFilePath = "/home/olamide/Projects/BrewLog/BrewingModel/bin/Debug/period_template.xlsx";
+            //string templateFilePath = $"{AppDomain.CurrentDomain.BaseDirectory}period_template.xlsx";
+
+            // Setup Datasource Handler
+            Datasource datasource = new XlDatasource(connectionString, templateFilePath);
+            DatasourceHandler datasourceHandler = DatasourceHandler.GetInstance(datasource);
 
             // Gui Thread
             ThreadStart guiRef = new ThreadStart(StartGui);
             Thread guiThread = new Thread(guiRef);
             guiThread.Start();
-
-
-            // Excel Thread
-            ThreadStart xlRef = new ThreadStart(StartExcelManager);
-            Thread xlThread = new Thread(xlRef);
-            xlThread.Start();
-
 
             // Main thread
             StartBrewMonitor();
@@ -44,9 +44,13 @@ namespace BrewLog
             //Create timer
             Console.WriteLine("Starting...");
 
-            System.Threading.Timer nTimer = new System.Threading.Timer(action.DoThis, autoEvent, 1000, 5000);
-            autoEvent.WaitOne();
-            nTimer.Change(0, 500);
+            System.Threading.Timer nTimer = new System.Threading.Timer(
+                callback: action.DoThis, 
+                state: autoEvent, 
+                dueTime: 1000, 
+                period: 5000);
+            // autoEvent.WaitOne();
+            // nTimer.Change(0, 500);
         }
 
         static void StartGui()
@@ -54,16 +58,6 @@ namespace BrewLog
             Application.Run(new AppForm());
         }
 
-        static void StartExcelManager()
-        {
-            string connectionString = "/home/olamide/Projects/BrewLog/BrewingModel/bin/Debug";
-            string templateFilePath = "/home/olamide/Projects/BrewLog/BrewingModel/bin/Debug/period_template.xlsx";
-            //string templateFilePath = $"{AppDomain.CurrentDomain.BaseDirectory}period_template.xlsx";
-
-            // Setup Datasource Handler
-            Datasource datasource = new XlDatasource(connectionString, templateFilePath);
-            DatasourceHandler datasourceHandler = DatasourceHandler.GetInstance(datasource);
-        }
 
     }
 
@@ -80,11 +74,10 @@ namespace BrewLog
             Console.WriteLine("Doing this...");
             string filePath = "/home/olamide/Projects/BrewLog/BrewLog/bin/Debug/brewing data/2018/september/9/";
             string brewNumber = "258";
-           
 
             LiveBrewMonitor liveBrewMonitor = LiveBrewMonitor.GetInstance();
             liveBrewMonitor.StartMonitoring(filePath, "Maltina", brewNumber);
-            Thread.Sleep(1000);
+            // Thread.Sleep(1000);
         }
     }
 }

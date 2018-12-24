@@ -3,6 +3,7 @@
  */
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 namespace BrewMonitor
 {
@@ -13,7 +14,8 @@ namespace BrewMonitor
 
         private IDictionary<string, IDictionary<string, string>> _availableFields = new Dictionary<string, IDictionary<string, string>>();
         private IDictionary<string, IDictionary<string, string>> _existingFields = new Dictionary<string, IDictionary<string, string>>();
-        private IDictionary<string, IDictionary<string, string>> _newField = new Dictionary<string, IDictionary<string, string>>();
+        //private IDictionary<string, IDictionary<string, string>> _newField = new Dictionary<string, IDictionary<string, string>>();
+        private ConcurrentDictionary<string, ConcurrentDictionary<string, string>> _newField = new ConcurrentDictionary<string, ConcurrentDictionary<string, string>>();
 
         private IDictionary<string, string> _headerFields = new Dictionary<string, string>();
         private IDictionary<string, IDictionary<string, string>> _sectionFields = new Dictionary<string, IDictionary<string, string>>();
@@ -30,7 +32,7 @@ namespace BrewMonitor
         {
             _availableFields = new Dictionary<string, IDictionary<string, string>>();
             _existingFields = new Dictionary<string, IDictionary<string, string>>();
-            _newField = new Dictionary<string, IDictionary<string, string>>();
+            _newField = new ConcurrentDictionary<string, ConcurrentDictionary<string, string>>();
             _filePath = "";
             _brewNumber = "";
             _headerFields = new Dictionary<string, string>();
@@ -59,7 +61,7 @@ namespace BrewMonitor
             }
         }
 
-        public IDictionary<string, IDictionary<string, string>> NewField
+        public ConcurrentDictionary<string, ConcurrentDictionary<string, string>> NewField
         {
             get
             {
@@ -140,11 +142,12 @@ namespace BrewMonitor
                         if (existingParam.Length == 0 && availableParam.Length > 0)
                         {
                             Console.WriteLine("In if(existingParam.Length == 0 && availableParam.Length > 0)!");
-                            IDictionary<string, string> newParam = new Dictionary<string, string>
-                        {
-                            { param.Key, availableParams[param.Key] }
-                            };
-                            _newField.Add(processSection.Key, newParam);
+                            ConcurrentDictionary<string, string> newParam = new ConcurrentDictionary<string, string>();
+                            newParam.TryAdd(param.Key, availableParams[param.Key]);
+                            //{
+                            //    { param.Key, availableParams[param.Key] }
+                            //};
+                            _newField.TryAdd(processSection.Key, newParam);
                         }
                     }
                 }

@@ -100,6 +100,7 @@ namespace BrewLogGui.ProcessEquipmentViews
             }
         }
 
+
         public string BrewNumber
         {
             get
@@ -126,6 +127,7 @@ namespace BrewLogGui.ProcessEquipmentViews
                 RefreshCurrentStateText();
             }
         }
+
 
 
         public string BrandName
@@ -302,7 +304,7 @@ namespace BrewLogGui.ProcessEquipmentViews
             }
         }
 
-        // Delegate f Thread safe call 
+        // Delegate for Thread safe call 
         delegate void ReturningVoidDelegate();
 
         // Thread safe RunEquipment
@@ -335,25 +337,53 @@ namespace BrewLogGui.ProcessEquipmentViews
             }
         }
 
+
+        // Thread safe RefreshBrewNumber
         private void RefreshBrewNumber()
         {
-            _brewNumberLabel.Text = "Brew: " + _brewNumber;
-            AlignCenter(_brewNumberLabel);
-            Show();
+            if (this.InvokeRequired)
+            {
+                ReturningVoidDelegate d = new ReturningVoidDelegate(RefreshBrewNumber);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                _brewNumberLabel.Text = "Brew: " + _brewNumber;
+                AlignCenter(_brewNumberLabel);
+                Show();
+            }
         }
 
+        // Thread safe RefreshCurrentStateText
         private void RefreshCurrentStateText()
         {
-            _stateLabel.Text = "State: " + _currentStateText;
-            AlignCenter(_stateLabel);
-            Show();
+            if (this.InvokeRequired)
+            {
+                ReturningVoidDelegate d = new ReturningVoidDelegate(RefreshCurrentStateText);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                _stateLabel.Text = "State: " + _currentStateText;
+                AlignCenter(_stateLabel);
+                Show();
+            }
         }
 
+        // Thread safe RefreshBrandName
         private void RefreshBrandName()
         {
-            _brandNameLabel.Text = "Brand: " + _brandName;
-            AlignCenter(_brandNameLabel);
-            Show();
+            if (this.InvokeRequired)
+            {
+                ReturningVoidDelegate d = new ReturningVoidDelegate(RefreshBrandName);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                _brandNameLabel.Text = "Brand: " + _brandName;
+                AlignCenter(_brandNameLabel);
+                Show();
+            }
         }
 
         public void StartFlashing()

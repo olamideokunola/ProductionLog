@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using BrewingModel;
 using BrewMonitor.LiveBrewCommands;
 
@@ -26,7 +27,7 @@ namespace BrewMonitor.LiveBrewCommandDispatchers
 
         public override void CreateLiveBrewCommands(string fieldName, string fieldValue, Brew brew, string fieldSection)
         {
-            this.liveBrewCommands.Clear();
+            this.liveBrewCommands = new BlockingCollection<LiveBrewCommand>();
             switch (fieldName)
             {
                 case "Start Casting - Finish":

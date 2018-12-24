@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using BrewingModel;
 using BrewMonitor.LiveBrewCommands;
 
@@ -22,7 +23,7 @@ namespace BrewMonitor.LiveBrewCommandDispatchers
         //hidden constructer to allow Singleton
         private MashCopperCommandDispatcher()
         {
-            this.liveBrewCommands.Clear();
+            this.liveBrewCommands = new BlockingCollection<LiveBrewCommand>();
         }
 
 

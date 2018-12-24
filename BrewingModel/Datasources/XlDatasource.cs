@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace BrewingModel.Datasources
 {
-	public class XlDatasource : Datasource
+    public class XlDatasource : Datasource
     {
 
         private ExcelPackage xlExcelPackage;
@@ -206,14 +206,10 @@ namespace BrewingModel.Datasources
             }
         }
 
-
-
         // Thread safe SaveBrew
         public override string SaveBrew(IBrew brew)
         {
-
             Period period;
-
             // if brewnumber, brand and start date are valid, then go ahead and save brew
             if (brew.BrewNumber.Length > 0 && brew.BrandName.Length > 0 && brew.StartDate.Length > 0)
             {
