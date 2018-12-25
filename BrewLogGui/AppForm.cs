@@ -389,5 +389,5 @@ namespace BrewLogGui
             }
         }
 
-}
+    }
 }

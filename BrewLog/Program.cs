@@ -1,6 +1,7 @@
 ﻿using System;
-using BrewMonitor;
 using System.Collections.Generic;
+using BrewingModel.BrewMonitor;
+
 namespace BrewLog
 {
     class MainClass

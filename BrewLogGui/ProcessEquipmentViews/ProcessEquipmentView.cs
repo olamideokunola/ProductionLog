@@ -20,9 +20,9 @@ namespace BrewLogGui.ProcessEquipmentViews
         Label _brewNumberLabel;
         Label _brandNameLabel;
 
-        string _brewNumber="";
-        string _brandName="";
-        string _currentStateText="Idle";
+        string _brewNumber = "";
+        string _brandName = "";
+        string _currentStateText = "Idle";
 
         int margin = 15;
         int lineSpacing = 15;
@@ -167,57 +167,67 @@ namespace BrewLogGui.ProcessEquipmentViews
             SetUpProcessEquipmentView(); //_processEquipment, imageFileName);
         }
 
+
+        // Thread safe SetUpProcessEquipmentView
         public void SetUpProcessEquipmentView()
         {
-            //_imageFileName = imageFileName;
-            _imgPathRel = GetImagePath(_imageFileName);
-
-            Image = new Bitmap(_imgPathRel);
-
-            ScaleImage(this);
-            BackColor = Color.Transparent;
-
-            _brewNumberLabel = new Label
+            if (this.InvokeRequired)
             {
-                Text = "Brew: " + _brewNumber,
-                Location = new Point(margin, _top),
-                //Location = AlignCenter(_brewNumberLabel),
-                BackColor = Color.Transparent
-            };
-            _brewNumberLabel.AutoSize = true;
-            AlignCenter(_brewNumberLabel);
-
-            _brandNameLabel = new Label
+                ReturningVoidDelegate d = new ReturningVoidDelegate(SetUpProcessEquipmentView);
+                this.Invoke(d, new object[] { });
+            }
+            else
             {
-                Text = "Brand: " + _brandName,
-                Location = new Point(margin, _brewNumberLabel.Top + lineSpacing),
-                BackColor = Color.Transparent
-            };
-            _brandNameLabel.AutoSize = true;
-            AlignCenter(_brandNameLabel);
+                //_imageFileName = imageFileName;
+                _imgPathRel = GetImagePath(_imageFileName);
 
-            _stateLabel = new Label
-            {
-                Text = _currentStateText,
-                Location = new Point(margin, _brandNameLabel.Top + lineSpacing),
-                BackColor = Color.Transparent
-            };
-            _stateLabel.AutoSize = true;
-            AlignCenter(_stateLabel);
+                Image = new Bitmap(_imgPathRel);
 
-            _nameLabel = new Label
-            {
-                Text = _processEquipment,
-                Location = new Point(margin, _stateLabel.Top + lineSpacing),
-                BackColor = Color.Transparent,
-            };
-            _nameLabel.Font = new Font(_nameLabel.Font.FontFamily, 8, FontStyle.Bold);
-            _nameLabel.AutoSize = true;
-            AlignCenter(_nameLabel);
+                ScaleImage(this);
+                BackColor = Color.Transparent;
 
-            if (Controls.Count > 0){ Controls.Clear(); }
-            Render();
-            Show();
+                _brewNumberLabel = new Label
+                {
+                    Text = "Brew: " + _brewNumber,
+                    Location = new Point(margin, _top),
+                    //Location = AlignCenter(_brewNumberLabel),
+                    BackColor = Color.Transparent
+                };
+                _brewNumberLabel.AutoSize = true;
+                AlignCenter(_brewNumberLabel);
+
+                _brandNameLabel = new Label
+                {
+                    Text = "Brand: " + _brandName,
+                    Location = new Point(margin, _brewNumberLabel.Top + lineSpacing),
+                    BackColor = Color.Transparent
+                };
+                _brandNameLabel.AutoSize = true;
+                AlignCenter(_brandNameLabel);
+
+                _stateLabel = new Label
+                {
+                    Text = _currentStateText,
+                    Location = new Point(margin, _brandNameLabel.Top + lineSpacing),
+                    BackColor = Color.Transparent
+                };
+                _stateLabel.AutoSize = true;
+                AlignCenter(_stateLabel);
+
+                _nameLabel = new Label
+                {
+                    Text = _processEquipment,
+                    Location = new Point(margin, _stateLabel.Top + lineSpacing),
+                    BackColor = Color.Transparent,
+                };
+                _nameLabel.Font = new Font(_nameLabel.Font.FontFamily, 8, FontStyle.Bold);
+                _nameLabel.AutoSize = true;
+                AlignCenter(_nameLabel);
+
+                if (Controls.Count > 0) { Controls.Clear(); }
+                Render();
+                Show();
+            }
         }
 
         private void Render()
@@ -233,7 +243,7 @@ namespace BrewLogGui.ProcessEquipmentViews
             int x;
             int myWidth = this.Width;
             x = Convert.ToInt32((Image.Width - control.Width) / 2);
-            control.Location = new Point(x,control.Top);
+            control.Location = new Point(x, control.Top);
             control.Show();
         }
 
@@ -254,7 +264,7 @@ namespace BrewLogGui.ProcessEquipmentViews
 
         private void AddLabelToControls(Label label)
         {
-            if(!Controls.Contains(label))
+            if (!Controls.Contains(label))
             {
                 Controls.Add(label);
             }
@@ -270,10 +280,10 @@ namespace BrewLogGui.ProcessEquipmentViews
 
         public void DisplayBrand(bool choice)
         {
-            if(choice)
+            if (choice)
             {
                 AddLabelToControls(_brandNameLabel);
-            } 
+            }
             else
             {
                 RemoveLabelFromControls(_brandNameLabel);
@@ -386,54 +396,55 @@ namespace BrewLogGui.ProcessEquipmentViews
             }
         }
 
-        public void StartFlashing()
-        {
-            //StartFlashTimer();
-        }
+        //public void StartFlashing()
+        //{
+        //    //StartFlashTimer();
+        //}
 
-        public void StopFlashing()
-        {
+        //public void StopFlashing()
+        //{
 
-        }
+        //}
 
-        void StartFlashTimer()
-        {
-            AutoResetEvent autoEvent = new AutoResetEvent(false);
-            Action action = new Action(this);
-            //Create timer
-            //Console.WriteLine("Starting...");
+        //    void StartFlashTimer()
+        //    {
+        //        AutoResetEvent autoEvent = new AutoResetEvent(false);
+        //        Action action = new Action(this);
+        //        //Create timer
+        //        //Console.WriteLine("Starting...");
 
-            System.Threading.Timer nTimer = new System.Threading.Timer(action.DoThis, autoEvent, 1000, 10000);
-            // When autoEvent signals, 
-            autoEvent.WaitOne();
-            //nTimer.Change(0, 500);
-            //Controls.Clear();
-            SetUpProcessEquipmentView();
-        }   
-    }
+        //        System.Threading.Timer nTimer = new System.Threading.Timer(action.DoThis, autoEvent, 1000, 10000);
+        //        // When autoEvent signals, 
+        //        autoEvent.WaitOne();
+        //        //nTimer.Change(0, 500);
+        //        //Controls.Clear();
+        //        SetUpProcessEquipmentView();
+        //    }   
+        //}
 
-    class Action
-    {
-        ProcessEquipmentView _parent;
-        public Action(ProcessEquipmentView parent)
-        {
-            _parent = parent;
-        }
-        //Callback
-        public void DoThis(object state)
-        {
-            AutoResetEvent autoEvent = (AutoResetEvent)state;
-            //Console.WriteLine("Doing this...");
-            SwitchImage();
-            autoEvent.Set();
-            //Thread.Sleep(1000);
-        }
-        private void SwitchImage()
-        {
-            //Console.WriteLine("In  SwitchImage...");
-            //Console.WriteLine("_parent.ImageFileName: " + _parent.ImageFileName);
-            _parent.ImageFileName = _parent.ImageFileName == _parent.RunFileName ? _parent.StopFileName : _parent.RunFileName;
+        //class Action
+        //{
+        //    ProcessEquipmentView _parent;
+        //    public Action(ProcessEquipmentView parent)
+        //    {
+        //        _parent = parent;
+        //    }
+        //    //Callback
+        //    public void DoThis(object state)
+        //    {
+        //        AutoResetEvent autoEvent = (AutoResetEvent)state;
+        //        //Console.WriteLine("Doing this...");
+        //        SwitchImage();
+        //        autoEvent.Set();
+        //        //Thread.Sleep(1000);
+        //    }
+        //    private void SwitchImage()
+        //    {
+        //        //Console.WriteLine("In  SwitchImage...");
+        //        //Console.WriteLine("_parent.ImageFileName: " + _parent.ImageFileName);
+        //        _parent.ImageFileName = _parent.ImageFileName == _parent.RunFileName ? _parent.StopFileName : _parent.RunFileName;
 
-        }
+        //    }
+        //}
     }
 }

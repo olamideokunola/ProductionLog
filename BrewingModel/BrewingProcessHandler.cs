@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using BrewingModel.BrewingProcessEquipment;
+using BrewingModel.BrewMonitor;
 using Observer;
 
 namespace BrewingModel
@@ -30,6 +31,7 @@ namespace BrewingModel
         private HoldingVessel holdingVessel;
         private WortCopper wortCopper;
         private Whirlpool whirlpool;
+        LiveBrewMonitor liveBrewMonitor = LiveBrewMonitor.GetInstance();
 
         //Singleton
         private static BrewingProcessHandler _uniqueInstance = null;
@@ -333,7 +335,8 @@ namespace BrewingModel
         //User Methods
         public void StartNewBrew(string startDate, string brandName, string brewNumber)
         {
-            if(!_brews.ContainsKey(brewNumber))
+
+            if(!_brews.ContainsKey(brewNumber) && liveBrewMonitor.BrewFileExists(brewNumber))
             {
                 Brew brew = new Brew(startDate, brandName, brewNumber);
 

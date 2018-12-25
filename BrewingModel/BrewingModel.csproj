@@ -106,6 +106,36 @@
     <Compile Include="Datasources\XlPeriod.cs" />
     <Compile Include="Datasources\DatasourceHandler.cs" />
     <Compile Include="Datasources\WorkSheetSaver.cs" />
+    <Compile Include="BrewMonitor\BrewInProcess.cs" />
+    <Compile Include="BrewMonitor\BrewLoader.cs" />
+    <Compile Include="BrewMonitor\FileParser.cs" />
+    <Compile Include="BrewMonitor\IFileParser.cs" />
+    <Compile Include="BrewMonitor\ILiveBrewMonitor.cs" />
+    <Compile Include="BrewMonitor\LiveBrewMonitor.cs" />
+    <Compile Include="BrewMonitor\RequiredBrewParameters.cs" />
+    <Compile Include="BrewMonitor\RequiredFieldsChecker.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommandDispatchers\HoldingVesselCommandDispatcher.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommandDispatchers\LiveBrewCommandDispatcher.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommandDispatchers\LiveBrewCommandDispatcherFactory.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommandDispatchers\MashCopperCommandDispatcher.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommandDispatchers\MashFilterCommandDispatcher.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommandDispatchers\MashTunCommandDispatcher.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommandDispatchers\WhirlpoolCommandDispatcher.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommandDispatchers\WortCopperCommandDispatcher.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommands\CompleteHoldingVesselProcessStepCommand.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommands\CompleteMashCopperProcessStepCommand.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommands\CompleteMashFilterProcessStepCommand.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommands\CompleteMashTunProcessStepCommand.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommands\CompleteWhirlpoolProcessStepCommand.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommands\CompleteWortCopperProcessStepCommand.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommands\LiveBrewCommand.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommands\StartHoldingVesselFillingCommand.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommands\StartMashCopperMashingInCommand.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommands\StartMashFilterPrefillingCommand.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommands\StartMashTunMashingInCommand.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommands\StartWhirlpoolCastingCommand.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommands\StartWortCopperCastingCommand.cs" />
+    <Compile Include="BrewMonitor\LiveBrewCommands\StartWortCopperHeatingCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProcessFields\ProcessEquipmentParameters.csproj">
@@ -124,6 +154,9 @@
   <ItemGroup>
     <Folder Include="BrewingProcessEquipment\" />
     <Folder Include="Datasources\" />
+    <Folder Include="BrewMonitor\" />
+    <Folder Include="BrewMonitor\LiveBrewCommandDispatchers\" />
+    <Folder Include="BrewMonitor\LiveBrewCommands\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Timers;
-using BrewMonitor;
+using BrewingModel.BrewMonitor;
 
 public class Example
 {

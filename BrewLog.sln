@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewLog", "BrewLog\BrewLog.csproj", "{CE9F8BFD-AFB2-4E70-965B-CC6EEE74131B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewMonitor", "BrewMonitor\BrewMonitor.csproj", "{0B8AEEED-71DA-4570-9392-CAA35FA89A29}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewMonitorTest", "BrewMonitorTest\BrewMonitorTest.csproj", "{7F8FF51D-79BF-45B0-84F3-A3603AAFDE53}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewingModel", "BrewingModel\BrewingModel.csproj", "{5525FB3B-B363-4351-9D80-D17E8FDFB1BC}"
@@ -33,10 +31,6 @@ Global
 		{CE9F8BFD-AFB2-4E70-965B-CC6EEE74131B}.Debug|x86.Build.0 = Debug|x86
 		{CE9F8BFD-AFB2-4E70-965B-CC6EEE74131B}.Release|x86.ActiveCfg = Release|x86
 		{CE9F8BFD-AFB2-4E70-965B-CC6EEE74131B}.Release|x86.Build.0 = Release|x86
-		{0B8AEEED-71DA-4570-9392-CAA35FA89A29}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0B8AEEED-71DA-4570-9392-CAA35FA89A29}.Debug|x86.Build.0 = Debug|Any CPU
-		{0B8AEEED-71DA-4570-9392-CAA35FA89A29}.Release|x86.ActiveCfg = Release|Any CPU
-		{0B8AEEED-71DA-4570-9392-CAA35FA89A29}.Release|x86.Build.0 = Release|Any CPU
 		{7F8FF51D-79BF-45B0-84F3-A3603AAFDE53}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{7F8FF51D-79BF-45B0-84F3-A3603AAFDE53}.Debug|x86.Build.0 = Debug|Any CPU
 		{7F8FF51D-79BF-45B0-84F3-A3603AAFDE53}.Release|x86.ActiveCfg = Release|Any CPU

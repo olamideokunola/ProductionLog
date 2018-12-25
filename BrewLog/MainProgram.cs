@@ -1,11 +1,11 @@
 ﻿using System;  
 using System.Threading;
-using BrewMonitor;
 using BrewingModel;
 using System.Windows.Forms;
 using System.Drawing;
 using BrewLogGui;
 using BrewingModel.Datasources;
+using BrewingModel.BrewMonitor;
 
 namespace BrewLog
 {
@@ -48,8 +48,8 @@ namespace BrewLog
                 callback: action.DoThis, 
                 state: autoEvent, 
                 dueTime: 1000, 
-                period: 5000);
-            // autoEvent.WaitOne();
+                period:  15000);
+            autoEvent.WaitOne();
             // nTimer.Change(0, 500);
         }
 
