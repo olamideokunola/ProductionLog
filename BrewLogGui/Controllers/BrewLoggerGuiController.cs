@@ -10,6 +10,7 @@ namespace BrewLogGui.Controllers
         private Subject guiModel;
         private BrewParametersGuiModel brewParametersGuiModel;
         private IBrewLoggerGuiView guiView;
+        private BrewingProcessHandler brewingProcessHandler = BrewingProcessHandler.GetInstance();
 
         public string ProcessEquipment
         {
@@ -82,7 +83,7 @@ namespace BrewLogGui.Controllers
 
         public void StartNewBrew(string startDate, string brandName, string brewNumber)
         {
-
+            brewingProcessHandler.StartNewBrew(startDate, brandName, brewNumber);
         }
 
         public void SetProcessEquipment(string processEquipment)

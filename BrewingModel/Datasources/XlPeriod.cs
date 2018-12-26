@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using BrewingModel.Settings;
 using OfficeOpenXml;
 using ProcessEquipmentParameters;
 using ProcessFields.ProcessDurations;
@@ -20,6 +21,8 @@ namespace BrewingModel.Datasources
         FileInfo fileInfo;
         private const string rawDataSheetName = "Raw data";
         private const string brewingFormSheetName = "Brewing forms";
+        MyAppSettings appSettings = MyAppSettings.GetInstance();
+        private string fileServerPath;
 
         static WorkSheetSaver workSheetSaver;
 
@@ -72,12 +75,13 @@ namespace BrewingModel.Datasources
             this.year = year;
             this.month = month;
             this.periodName = year + "-" + month;
-            this.fileInfo = new FileInfo(connectionString + "/" + year + "/" + month + ".xlsx");
+            this.fileInfo = new FileInfo(connectionString + fileServerPath + year + fileServerPath + month + ".xlsx");
             xlPackage = new ExcelPackage(fileInfo);
             xlRawDataWorksheet = xlPackage.Workbook.Worksheets[rawDataSheetName];
             xlBrewingFormWorksheet = xlPackage.Workbook.Worksheets[brewingFormSheetName];
 
             workSheetSaver = new WorkSheetSaver(this);
+            fileServerPath = appSettings.FileServerPath;
         }
 
         public override void AddBrew(IBrew brew)

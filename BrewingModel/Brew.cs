@@ -151,7 +151,16 @@ namespace BrewingModel
                 return stringDateWorker.GetMonth(_startDate);
             }
         }
-        
+
+        public string Day
+        {
+            get
+            {
+                StringDateWorker stringDateWorker = StringDateWorker.GetInstance();
+                return stringDateWorker.GetDay(_startDate);
+            }
+        }
+
         //Getters & Setters for Process Equipment Fields
         public string GetProcessParameterValue(ProcessEquipment processEquipment, string parameterName)
         {

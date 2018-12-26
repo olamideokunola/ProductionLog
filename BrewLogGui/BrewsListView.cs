@@ -21,6 +21,7 @@ namespace BrewLogGui
         public BrewsListView()
         {
             SetupBrewsListView();
+
         }
 
         private void SetupBrewsListView()

@@ -43,5 +43,18 @@ namespace Util
             }
             return Enum.GetName(typeof(Month), monthInt);
         }
+
+        public string GetDay(string startDate)
+        {
+            string day = "";
+            int dayInt = 0;
+
+            if (startDate.Length > 0)
+            {
+                day = startDate.Substring(0, 2);
+                dayInt = int.Parse(day);
+            }
+            return dayInt.ToString();
+        }
     }
 }

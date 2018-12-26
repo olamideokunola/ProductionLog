@@ -69,6 +69,7 @@
     <Compile Include="PictureView.cs" />
     <Compile Include="Models\BrewParametersGuiModel.cs" />
     <Compile Include="Models\IBrewParametersGuiModel.cs" />
+    <Compile Include="NewBrewView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\" />

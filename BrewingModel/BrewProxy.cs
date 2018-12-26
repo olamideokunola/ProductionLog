@@ -82,6 +82,14 @@ namespace BrewingModel
             }
         }
 
+        public string Day
+        {
+            get
+            {
+                return _brew.Day;
+            }
+        }
+
         //Methods
         public void SetState(IBrewState newState)
         {

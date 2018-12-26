@@ -22,6 +22,7 @@ namespace BrewingModel
 
         string Year { get; }
         string Month { get; }
+        string Day { get; }
 
         //Methods
         void SetState(IBrewState newState);

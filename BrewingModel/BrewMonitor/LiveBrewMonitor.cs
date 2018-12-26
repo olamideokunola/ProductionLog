@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using BrewingModel;
 using System.Collections.Concurrent;
 using BrewingModel.BrewMonitor.LiveBrewCommandDispatchers;
+using System.IO;
+using BrewingModel.Settings;
+using Util;
 
 namespace BrewingModel.BrewMonitor
 {
@@ -44,6 +47,10 @@ namespace BrewingModel.BrewMonitor
         private IDictionary<string, IDictionary<string, string>> _brewFields;
         private IFileParser _brewFileParser;
 
+        MyAppSettings appSettings = MyAppSettings.GetInstance();
+        private string fileServerPath;
+        string folderSeparator;
+
         //hidden constructer to allow Singleton
         private LiveBrewMonitor()
         {
@@ -52,6 +59,9 @@ namespace BrewingModel.BrewMonitor
             SetupBrewFields();
             _brewFileParser = new FileParser();
             _brewLoader = new BrewLoader(_brewFileParser);
+
+            fileServerPath = appSettings.FileServerPath;
+            folderSeparator = appSettings.FolderSeparator;
         }
 
         public void StartMonitoring(string filePath, string brandName, string brewNumber)
@@ -133,9 +143,34 @@ namespace BrewingModel.BrewMonitor
             _brewFields = _requiredBrewParameters.GetRequiredBrewParameters();
         }
 
-        internal bool BrewFileExists(string brewNumber)
+        internal bool BrewFileExists(IBrew brew)
         {
-            throw new NotImplementedException();
+            DirectoryInfo dir = new DirectoryInfo(fileServerPath);
+
+            string year = brew.Year;
+            string month = brew.Month.ToLower();
+            string brewNumber = brew.BrewNumber;
+            string day = brew.Day;
+
+            bool yearFolderExists = FolderWorker.IsSubDirectory(fileServerPath, year);
+            bool monthFolderExists = FolderWorker.IsSubDirectory(fileServerPath + folderSeparator + year, month);
+            bool fileExists = FolderWorker.FileInFolder(fileServerPath + folderSeparator + year + folderSeparator + month + folderSeparator + day, brewNumber + ".txt");
+
+            if (yearFolderExists && monthFolderExists && fileExists)
+            {
+                return true;
+            }
+            return false;
+
+        }
+
+        internal string GetBrewFilePath(IBrew brew)
+        {
+            string year = brew.Year;
+            string month = brew.Month.ToLower();
+            string day = brew.Day;
+            string brewNumber = brew.BrewNumber;
+            return fileServerPath + folderSeparator + year + folderSeparator + month + folderSeparator + day + folderSeparator;
         }
     }
 }

@@ -57,5 +57,12 @@
       <Name>Observer</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="BrewLog.exe.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="BrewLog.config">
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

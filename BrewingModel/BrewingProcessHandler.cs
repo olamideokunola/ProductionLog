@@ -335,13 +335,17 @@ namespace BrewingModel
         //User Methods
         public void StartNewBrew(string startDate, string brandName, string brewNumber)
         {
-
-            if(!_brews.ContainsKey(brewNumber) && liveBrewMonitor.BrewFileExists(brewNumber))
+            if (!_brews.ContainsKey(brewNumber))
+            // if (!_brews.ContainsKey(brewNumber))
             {
                 Brew brew = new Brew(startDate, brandName, brewNumber);
-
-                _brews.Add(brewNumber, brew);
-                Notify();
+                if(liveBrewMonitor.BrewFileExists(brew))
+                {
+                    _brews.Add(brewNumber, brew);
+                    string filePath = liveBrewMonitor.GetBrewFilePath(brew);
+                    liveBrewMonitor.StartMonitoring(filePath, brew.BrandName, brew.BrewNumber);
+                    Notify();
+                }
             }
         }
     }

@@ -6,6 +6,7 @@ using System.Drawing;
 using BrewLogGui;
 using BrewingModel.Datasources;
 using BrewingModel.BrewMonitor;
+using BrewingModel.Settings;
 
 namespace BrewLog
 {
@@ -15,10 +16,14 @@ namespace BrewLog
         static void Main()
         {
             BrewingProcessHandler brewingProcessHandler = BrewingProcessHandler.GetInstance();
-            brewingProcessHandler.StartNewBrew("01/01/2016", "Maltina", "258");
+            brewingProcessHandler.StartNewBrew("09/09/2018", "Maltina", "258");
+            //ApplicationSettings appsettings = new ApplicationSettings();
+            MyAppSettings appSettings = MyAppSettings.GetInstance();
 
-            string connectionString = "/home/olamide/Projects/BrewLog/BrewingModel/bin/Debug";
-            string templateFilePath = "/home/olamide/Projects/BrewLog/BrewingModel/bin/Debug/period_template.xlsx";
+            //string connectionString = appsettings.ConnectionString;
+            //string templateFilePath = appsettings.TemplateFilePath;
+            string connectionString = appSettings.ConnectionString;
+            string templateFilePath = appSettings.TemplateFilePath;
             //string templateFilePath = $"{AppDomain.CurrentDomain.BaseDirectory}period_template.xlsx";
 
             // Setup Datasource Handler
@@ -32,6 +37,9 @@ namespace BrewLog
 
             // Main thread
             StartBrewMonitor();
+
+
+
 
             //TestDataSource();
         }
@@ -63,16 +71,20 @@ namespace BrewLog
 
     class Action
     {
+        MyAppSettings appSettings = MyAppSettings.GetInstance();
         public Action()
         {
-
         }
         //Callback
         public void DoThis(object state)
         {
             AutoResetEvent autoEvent = (AutoResetEvent)state;
             Console.WriteLine("Doing this...");
-            string filePath = "/home/olamide/Projects/BrewLog/BrewLog/bin/Debug/brewing data/2018/september/9/";
+            //aps = new ApplicationSettings();
+            //aps.FileServerPath = "/home/olamide/Projects/BrewLog/BrewLog/bin/Debug/brewing data/";
+            //aps.Save();
+            //filePath = "/home/olamide/Projects/BrewLog/BrewLog/bin/Debug/brewing data/2018/september/9/";
+            string filePath = appSettings.FileServerPath + "/2018/september/9/";
             string brewNumber = "258";
 
             LiveBrewMonitor liveBrewMonitor = LiveBrewMonitor.GetInstance();

@@ -23,8 +23,8 @@ namespace BrewLogGui
         private Button stopBtn;
         private ProcessView processView;
         private BrewsListView brewsListView = new BrewsListView();
-        private ProcessEquipmentParametersView processEquipmentParametersView = 
-            new ProcessEquipmentParametersView();
+        private ProcessEquipmentParametersView processEquipmentParametersView = new ProcessEquipmentParametersView();
+        private NewBrewView newBrewView = new NewBrewView();
 
         // MVC Elements
         // BrewingProcessHandler MVC elements
@@ -69,9 +69,41 @@ namespace BrewLogGui
             SetupProcessView();
             SetupBrewsListView();
             SetupProcessEquipmentParametersView();
+            SetupNewBrewView();
 
             render();
         }
+
+        private void SetupNewBrewView()
+        {
+            //Position and set size of newBrewView
+            newBrewView.SetPos(
+                x: processView.Left + 50,
+                y: 500);
+
+            Button startNewBrewButton = newBrewView.StartNewBrewButton;
+            startNewBrewButton.Click += StartNewBrewButton_Click;
+        }
+
+        void StartNewBrewButton_Click(object sender, EventArgs e)
+        {
+            MaskedTextBox maskedDateTextBox = newBrewView.DateTextBox;
+            string brewNumber = newBrewView.BrewNumberTextBox.Text;
+            string brandName = newBrewView.BrandNameTextBox.Text;
+            string startDate = maskedDateTextBox.Text;
+
+            if(brewNumber.Length > 0 && brandName.Length > 0 && startDate.Length == 10)
+            {
+                guiController.StartNewBrew(startDate, brandName, brewNumber);
+                newBrewView.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Invalid entry!" + "startDate: " + startDate + "brandName" + brandName + "brewNumber" + brewNumber);
+            }
+
+        }
+
 
         private void SetupProcessView()
         {
@@ -96,8 +128,13 @@ namespace BrewLogGui
                 150, 
                 150);
 
-            ListView listView = brewsListView.ListView;
+            // Load BrewsListData
+            LoadBrewListData();
+        }
 
+        private void LoadBrewListData()
+        {
+            ListView listView = brewsListView.ListView;
             // Load BrewsListData
             foreach (KeyValuePair<string, Brew> brew in brewingProcessHandler.Brews)
             {
@@ -208,6 +245,7 @@ namespace BrewLogGui
             Controls.Add(stopBtn);
             Controls.Add(brewsListView);
             Controls.Add(processEquipmentParametersView);
+            Controls.Add(newBrewView);
         }
 
 
@@ -267,6 +305,7 @@ namespace BrewLogGui
             if (changedSubject.Equals(brewingProcessHandler))
             {
                 UpdateMashCopperView();
+                UpdateBrewsListView();
             }
 
             // For brewParametersGuiModel portion of the view
@@ -276,6 +315,13 @@ namespace BrewLogGui
                 UpdateSelectedParameterView();
             }
 
+        }
+
+        private void UpdateBrewsListView()
+        {
+            brewsListView.ListView.Clear();
+            // Load BrewsListData
+            LoadBrewListData();
         }
 
         private void UpdateSelectedParameterView()
