@@ -162,10 +162,9 @@ namespace BrewingModel.BrewingProcessEquipment
         }
 
         //State events
-        public void StartMashingIn(string paramText, string startTime)
+        public void StartMashingIn(Brew brew, string paramText, string startTime)
         {
-            _currentState.StartMashingIn(paramText, startTime, this, _brew);
-            _brew.SetState(new BrewInProcessState());
+            _currentState.StartMashingIn(paramText, startTime, this, brew);
             _brew.Save();
         }
 

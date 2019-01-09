@@ -1,5 +1,5 @@
 ﻿using System;
-namespace BrewingModel
+namespace Util
 {
     public class DateHelper
     {
@@ -20,6 +20,8 @@ namespace BrewingModel
         // Other attributes
         private static string dateTimePattern = "dd.MM.yyyy HH:mm:ss";
         private static string datePattern = "dd.MM.yyyy";
+
+        private static string timeSpanPattern = "HH:mm:ss";
 
         //public static string DateTimePattern
         //{
@@ -62,6 +64,21 @@ namespace BrewingModel
         {
             string dateStr = date.ToString(datePattern);
             return dateStr;
+        }
+
+        public static TimeSpan ConvertStringToTimeSpan(string timeSpanStr)
+        {
+            TimeSpan convertedTimeSpan;
+            if (!string.IsNullOrEmpty(timeSpanStr))
+            {
+                convertedTimeSpan = TimeSpan.ParseExact(timeSpanStr, timeSpanPattern, null);
+                //string[] formats = new string[2];
+                //formats[0] = "";
+                //formats[1] = timeSpanPattern;
+
+                return convertedTimeSpan;
+            }
+            return TimeSpan.Zero;
         }
     }
 }

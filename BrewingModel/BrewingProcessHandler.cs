@@ -114,8 +114,8 @@ namespace BrewingModel
         {
             Brew brew = GetBrew(brewNumber);
 
-            mashCopper.InitBrew(brew);
-            mashCopper.StartMashingIn(fieldName, fieldValue);
+            // mashCopper.InitBrew(brew);
+            mashCopper.StartMashingIn(brew, fieldName, fieldValue);
             Notify();
         }
 

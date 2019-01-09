@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace BrewLogGui
 {
-    public class ProcessEquipmentParametersView : PictureBox
+    public class ProcessEquipmentParametersView : AppView
     {
         private Label process_equipment_name_label = new Label();
         private Label process_parameters_label = new Label();
@@ -33,19 +33,19 @@ namespace BrewLogGui
 
         // private IList<string> _defaultParameters = new List<string>();
 
-        const int margin = 5;
-        const int padding = 5;
+        //const int margin = 5;
+        //const int padding = 5;
 
         public ProcessEquipmentParametersView()
         {
-            SetupProcessEquipmentParametersView();
+            Initialize();
         }
 
-        private void SetupProcessEquipmentParametersView()
+        public override void SetupView()
         {
             // Setup label text
-            process_equipment_name_label.Text = "Process Equipment Name";
-            process_equipment_name_label.SetBounds(
+            TitleLabel.Text = "Selected Equipment:";
+            TitleLabel.SetBounds(
                 margin,
                 margin,
                 200,
@@ -54,7 +54,7 @@ namespace BrewLogGui
             process_parameters_label.Text = "Process Parameters:";
             process_parameters_label.SetBounds(
                 margin,
-                process_equipment_name_label.Top + process_equipment_name_label.Height + padding,
+                TitleLabel.Top + TitleLabel.Height + padding,
                 200,
                 20);
 
@@ -62,14 +62,23 @@ namespace BrewLogGui
             SetupProcessParametersListView();
 
             // Setup EditParameterView
-            editParameterView.SetBounds(
+            editParameterView.SetPos(
                 processParametersListview.Left + processParametersListview.Width + padding,
-                processParametersListview.Top,
-                300,
-                200);
+                process_parameters_label.Top);
+                //300,
+                //200);
 
-            Render();
-            Show();
+            // Setup width & height
+            this.Width =
+                margin +
+                processParametersListview.Width + padding +
+                editParameterView.Width;
+
+            this.Height =
+                margin +
+                TitleLabel.Height + padding +
+                process_parameters_label.Height + padding +
+                processParametersListview.Height + margin;
         }
 
         private void SetupProcessParametersListView()
@@ -82,12 +91,13 @@ namespace BrewLogGui
                 margin,
                 process_parameters_label.Top + process_parameters_label.Height + padding,
                 300,
-                100);
+                250);
         }
 
-        private void Render()
+        public override void Render()
         {
-            Controls.Add(process_equipment_name_label);
+            //Controls.Add(process_equipment_name_label);
+            Controls.Add(TitleLabel);
             Controls.Add(process_parameters_label);
             Controls.Add(processParametersListview);
             Controls.Add(editParameterView);
@@ -132,5 +142,11 @@ namespace BrewLogGui
             }
             return newProcessParameters;
         }
+
+        public override void Clear()
+        {
+
+        }
+
     }
 }

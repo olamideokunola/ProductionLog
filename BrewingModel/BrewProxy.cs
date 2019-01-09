@@ -144,27 +144,27 @@ namespace BrewingModel
 
 
         // Process Equipment Process Duration Calculations
-        public IDictionary<string, string> GetMashCopperProcessDurations()
+        public IDictionary<string, TimeSpan> GetMashCopperProcessDurations()
         {
             return _brew.GetMashCopperProcessDurations();
         }
 
-        public IDictionary<string, string> GetMashTunProcessDurations()
+        public IDictionary<string, TimeSpan> GetMashTunProcessDurations()
         {
             return _brew.GetMashTunProcessDurations();
         }
 
-        public IDictionary<string, string> GetMashFilterProcessDurations()
+        public IDictionary<string, TimeSpan> GetMashFilterProcessDurations()
         {
             return _brew.GetMashFilterProcessDurations();
         }
 
-        public IDictionary<string, string> GetWortCopperProcessDurations()
+        public IDictionary<string, TimeSpan> GetWortCopperProcessDurations()
         {
             return _brew.GetWortCopperProcessDurations();
         }
 
-        public IDictionary<string, string> GetWhirlpoolProcessDurations()
+        public IDictionary<string, TimeSpan> GetWhirlpoolProcessDurations()
         {
             return _brew.GetWhirlpoolProcessDurations();
         }

@@ -24,7 +24,7 @@ namespace BrewingProcessEquipmentTest
 
 
             MashCopperRest1State mashCopperRest1State = new MashCopperRest1State();
-            mashCopperRest1State.SetEndTime("12:00", mashCopper, brew);
+            //mashCopperRest1State.SetEndTime("12:00", mashCopper, brew);
 
            
 

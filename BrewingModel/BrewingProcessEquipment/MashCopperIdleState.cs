@@ -59,6 +59,7 @@ namespace BrewingModel.BrewingProcessEquipment
 
         public void StartMashingIn(string paramText, string startTime, MashCopper mashCopper, Brew brew)
         {
+            mashCopper.InitBrew(brew);
             string brewNumber = brew.BrewNumber;
             string brandName = brew.BrandName;
             string mashCopperBrewNumber = mashCopper.Brew.BrewNumber;
@@ -73,6 +74,7 @@ namespace BrewingModel.BrewingProcessEquipment
                 mashCopper.Brew.SetProcessParameterValue(ProcessEquipment.MashCopper, paramName, startTime);
 
                 //Set new state
+                brew.SetState(new BrewInProcessState());
                 mashCopper.SetState(mashCopper.MashingInState);
             }
 

@@ -25,6 +25,7 @@ namespace BrewLogGui
         private BrewsListView brewsListView = new BrewsListView();
         private ProcessEquipmentParametersView processEquipmentParametersView = new ProcessEquipmentParametersView();
         private NewBrewView newBrewView = new NewBrewView();
+        private ReportView reportView = new ReportView();
 
         // MVC Elements
         // BrewingProcessHandler MVC elements
@@ -63,23 +64,50 @@ namespace BrewLogGui
             //processViewModel = new ProcessViewModel();
             //processViewModel.AddObserver(this);
 
-            this.Size = new Size(1200, 600);
+            this.Size = new Size(1200, 800);
 
             //Setup GUI elements
             SetupProcessView();
+            SetupNewBrewView();
             SetupBrewsListView();
             SetupProcessEquipmentParametersView();
-            SetupNewBrewView();
+            SetupReportView();
 
             render();
+        }
+
+        private void SetupReportView()
+        {
+            //Position and set size of reportView
+            reportView.SetPos(
+                x: processEquipmentParametersView.Left + processEquipmentParametersView.Width + padding,
+                y: processEquipmentParametersView.Top);
+
+            Button setReportLocationButton = reportView.SetLocationButton;
+            setReportLocationButton.Click += SetReportLocationButton_Click;
+        }
+
+        private void SetReportLocationButton_Click(object sender, EventArgs e)
+        {
+            // Show the FolderBrowserDialog.
+            FolderBrowserDialog folderBrowser = reportView.FolderBrowser;
+            DialogResult result = folderBrowser.ShowDialog();
+
+            TextBox locationTextBox = reportView.LocationTextBox;
+
+            if (result == DialogResult.OK)
+            {
+
+               locationTextBox.Text = folderBrowser.SelectedPath;
+            }
         }
 
         private void SetupNewBrewView()
         {
             //Position and set size of newBrewView
             newBrewView.SetPos(
-                x: processView.Left + 50,
-                y: 500);
+                x: processView.Left + padding,
+                y: 400);
 
             Button startNewBrewButton = newBrewView.StartNewBrewButton;
             startNewBrewButton.Click += StartNewBrewButton_Click;
@@ -104,7 +132,6 @@ namespace BrewLogGui
 
         }
 
-
         private void SetupProcessView()
         {
             //Attach these objects to the graphics window.
@@ -122,12 +149,15 @@ namespace BrewLogGui
         private void SetupBrewsListView()
         {
             //Position and set size of brewsListView
-            brewsListView.SetBoundary(
-                processView.Left + 300,
-                500, 
-                150, 
-                150);
+            brewsListView.SetPos(
+                x: newBrewView.Left,
+                y: newBrewView.Top + newBrewView.Height + padding);
 
+            brewsListView.SetListViewBoundary(
+                x: newBrewView.Left,
+                y: newBrewView.Top + newBrewView.Height + padding,
+                width: newBrewView.BrewNumberLabel.Width + padding + newBrewView.BrewNumberTextBox.Width,
+                height: brewsListView.Height);
             // Load BrewsListData
             LoadBrewListData();
         }
@@ -144,11 +174,11 @@ namespace BrewLogGui
 
         private void SetupProcessEquipmentParametersView()
         {
-            processEquipmentParametersView.SetBounds(
-                brewsListView.Left + brewsListView.Width + padding,
-                brewsListView.Top,
-                700,
-                200);
+            processEquipmentParametersView.SetPos(
+                newBrewView.Left + newBrewView.Width + padding,
+                newBrewView.Top);
+                //600,
+                //200);
 
             ListView parametersListView = processEquipmentParametersView.ProcessParametersListview;
             parametersListView.Activation = ItemActivation.OneClick;
@@ -241,11 +271,12 @@ namespace BrewLogGui
 
             //Add members to Controls
             Controls.Add(processView);
-            Controls.Add(runBtn);
-            Controls.Add(stopBtn);
+            //Controls.Add(runBtn);
+            //Controls.Add(stopBtn);
             Controls.Add(brewsListView);
             Controls.Add(processEquipmentParametersView);
             Controls.Add(newBrewView);
+            Controls.Add(reportView);
         }
 
 

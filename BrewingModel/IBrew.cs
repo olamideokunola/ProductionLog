@@ -37,11 +37,11 @@ namespace BrewingModel
         void SetProcessParameterValue(ProcessEquipment processEquipment, string parameterName, string parameterValue);
 
         // Process Equipment Process Duration Calculations
-        IDictionary<string, string> GetMashCopperProcessDurations();
-        IDictionary<string, string> GetMashTunProcessDurations();
-        IDictionary<string, string> GetMashFilterProcessDurations();
-        IDictionary<string, string> GetWortCopperProcessDurations();
-        IDictionary<string, string> GetWhirlpoolProcessDurations();
+        IDictionary<string, TimeSpan> GetMashCopperProcessDurations();
+        IDictionary<string, TimeSpan> GetMashTunProcessDurations();
+        IDictionary<string, TimeSpan> GetMashFilterProcessDurations();
+        IDictionary<string, TimeSpan> GetWortCopperProcessDurations();
+        IDictionary<string, TimeSpan> GetWhirlpoolProcessDurations();
 
         //Event methods
         void StartBrew(string startTime);

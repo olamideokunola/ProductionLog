@@ -16,18 +16,18 @@ namespace BrewLog
         static void Main()
         {
             BrewingProcessHandler brewingProcessHandler = BrewingProcessHandler.GetInstance();
-            brewingProcessHandler.StartNewBrew("09/09/2018", "Maltina", "258");
+            //brewingProcessHandler.StartNewBrew("09/09/2018", "Maltina", "258");
             //ApplicationSettings appsettings = new ApplicationSettings();
             MyAppSettings appSettings = MyAppSettings.GetInstance();
 
             //string connectionString = appsettings.ConnectionString;
             //string templateFilePath = appsettings.TemplateFilePath;
             string connectionString = appSettings.ConnectionString;
-            string templateFilePath = appSettings.TemplateFilePath;
+            string periodTemplateFilePath = appSettings.PeriodTemplateFilePath;
             //string templateFilePath = $"{AppDomain.CurrentDomain.BaseDirectory}period_template.xlsx";
 
             // Setup Datasource Handler
-            Datasource datasource = new XlDatasource(connectionString, templateFilePath);
+            Datasource datasource = new XlDatasource(connectionString, periodTemplateFilePath);
             DatasourceHandler datasourceHandler = DatasourceHandler.GetInstance(datasource);
 
             // Gui Thread
@@ -36,10 +36,9 @@ namespace BrewLog
             guiThread.Start();
 
             // Main thread
+            //BrewMonitorTimer brewMonitorTimer = BrewMonitorTimer.GetInstance();
+            //BrewMonitorTimer.Startup();
             StartBrewMonitor();
-
-
-
 
             //TestDataSource();
         }
@@ -88,7 +87,8 @@ namespace BrewLog
             string brewNumber = "258";
 
             LiveBrewMonitor liveBrewMonitor = LiveBrewMonitor.GetInstance();
-            liveBrewMonitor.StartMonitoring(filePath, "Maltina", brewNumber);
+            //liveBrewMonitor.StartMonitoring(filePath, "Maltina", brewNumber);
+            liveBrewMonitor.MonitorBrews();
             // Thread.Sleep(1000);
         }
     }

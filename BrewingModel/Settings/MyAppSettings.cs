@@ -43,12 +43,21 @@ namespace BrewingModel.Settings
             }
         }
 
-        public string TemplateFilePath
+        public string PeriodTemplateFilePath
         {
             get
             {
-                string templateFilePath = (string)reader.GetValue("TemplateFilePath", typeof(string));
-                return templateFilePath;
+                string periodTemplateFilePath = (string)reader.GetValue("PeriodTemplateFilePath", typeof(string));
+                return periodTemplateFilePath;
+            }
+        }
+
+        public string ReportTemplateFilePath
+        {
+            get
+            {
+                string reportTemplateFilePath = (string)reader.GetValue("ReportTemplateFilePath", typeof(string));
+                return reportTemplateFilePath;
             }
         }
 

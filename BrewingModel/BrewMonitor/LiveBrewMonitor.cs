@@ -67,9 +67,10 @@ namespace BrewingModel.BrewMonitor
         public void StartMonitoring(string filePath, string brandName, string brewNumber)
         {
             AddToWatchList(filePath, brandName, brewNumber);
-            MonitorBrews();
+            //MonitorBrews();
             if (!isMonitoring)
             {
+                BrewMonitorTimer.StartBrewMonitor();
                 isMonitoring = true;
             }
         }
@@ -89,7 +90,7 @@ namespace BrewingModel.BrewMonitor
 
         public void MonitorBrews()
         {
-
+            isMonitoring = true;
             Console.WriteLine("In MonitorBrews!");
             foreach (KeyValuePair<string, BrewInProcess> brewInProcess in _brewsInProcess) 
             {

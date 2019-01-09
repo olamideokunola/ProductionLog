@@ -33,7 +33,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BrewMonitorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequiredFieldsTest.cs" />
     <Compile Include="RequiredBrewParametersTest.cs" />

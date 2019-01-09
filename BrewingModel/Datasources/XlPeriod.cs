@@ -4,6 +4,7 @@ using BrewingModel.Settings;
 using OfficeOpenXml;
 using ProcessEquipmentParameters;
 using ProcessFields.ProcessDurations;
+using Util;
 
 namespace BrewingModel.Datasources
 {
@@ -23,6 +24,7 @@ namespace BrewingModel.Datasources
         private const string brewingFormSheetName = "Brewing forms";
         MyAppSettings appSettings = MyAppSettings.GetInstance();
         private string fileServerPath;
+        private string folderSeparator;
 
         static WorkSheetSaver workSheetSaver;
 
@@ -72,16 +74,18 @@ namespace BrewingModel.Datasources
 
         public XlPeriod(string year, string month, string connectionString)
         {
+            fileServerPath = appSettings.FileServerPath;
+            folderSeparator = appSettings.FolderSeparator;
             this.year = year;
             this.month = month;
             this.periodName = year + "-" + month;
-            this.fileInfo = new FileInfo(connectionString + fileServerPath + year + fileServerPath + month + ".xlsx");
+            this.fileInfo = new FileInfo(connectionString + folderSeparator + year + folderSeparator + month + ".xlsx");
             xlPackage = new ExcelPackage(fileInfo);
             xlRawDataWorksheet = xlPackage.Workbook.Worksheets[rawDataSheetName];
             xlBrewingFormWorksheet = xlPackage.Workbook.Worksheets[brewingFormSheetName];
 
             workSheetSaver = new WorkSheetSaver(this);
-            fileServerPath = appSettings.FileServerPath;
+
         }
 
         public override void AddBrew(IBrew brew)
@@ -229,6 +233,7 @@ namespace BrewingModel.Datasources
             using (xlPackage = new ExcelPackage(fileInfo))
             {
                 ExcelWorksheet brewingFormWorksheet = xlPackage.Workbook.Worksheets[brewingFormSheetName];
+
                 // Set Headers
                 brewingFormWorksheet.Cells[1, newColumnIndex].Value = "";
                 brewingFormWorksheet.Cells[2, newColumnIndex].Value = brew.StartDate;
@@ -238,52 +243,123 @@ namespace BrewingModel.Datasources
 
                 // Set process parameter values
                 // Mash Copper process parameters
-                brewingFormWorksheet.Cells[6, newColumnIndex].Value = brew.GetMashCopperProcessDurations()[MashCopperProcessDurations.MashingInDuration.ToString()];
+                brewingFormWorksheet.Cells[6, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetMashCopperProcessDurations()[MashCopperProcessDurations.MashingInDuration.ToString()]);
                 brewingFormWorksheet.Cells[7, newColumnIndex].Value = "";
                 brewingFormWorksheet.Cells[8, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.MashCopper, MashCopperProcessParameters.ProteinRestTemperature.ToString());
-                brewingFormWorksheet.Cells[9, newColumnIndex].Value = brew.GetMashCopperProcessDurations()[MashCopperProcessDurations.ProteinRestDuration.ToString()];
-                brewingFormWorksheet.Cells[10, newColumnIndex].Value = brew.GetMashCopperProcessDurations()[MashCopperProcessDurations.HeatingUp1Duration.ToString()];
+                brewingFormWorksheet.Cells[9, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetMashCopperProcessDurations()[MashCopperProcessDurations.ProteinRestDuration.ToString()]);
+                brewingFormWorksheet.Cells[10, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetMashCopperProcessDurations()[MashCopperProcessDurations.HeatingUp1Duration.ToString()]);
                 brewingFormWorksheet.Cells[11, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.MashCopper, MashCopperProcessParameters.HeatingUp1Temperature.ToString());
-                brewingFormWorksheet.Cells[12, newColumnIndex].Value = brew.GetMashCopperProcessDurations()[MashCopperProcessDurations.Rest1Duration.ToString()];
-                brewingFormWorksheet.Cells[13, newColumnIndex].Value = brew.GetMashCopperProcessDurations()[MashCopperProcessDurations.HeatingUp2Duration.ToString()];
+                brewingFormWorksheet.Cells[12, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetMashCopperProcessDurations()[MashCopperProcessDurations.Rest1Duration.ToString()]);
+                brewingFormWorksheet.Cells[13, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetMashCopperProcessDurations()[MashCopperProcessDurations.HeatingUp2Duration.ToString()]);
                 brewingFormWorksheet.Cells[14, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.MashCopper, MashCopperProcessParameters.HeatingUp2Temperature.ToString());
-                brewingFormWorksheet.Cells[15, newColumnIndex].Value = brew.GetMashCopperProcessDurations()[MashCopperProcessDurations.Rest2Duration.ToString()];
+                brewingFormWorksheet.Cells[15, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetMashCopperProcessDurations()[MashCopperProcessDurations.Rest2Duration.ToString()]);
 
                 // Mash Tun process parameters
-                brewingFormWorksheet.Cells[16, newColumnIndex].Value = brew.GetMashTunProcessDurations()[MashTunProcessDurations.MashingInDuration.ToString()];
+                brewingFormWorksheet.Cells[16, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetMashTunProcessDurations()[MashTunProcessDurations.MashingInDuration.ToString()]);
                 brewingFormWorksheet.Cells[17, newColumnIndex].Value = "";
                 brewingFormWorksheet.Cells[18, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.MashTun, MashTunProcessParameters.ProteinRestTemperature.ToString());
-                brewingFormWorksheet.Cells[19, newColumnIndex].Value = brew.GetMashTunProcessDurations()[MashTunProcessDurations.ProteinRestDuration.ToString()];
-                brewingFormWorksheet.Cells[20, newColumnIndex].Value = brew.GetMashTunProcessDurations()[MashTunProcessDurations.SaccharificationDuration.ToString()];
+                brewingFormWorksheet.Cells[19, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetMashTunProcessDurations()[MashTunProcessDurations.ProteinRestDuration.ToString()]);
+                brewingFormWorksheet.Cells[20, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetMashTunProcessDurations()[MashTunProcessDurations.SaccharificationDuration.ToString()]);
                 brewingFormWorksheet.Cells[21, newColumnIndex].Value = "";
                 brewingFormWorksheet.Cells[22, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.MashTun, MashTunProcessParameters.SacharificationRestTemperature.ToString());
-                brewingFormWorksheet.Cells[23, newColumnIndex].Value = brew.GetMashTunProcessDurations()[MashTunProcessDurations.HeatingUpDuration.ToString()];
+                brewingFormWorksheet.Cells[23, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetMashTunProcessDurations()[MashTunProcessDurations.HeatingUpDuration.ToString()]);
                 brewingFormWorksheet.Cells[24, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.MashTun, MashTunProcessParameters.HeatingUpTemperature.ToString());
                 brewingFormWorksheet.Cells[25, newColumnIndex].Value = "";
 
                 // Mash Filter process parameters
-                brewingFormWorksheet.Cells[26, newColumnIndex].Value = brew.GetMashFilterProcessDurations()[MashFilterProcessDurations.MainWortFiltrationDuration.ToString()];
-                brewingFormWorksheet.Cells[27, newColumnIndex].Value = brew.GetMashFilterProcessDurations()[MashFilterProcessDurations.SpargingRestDuration.ToString()];
-                brewingFormWorksheet.Cells[28, newColumnIndex].Value = brew.GetMashFilterProcessDurations()[MashFilterProcessDurations.TotalFiltrationDuration.ToString()];
+                brewingFormWorksheet.Cells[26, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetMashFilterProcessDurations()[MashFilterProcessDurations.MainWortFiltrationDuration.ToString()]);
+                brewingFormWorksheet.Cells[27, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetMashFilterProcessDurations()[MashFilterProcessDurations.SpargingRestDuration.ToString()]);
+                brewingFormWorksheet.Cells[28, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetMashFilterProcessDurations()[MashFilterProcessDurations.TotalFiltrationDuration.ToString()]);
 
                 // Wort Copper process parameters
-                brewingFormWorksheet.Cells[29, newColumnIndex].Value = brew.GetWortCopperProcessDurations()[WortCopperProcessDurations.HeatToBoilDuration.ToString()];
+                brewingFormWorksheet.Cells[29, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetWortCopperProcessDurations()[WortCopperProcessDurations.HeatToBoilDuration.ToString()]);
                 brewingFormWorksheet.Cells[30, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.WortCopper, WortCopperProcessParameters.VolumeBeforeBoiling.ToString());
                 brewingFormWorksheet.Cells[31, newColumnIndex].Value = brew.GetProcessParameterValue(ProcessEquipment.WortCopper, WortCopperProcessParameters.VolumeAfterBoiling.ToString());
                 brewingFormWorksheet.Cells[32, newColumnIndex].Value = "";
-                brewingFormWorksheet.Cells[33, newColumnIndex].Value = brew.GetWortCopperProcessDurations()[WortCopperProcessDurations.BoilingDuration.ToString()];
+                brewingFormWorksheet.Cells[33, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetWortCopperProcessDurations()[WortCopperProcessDurations.BoilingDuration.ToString()]);
 
                 // Whirpool process parameters
-                brewingFormWorksheet.Cells[34, newColumnIndex].Value = brew.GetWhirlpoolProcessDurations()[WhirlpoolProcessDurations.CastingDuration.ToString()];
-                brewingFormWorksheet.Cells[35, newColumnIndex].Value = brew.GetWhirlpoolProcessDurations()[WhirlpoolProcessDurations.RestDuration.ToString()];
-                brewingFormWorksheet.Cells[36, newColumnIndex].Value = brew.GetWhirlpoolProcessDurations()[WhirlpoolProcessDurations.CoolingDuration.ToString()];
+                brewingFormWorksheet.Cells[34, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetWhirlpoolProcessDurations()[WhirlpoolProcessDurations.CastingDuration.ToString()]);
+                brewingFormWorksheet.Cells[35, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetWhirlpoolProcessDurations()[WhirlpoolProcessDurations.RestDuration.ToString()]);
+                brewingFormWorksheet.Cells[36, newColumnIndex].Value = GetTimeValueOrBlank(brew.GetWhirlpoolProcessDurations()[WhirlpoolProcessDurations.CoolingDuration.ToString()]);
                 brewingFormWorksheet.Cells[37, newColumnIndex].Value = "";
                 brewingFormWorksheet.Cells[38, newColumnIndex].Value = "";
                 brewingFormWorksheet.Cells[39, newColumnIndex].Value = "";
 
+                SetNumberFormats(brewingFormWorksheet, newColumnIndex);
+
                 SaveWorkSheet(xlPackage);
 
             }
+        }
+
+        private object GetTimeValueOrBlank(TimeSpan t)
+        {
+            if(t == TimeSpan.Zero)
+            {
+                return "";
+            }
+            else
+            {
+                return t;
+            }
+        }
+
+        private void SetNumberFormats(ExcelWorksheet brewingFormWorksheet, int newColumnIndex)
+        {
+            string durationFormat = "hh:mm:ss";
+
+            // Set Headers
+            //brewingFormWorksheet.Cells[1, newColumnIndex].Style.Numberformat.Format = "";
+            //brewingFormWorksheet.Cells[2, newColumnIndex].Style.Numberformat.Format = brew.StartDate;
+            //brewingFormWorksheet.Cells[3, newColumnIndex].Style.Numberformat.Format = brew.BrandName;
+            //brewingFormWorksheet.Cells[4, newColumnIndex].Style.Numberformat.Format = brew.BrewNumber;
+            //brewingFormWorksheet.Cells[5, newColumnIndex].Style.Numberformat.Format = brew.StartTime;
+
+            // Set process parameter values
+            // Mash Copper process parameters
+            brewingFormWorksheet.Cells[6, newColumnIndex].Style.Numberformat.Format = durationFormat;
+            //brewingFormWorksheet.Cells[7, newColumnIndex].Style.Numberformat.Format = "";
+            //brewingFormWorksheet.Cells[8, newColumnIndex].Style.Numberformat.Format = brew.GetProcessParameterValue(ProcessEquipment.MashCopper, MashCopperProcessParameters.ProteinRestTemperature.ToString());
+            brewingFormWorksheet.Cells[9, newColumnIndex].Style.Numberformat.Format = durationFormat;
+            brewingFormWorksheet.Cells[10, newColumnIndex].Style.Numberformat.Format = durationFormat;
+            //brewingFormWorksheet.Cells[11, newColumnIndex].Style.Numberformat.Format = brew.GetProcessParameterValue(ProcessEquipment.MashCopper, MashCopperProcessParameters.HeatingUp1Temperature.ToString());
+            brewingFormWorksheet.Cells[12, newColumnIndex].Style.Numberformat.Format = durationFormat;
+            brewingFormWorksheet.Cells[13, newColumnIndex].Style.Numberformat.Format = durationFormat;
+            //brewingFormWorksheet.Cells[14, newColumnIndex].Style.Numberformat.Format = brew.GetProcessParameterValue(ProcessEquipment.MashCopper, MashCopperProcessParameters.HeatingUp2Temperature.ToString());
+            brewingFormWorksheet.Cells[15, newColumnIndex].Style.Numberformat.Format = durationFormat;
+
+            // Mash Tun process parameters
+            brewingFormWorksheet.Cells[16, newColumnIndex].Style.Numberformat.Format = durationFormat;
+            brewingFormWorksheet.Cells[17, newColumnIndex].Style.Numberformat.Format = "";
+            //brewingFormWorksheet.Cells[18, newColumnIndex].Style.Numberformat.Format = brew.GetProcessParameterValue(ProcessEquipment.MashTun, MashTunProcessParameters.ProteinRestTemperature.ToString());
+            brewingFormWorksheet.Cells[19, newColumnIndex].Style.Numberformat.Format = durationFormat;
+            brewingFormWorksheet.Cells[20, newColumnIndex].Style.Numberformat.Format = durationFormat;
+            brewingFormWorksheet.Cells[21, newColumnIndex].Style.Numberformat.Format = "";
+            //brewingFormWorksheet.Cells[22, newColumnIndex].Style.Numberformat.Format = brew.GetProcessParameterValue(ProcessEquipment.MashTun, MashTunProcessParameters.SacharificationRestTemperature.ToString());
+            brewingFormWorksheet.Cells[23, newColumnIndex].Style.Numberformat.Format = durationFormat;
+            //brewingFormWorksheet.Cells[24, newColumnIndex].Style.Numberformat.Format = brew.GetProcessParameterValue(ProcessEquipment.MashTun, MashTunProcessParameters.HeatingUpTemperature.ToString());
+            brewingFormWorksheet.Cells[25, newColumnIndex].Style.Numberformat.Format = "";
+
+            // Mash Filter process parameters
+            brewingFormWorksheet.Cells[26, newColumnIndex].Style.Numberformat.Format = durationFormat;
+            //brewingFormWorksheet.Cells[27, newColumnIndex].Style.Numberformat.Format = brew.GetMashFilterProcessDurations()[MashFilterProcessDurations.SpargingRestDuration.ToString()];
+            brewingFormWorksheet.Cells[28, newColumnIndex].Style.Numberformat.Format = durationFormat;
+
+            // Wort Copper process parameters
+            brewingFormWorksheet.Cells[29, newColumnIndex].Style.Numberformat.Format = durationFormat;
+            //brewingFormWorksheet.Cells[30, newColumnIndex].Style.Numberformat.Format = brew.GetProcessParameterValue(ProcessEquipment.WortCopper, WortCopperProcessParameters.VolumeBeforeBoiling.ToString());
+            //brewingFormWorksheet.Cells[31, newColumnIndex].Style.Numberformat.Format = brew.GetProcessParameterValue(ProcessEquipment.WortCopper, WortCopperProcessParameters.VolumeAfterBoiling.ToString());
+            brewingFormWorksheet.Cells[32, newColumnIndex].Style.Numberformat.Format = "";
+            brewingFormWorksheet.Cells[33, newColumnIndex].Style.Numberformat.Format = durationFormat;
+
+            // Whirpool process parameters
+            brewingFormWorksheet.Cells[34, newColumnIndex].Style.Numberformat.Format = durationFormat;
+            brewingFormWorksheet.Cells[35, newColumnIndex].Style.Numberformat.Format = durationFormat;
+            brewingFormWorksheet.Cells[36, newColumnIndex].Style.Numberformat.Format = durationFormat;
+            brewingFormWorksheet.Cells[37, newColumnIndex].Style.Numberformat.Format = "";
+            brewingFormWorksheet.Cells[38, newColumnIndex].Style.Numberformat.Format = "";
+            brewingFormWorksheet.Cells[39, newColumnIndex].Style.Numberformat.Format = "";
         }
 
         private void SaveWorkSheet(ExcelPackage xlPackage)

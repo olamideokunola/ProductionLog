@@ -2,6 +2,7 @@
 using System;
 using BrewingModel;
 using ProcessEquipmentParameters;
+using Util;
 
 namespace BrewingModelTest
 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
-using BrewMonitor;
+using BrewingModel.BrewMonitor;
+using BrewingModel;
 using System.Collections.Generic;
 namespace BrewMonitorTest
 {

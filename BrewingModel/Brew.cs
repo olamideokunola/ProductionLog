@@ -189,7 +189,29 @@ namespace BrewingModel
         }
 
         // Method foor getting process durations
-        private string GetProcessDuration(ProcessEquipment processEquipment, string processStartTime, string processEndTime)
+        //private string GetProcessDuration1(ProcessEquipment processEquipment, string processStartTime, string processEndTime)
+        //{
+        //    string startTimeString = GetProcessParameterValue(processEquipment, processStartTime);
+        //    string endTimeString = GetProcessParameterValue(processEquipment, processEndTime);
+
+        //    if (startTimeString != "" && endTimeString != "")
+        //    {
+        //        DateTime startTime = DateHelper.GetProcessParameterDateTime(startTimeString);
+        //        DateTime endTime = DateHelper.GetProcessParameterDateTime(GetProcessParameterValue(processEquipment, processEndTime));
+
+        //        TimeSpan processDuration = endTime - startTime;
+
+        //        string formattedDuration = processDuration.ToString("c");
+
+        //        return formattedDuration;
+        //    }
+        //    else
+        //    {
+        //        return "";
+        //    }
+        //}
+
+        private TimeSpan GetProcessDuration(ProcessEquipment processEquipment, string processStartTime, string processEndTime)
         {
             string startTimeString = GetProcessParameterValue(processEquipment, processStartTime);
             string endTimeString = GetProcessParameterValue(processEquipment, processEndTime);
@@ -201,19 +223,21 @@ namespace BrewingModel
 
                 TimeSpan processDuration = endTime - startTime;
 
-                return processDuration.ToString(@"hh\:mm\:ss");
+                string formattedDuration = processDuration.ToString("c");
+
+                return processDuration;
             }
             else
             {
-                return "";
-            }
+                return TimeSpan.Zero;
+            }   
         }
 
         // MashCopper Process Duration Calculations
-        public IDictionary<string, string> GetMashCopperProcessDurations()
+        public IDictionary<string, TimeSpan> GetMashCopperProcessDurations()
         {
             // MashCopper
-            IDictionary<string, string> mashCopperProcessDurations = new Dictionary<string, string>
+            IDictionary<string, TimeSpan> mashCopperProcessDurations = new Dictionary<string, TimeSpan>
             {
                 { MashCopperProcessDurations.MashingInDuration.ToString(), GetMashCopperMashingInDuration() },
                 { MashCopperProcessDurations.ProteinRestDuration.ToString(), GetMashCopperProteinRestDuration() },
@@ -226,7 +250,7 @@ namespace BrewingModel
             return mashCopperProcessDurations;
         }
 
-        private string GetMashCopperRest2Duration()
+        private TimeSpan GetMashCopperRest2Duration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.MashCopper;
             string processStartTimeString = MashCopperProcessParameters.HeatingUp2EndTime.ToString();
@@ -235,7 +259,7 @@ namespace BrewingModel
             return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
-        private string GetMashCopperHeatingUp2Duration()
+        private TimeSpan GetMashCopperHeatingUp2Duration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.MashCopper;
             string processStartTimeString = MashCopperProcessParameters.Rest1EndTime.ToString();
@@ -244,7 +268,7 @@ namespace BrewingModel
             return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
-        private string GetMashCopperRest1Duration()
+        private TimeSpan GetMashCopperRest1Duration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.MashCopper;
             string processStartTimeString = MashCopperProcessParameters.HeatingUp1EndTime.ToString();
@@ -253,7 +277,7 @@ namespace BrewingModel
             return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
-        private string GetMashCopperHeatingUp1Duration()
+        private TimeSpan GetMashCopperHeatingUp1Duration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.MashCopper;
             string processStartTimeString = MashCopperProcessParameters.ProteinRestEndTime.ToString();
@@ -262,7 +286,7 @@ namespace BrewingModel
             return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
-        private string GetMashCopperProteinRestDuration()
+        private TimeSpan GetMashCopperProteinRestDuration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.MashCopper;
             string processStartTimeString = MashCopperProcessParameters.MashingInEndTime.ToString();
@@ -271,7 +295,7 @@ namespace BrewingModel
             return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
-        private string GetMashCopperMashingInDuration()
+        private TimeSpan GetMashCopperMashingInDuration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.MashCopper;
             string processStartTimeString = MashCopperProcessParameters.MashingInStartTime.ToString();
@@ -281,10 +305,10 @@ namespace BrewingModel
         }
 
         // MashTun Process Duration Calculations
-        public IDictionary<string, string> GetMashTunProcessDurations()
+        public IDictionary<string, TimeSpan> GetMashTunProcessDurations()
         {
             // MashTun
-            IDictionary<string, string> mashTunProcessDurations = new Dictionary<string, string>
+            IDictionary<string, TimeSpan> mashTunProcessDurations = new Dictionary<string, TimeSpan>
             {
                 { MashTunProcessDurations.MashingInDuration.ToString(), GetMashTunMashingInDuration() },
                 { MashTunProcessDurations.ProteinRestDuration.ToString(), GetMashTunProteinRestDuration() },
@@ -295,7 +319,7 @@ namespace BrewingModel
             return mashTunProcessDurations;
         }
 
-        private string GetMashTunHeatingUpDuration()
+        private TimeSpan GetMashTunHeatingUpDuration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.MashTun;
             string processStartTimeString = MashTunProcessParameters.SacharificationRestEndTime.ToString();
@@ -304,7 +328,7 @@ namespace BrewingModel
             return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
-        private string GetMashTunSaccharificationDuration()
+        private TimeSpan GetMashTunSaccharificationDuration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.MashTun;
             string processStartTimeString = MashTunProcessParameters.ProteinRestEndTime.ToString();
@@ -313,7 +337,7 @@ namespace BrewingModel
             return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
-        private string GetMashTunProteinRestDuration()
+        private TimeSpan GetMashTunProteinRestDuration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.MashTun;
             string processStartTimeString = MashTunProcessParameters.MashingInEndTime.ToString();
@@ -322,7 +346,7 @@ namespace BrewingModel
             return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
-        private string GetMashTunMashingInDuration()
+        private TimeSpan GetMashTunMashingInDuration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.MashTun;
             string processStartTimeString = MashTunProcessParameters.MashingInStartTime.ToString();
@@ -332,10 +356,10 @@ namespace BrewingModel
         }
 
         // MashFilter Process Duration Calculations
-        public IDictionary<string, string> GetMashFilterProcessDurations()
+        public IDictionary<string, TimeSpan> GetMashFilterProcessDurations()
         {
             // MashFilter
-            IDictionary<string, string> mashFilterProcessDurations = new Dictionary<string, string>
+            IDictionary<string, TimeSpan> mashFilterProcessDurations = new Dictionary<string, TimeSpan>
             {
                 { MashFilterProcessDurations.MainWortFiltrationDuration.ToString(), GetMashFilterMainWortFiltrationDuration() },
                 { MashFilterProcessDurations.SpargingRestDuration.ToString(), GetMashFilterSpargingRestDuration() },
@@ -345,7 +369,7 @@ namespace BrewingModel
             return mashFilterProcessDurations;
         }
 
-        private string GetMashFilterTotalFiltrationDuration()
+        private TimeSpan GetMashFilterTotalFiltrationDuration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.MashFilter;
             string processStartTimeString = MashFilterProcessParameters.PrefillingEndTime.ToString();
@@ -354,7 +378,7 @@ namespace BrewingModel
             return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
-        private string GetMashFilterSpargingRestDuration()
+        private TimeSpan GetMashFilterSpargingRestDuration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.MashFilter;
             string processStartTimeString = MashFilterProcessParameters.MainMashFiltrationEndTime.ToString();
@@ -363,7 +387,7 @@ namespace BrewingModel
             return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
-        private string GetMashFilterMainWortFiltrationDuration()
+        private TimeSpan GetMashFilterMainWortFiltrationDuration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.MashFilter;
             string processStartTimeString = MashFilterProcessParameters.WeakWortTransferEndTime.ToString();
@@ -374,10 +398,10 @@ namespace BrewingModel
 
 
         // WortCopper Process Duration Calculations
-        public IDictionary<string, string> GetWortCopperProcessDurations()
+        public IDictionary<string, TimeSpan> GetWortCopperProcessDurations()
         {
             // WortCopper
-            IDictionary<string, string> mashFilterProcessDurations = new Dictionary<string, string>
+            IDictionary<string, TimeSpan> mashFilterProcessDurations = new Dictionary<string, TimeSpan>
             {
                 { WortCopperProcessDurations.HeatToBoilDuration.ToString(), GetWortCopperHeatToBoilDuration() },
                 { WortCopperProcessDurations.BoilingDuration.ToString(), GetWortCopperBoilingDuration() }
@@ -386,7 +410,7 @@ namespace BrewingModel
             return mashFilterProcessDurations;
         }
 
-        private string GetWortCopperBoilingDuration()
+        private TimeSpan GetWortCopperBoilingDuration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.WortCopper;
             string processStartTimeString = WortCopperProcessParameters.HeatingEndTime.ToString();
@@ -395,7 +419,7 @@ namespace BrewingModel
             return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
-        private string GetWortCopperHeatToBoilDuration()
+        private TimeSpan GetWortCopperHeatToBoilDuration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.WortCopper;
             string processStartTimeString = WortCopperProcessParameters.HeatingStartTime.ToString();
@@ -405,10 +429,10 @@ namespace BrewingModel
         }
 
         // Whirlpool Process Duration Calculations
-        public IDictionary<string, string> GetWhirlpoolProcessDurations()
+        public IDictionary<string, TimeSpan> GetWhirlpoolProcessDurations()
         {
             // Whirlpool
-            IDictionary<string, string> mashFilterProcessDurations = new Dictionary<string, string>
+            IDictionary<string, TimeSpan> mashFilterProcessDurations = new Dictionary<string, TimeSpan>
             {
                 { WhirlpoolProcessDurations.CastingDuration.ToString(), GetWhirlpoolCastingDuration() },
                 { WhirlpoolProcessDurations.RestDuration.ToString(), GetWhirlpoolRestDuration() },
@@ -418,7 +442,7 @@ namespace BrewingModel
             return mashFilterProcessDurations;
         }
 
-        private string GetWhirlpoolCoolingDuration()
+        private TimeSpan GetWhirlpoolCoolingDuration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.Whirlpool;
             string processStartTimeString = WhirlpoolProcessParameters.RestingEndTime.ToString();
@@ -427,7 +451,7 @@ namespace BrewingModel
             return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
-        private string GetWhirlpoolRestDuration()
+        private TimeSpan GetWhirlpoolRestDuration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.Whirlpool;
             string processStartTimeString = WhirlpoolProcessParameters.CastingEndTime.ToString();
@@ -436,7 +460,7 @@ namespace BrewingModel
             return GetProcessDuration(processEquipment, processStartTimeString, processEndTimeString);
         }
 
-        private string GetWhirlpoolCastingDuration()
+        private TimeSpan GetWhirlpoolCastingDuration()
         {
             ProcessEquipment processEquipment = ProcessEquipment.Whirlpool;
             string processStartTimeString = WhirlpoolProcessParameters.CastingStartTime.ToString();

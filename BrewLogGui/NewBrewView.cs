@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace BrewLogGui
 {
-    public class NewBrewView : PictureBox
+    public class NewBrewView : AppView
     {
         // GUI Controls
         private Label brandLabel = new Label();
@@ -16,6 +16,14 @@ namespace BrewLogGui
         private Button startNewBrewButton = new Button();
 
         // GUI element getters
+        public Label BrewNumberLabel
+        {
+            get
+            {
+                return brewNumberLabel;
+            }
+        }
+
         public TextBox BrandNameTextBox
         {
             get
@@ -49,24 +57,29 @@ namespace BrewLogGui
         }
 
         // attributes
-        const int margin = 5;
-        const int padding = 5;
+        //const int margin = 5;
+        //const int padding = 5;
 
         public NewBrewView()
         {
-            SetupView();
-            Render();
-            Show();
+            Initialize();
         }
 
-        private void SetupView()
+        public override void SetupView()
         {
             // Set GUI controls dimensions & positions
             // Setup labels
+            TitleLabel.Text = "Add New Brew:";
+            TitleLabel.SetBounds(
+                margin,
+                margin,
+                150,
+                30);
+
             brandLabel.Text = "Brand:";
             brandLabel.SetBounds(
                 margin,
-                margin,
+                TitleLabel.Top + TitleLabel.Height + padding,
                 100,
                 20);
 
@@ -113,12 +126,18 @@ namespace BrewLogGui
 
             // Setup width & height
             this.Width = margin + brandLabel.Width + padding + brandNameTextBox.Width + margin;
-            this.Height = margin + brandNameTextBox.Height + padding + dateTextBox.Height + padding + brewNumberTextBox.Height + padding + startNewBrewButton.Height + margin;
+            this.Height = margin +
+                TitleLabel.Height + padding +
+                brandNameTextBox.Height + padding + 
+                dateTextBox.Height + padding + 
+                brewNumberTextBox.Height + padding + 
+                startNewBrewButton.Height + margin;
         }
 
-        private void Render()
+        public override void Render()
         {
             // Add members to Controls
+            Controls.Add(TitleLabel);
             Controls.Add(brandLabel);
             Controls.Add(dateLabel);
             Controls.Add(brewNumberLabel);
@@ -128,18 +147,11 @@ namespace BrewLogGui
             Controls.Add(startNewBrewButton);
         }
 
-        public void SetPos(int x, int y)
-        {
-            this.Left = x;
-            this.Top = y;
-        }
-
-        public void Clear()
+        public override void Clear()
         {
             brandNameTextBox.Text = "";
             dateTextBox.Text = "";
             brewNumberTextBox.Text = "";
         }
-
     }
 }

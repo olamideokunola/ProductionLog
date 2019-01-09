@@ -5,7 +5,7 @@ using BrewingModel.BrewingProcessEquipment;
 
 namespace BrewLogGui
 {
-    public class BrewsListView : PictureBox
+    public class BrewsListView : AppView
     {
         private Label label = new Label();
         private ListView listView = new ListView();
@@ -20,34 +20,54 @@ namespace BrewLogGui
 
         public BrewsListView()
         {
-            SetupBrewsListView();
-
+            Initialize();
         }
 
-        private void SetupBrewsListView()
+        public void SetListViewBoundary(int x, int y, int width, int height)
         {
-            // Setup label text
-            label.Text = "Brews in process:";
-            label.SetBounds(0, 0, this.Width, 20);
+            this.SetPos(x, y);
+            label.SetBounds(margin, margin, this.Width, 20);
+            listView.SetBounds(margin, label.Top + label.Height, width, height);
 
-            // Setup listView
-            listView.SetBounds(0, label.Height, this.Width, this.Height - label.Height);
+            // Setup width & height
+            this.Width =
+                margin +
+                listView.Width + margin;
 
-            Render();
-            Show();
+            this.Height =
+                margin +
+                label.Height + padding +
+                listView.Height + margin;
         }
 
-        public void SetBoundary(int x, int y, int width, int height)
+        public override void Clear()
         {
-            this.SetBounds(x, y, width, height);
-            listView.SetBounds(0, label.Height, this.Width, this.Height - label.Height);
-            label.SetBounds(0, 0, this.Width, 20);
         }
 
-        private void Render()
+        public override void Render()
         {
             Controls.Add(label);
             Controls.Add(listView);
+        }
+
+        public override void SetupView()
+        {
+            // Setup label text
+            label.Text = "Brews in process:";
+            label.SetBounds(Margin, Margin, 150, 20);
+
+            // Setup listView
+            listView.SetBounds(Margin, label.Top + label.Height, 255, 100 - label.Height);
+
+            // Setup width & height
+            this.Width =
+                margin +
+                listView.Width + padding;
+
+            this.Height =
+                margin +
+                label.Height + padding +
+                listView.Height + margin;
         }
     }
 }

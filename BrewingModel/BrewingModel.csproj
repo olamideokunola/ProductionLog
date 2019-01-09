@@ -97,7 +97,6 @@
     <Compile Include="BrewingProcessEquipment\WhirlpoolRestingState.cs" />
     <Compile Include="BrewingProcessEquipment\WhirlpoolTrubRemovalState.cs" />
     <Compile Include="BrewingProcessEquipment\WhirlpoolState.cs" />
-    <Compile Include="DateHelper.cs" />
     <Compile Include="IBrew.cs" />
     <Compile Include="BrewProxy.cs" />
     <Compile Include="Datasources\Datasource.cs" />
@@ -139,6 +138,11 @@
     <Compile Include="BrewMonitor\LiveBrewCommands\StartWortCopperHeatingCommand.cs" />
     <Compile Include="Settings\ApplicationSettings.cs" />
     <Compile Include="Settings\MyAppSettings.cs" />
+    <Compile Include="BrewMonitor\BrewMonitorTimer.cs" />
+    <Compile Include="Reports\Report.cs" />
+    <Compile Include="Reports\XlReport.cs" />
+    <Compile Include="Reports\ReportGenerator.cs" />
+    <Compile Include="Reports\XlReportGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProcessFields\ProcessEquipmentParameters.csproj">
@@ -161,6 +165,8 @@
     <Folder Include="BrewMonitor\LiveBrewCommandDispatchers\" />
     <Folder Include="BrewMonitor\LiveBrewCommands\" />
     <Folder Include="Settings\" />
+    <Folder Include="Reports\" />
+    <Folder Include="Reports\Tests\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

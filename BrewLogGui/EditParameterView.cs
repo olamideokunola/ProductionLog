@@ -3,8 +3,9 @@ using System.Windows.Forms;
 
 namespace BrewLogGui
 {
-	public class EditParameterView : PictureBox
+	public class EditParameterView : AppView
     {
+        private Label sectionTitleLabel = new Label();
         private Label parameter_name_label = new Label();
         private Label parameter_value_label = new Label();
 
@@ -41,16 +42,23 @@ namespace BrewLogGui
 
         public EditParameterView()
         {
-            SetupEditParameterView();
+            Initialize();
         }
 
-        private void SetupEditParameterView()
+        public override void SetupView()
         {
             // Setup label text
+            sectionTitleLabel.Text = "Edit Selected Parameter:";
+            sectionTitleLabel.SetBounds(
+                0,
+                0,
+                150,
+                20);
+
             parameter_name_label.Text = "Parameter:";
             parameter_name_label.SetBounds(
-                0, 
-                0, 
+                sectionTitleLabel.Left,
+                sectionTitleLabel.Top + sectionTitleLabel.Height + padding, 
                 100, 
                 20);
 
@@ -66,13 +74,13 @@ namespace BrewLogGui
             parameterNameTextbox.SetBounds(
                 parameter_name_label.Width + 5,
                 parameter_name_label.Top, 
-                150, 
+                140, 
                 20);
 
             parameterValueTextbox.SetBounds(
                 parameterNameTextbox.Left,
                 parameter_value_label.Top,
-                150,
+                140,
                 20);
 
             // Setup button
@@ -80,20 +88,35 @@ namespace BrewLogGui
             submitButton.SetBounds(
                 parameterValueTextbox.Left,
                 parameterValueTextbox.Top + parameterValueTextbox.Height + 5,
-                150,
+                140,
                 20);
 
-            Render();
-            Show();
+            // Setup width & height
+            this.Width =
+                margin +
+                parameter_name_label.Width + padding +
+                parameterNameTextbox.Width + margin;
+
+            this.Height =
+                margin +
+                sectionTitleLabel.Height + padding +
+                parameter_name_label.Height + padding +
+                parameterNameTextbox.Height + padding +
+                submitButton.Height + margin;
         }
 
-        private void Render()
+        public override void Render()
         {
+            Controls.Add(sectionTitleLabel);
             Controls.Add(parameter_name_label);
             Controls.Add(parameter_value_label);
             Controls.Add(parameterNameTextbox);
             Controls.Add(parameterValueTextbox);
             Controls.Add(submitButton);
+        }
+
+        public override void Clear()
+        {
         }
     }
 }
