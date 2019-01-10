@@ -34,5 +34,7 @@ namespace BrewLogGui.Controllers
         void SelectProcessEquipmentParameter(string processEquipment, string parameterName);
         void ChangeProcessEquipmentParameterValue(string processEquipment, string parameterName, string parameterValue);
 
+        //  Action methods
+        void CreateReport(string year, string month, string reportName, string reportPath);
     }
 }

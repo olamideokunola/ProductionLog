@@ -73,8 +73,6 @@
     <Compile Include="ReportView.cs" />
     <Compile Include="IGui.cs" />
     <Compile Include="AppView.cs" />
-    <Compile Include="Controllers\ICreateReportViewController.cs" />
-    <Compile Include="Controllers\CreateReportViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\" />

@@ -8,6 +8,7 @@ using BrewingModel;
 using Observer;
 using Models;
 using ProcessEquipmentParameters;
+using BrewingModel.Reports;
 
 namespace BrewLogGui
 {
@@ -56,7 +57,8 @@ namespace BrewLogGui
 
             brewParametersGuiModel = new BrewParametersGuiModel();
             guiProcessParametersModel = brewParametersGuiModel;
-            guiController = new BrewLoggerGuiController(guiProcessParametersModel, this);
+            ReportGenerator reportGenerator = new XlReportGenerator();
+            guiController = new BrewLoggerGuiController(guiProcessParametersModel, this, reportGenerator);
             // Register with BrewParametersGuiModel Subject
             guiProcessParametersModel.Attach(this);
 
@@ -85,6 +87,22 @@ namespace BrewLogGui
 
             Button setReportLocationButton = reportView.SetLocationButton;
             setReportLocationButton.Click += SetReportLocationButton_Click;
+
+            Button createReportButton = reportView.CreateReportButton;
+            createReportButton.Click += CreateReportButton_Click;
+        }
+
+        private void CreateReportButton_Click(object sender, EventArgs e)
+        {
+            string year = reportView.YearTextBox.Text;
+            string month = reportView.MonthTextBox.Text;
+            string reportName = reportView.ReportNameTextBox.Text;
+            string reportPath = reportView.LocationTextBox.Text;
+
+            if (year.Length > 0 && month.Length > 0 && reportName.Length > 0 && reportPath.Length > 0)
+            {
+                guiController.CreateReport(year, month, reportName, reportPath);
+            }
         }
 
         private void SetReportLocationButton_Click(object sender, EventArgs e)

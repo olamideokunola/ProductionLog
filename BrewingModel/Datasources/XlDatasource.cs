@@ -90,6 +90,22 @@ namespace BrewingModel.Datasources
             }
         }
 
+        // TODO: Create LoadPeriod for lazy loading
+        public override Period LoadPeriod(string year, string month)
+        {
+            Period period = new XlPeriod(year, month, connectionString);
+            period.LoadBrews();
+            string periodName = year + "-" + month;
+            if (!periods.ContainsKey(periodName))
+            {
+                periods.Add(periodName, period);
+            }
+            else
+            {
+                periods[periodName] = period;
+            }
+            return period;
+        }
 
         public override void LoadPeriods()
         {
@@ -196,7 +212,8 @@ namespace BrewingModel.Datasources
             string periodName = year + "-" + month;
             if (periods.ContainsKey(periodName))
             {
-                Period period = periods[periodName];
+                //Period period = periods[periodName];
+                Period period = LoadPeriod(year, month);
                 period.LoadBrews();
                 return period;
             }

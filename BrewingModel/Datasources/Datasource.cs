@@ -45,6 +45,7 @@ namespace BrewingModel.Datasources
         public abstract Period GetPeriod(string year, Month month);
         public abstract Period GetPeriod(IBrew brew);
 
+        public abstract Period LoadPeriod(string year, string month);
         public abstract void LoadPeriods();
 
         public abstract IBrew GetBrewWithProcessParameters(IBrew brew);

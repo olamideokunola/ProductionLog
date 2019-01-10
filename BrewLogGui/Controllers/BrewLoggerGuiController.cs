@@ -1,5 +1,7 @@
 ﻿using System;
 using BrewingModel;
+using BrewingModel.Datasources;
+using BrewingModel.Reports;
 using Models;
 using Observer;
 
@@ -11,6 +13,7 @@ namespace BrewLogGui.Controllers
         private BrewParametersGuiModel brewParametersGuiModel;
         private IBrewLoggerGuiView guiView;
         private BrewingProcessHandler brewingProcessHandler = BrewingProcessHandler.GetInstance();
+        private ReportGenerator reportGenerator;
 
         public string ProcessEquipment
         {
@@ -19,11 +22,12 @@ namespace BrewLogGui.Controllers
             }
         }
 
-        public BrewLoggerGuiController(Subject guiModel, IBrewLoggerGuiView guiView)
+        public BrewLoggerGuiController(Subject guiModel, IBrewLoggerGuiView guiView, ReportGenerator reportGenerator)
         {
             this.guiModel = guiModel;
             this.guiView = guiView;
             brewParametersGuiModel = (Models.BrewParametersGuiModel)guiModel;
+            this.reportGenerator = reportGenerator;
         }
 
         public BrewLoggerGuiController()
@@ -101,6 +105,10 @@ namespace BrewLogGui.Controllers
             brewParametersGuiModel.ChangeProcessEquipmentParameterValue(processEquipment, parameterName, parameterValue);
         }
 
-
+        public void CreateReport(string year, string month, string reportName, string reportPath)
+        {
+            Month enumMonth = (Month)Enum.Parse(typeof(Month), month);
+            reportGenerator.CreateReport(year, enumMonth, reportName, reportPath);
+        }
     }
 }
